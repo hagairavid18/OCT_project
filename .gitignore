@@ -1,0 +1,5 @@
+venv
+vit_att_trial/res18.pt
+vit_att_trial/vit_base_patch16_224.pt
+results
+vit_att_trial/wandb
