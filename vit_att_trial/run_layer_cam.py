@@ -38,7 +38,8 @@ print(device)
 def_args = {
     "train": ["../../../../data/kermany/train"],
     "val": ["../../../../data/kermany/val"],
-    "test": ["../../../Documents/GitHub/test"],
+    # "test": ["../../../Documents/GitHub/test"],
+    "test": ["../../data/kermany/test"],
 }
 
 label_names = [
@@ -52,7 +53,7 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=1,
                                           shuffle=False)
 # names = ["res18", "res50", "res101", "res152"]
-names = ["res18"]
+names = ["../res18"]
 
 # models = [Resnet18(4), Resnet50(4), Resnet101(4), Resnet152(4)]
 models = [Resnet18(4)]
