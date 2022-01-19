@@ -81,7 +81,7 @@ class LayerCam():
         self.model.resnet.zero_grad()
         # self.model.classifier.zero_grad()
         # Backward pass with specified targets
-        model_output.backward(gradient=one_hot_output.cpu(), retain_graph=True)
+        model_output.backward(gradient=one_hot_output, retain_graph=True)
         # Get hooked gradients
         guided_gradients = self.extractor.gradients.data.cpu().numpy()[0]
         # Get convolution outputs
@@ -93,11 +93,8 @@ class LayerCam():
         cam = np.sum(weights * target, axis=0)
         cam = (cam - np.min(cam)) / (np.max(cam) - np.min(cam))  # Normalize between 0-1
         cam = np.uint8(cam * 255)  # Scale between 0-255 to visualize
-        print(cam.size)
-        print(input_image.shape)
         cam = np.uint8(Image.fromarray(cam).resize((input_image.shape[3],
                        input_image.shape[2]), Image.ANTIALIAS))/255
-        print(cam.size)
         return cam
 
 
