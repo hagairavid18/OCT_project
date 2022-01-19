@@ -8,6 +8,7 @@ import torch
 
 from misc_functions import get_example_params, save_class_activation_images
 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 class CamExtractor():
     """
@@ -81,7 +82,7 @@ class LayerCam():
         self.model.resnet.zero_grad()
         # self.model.classifier.zero_grad()
         # Backward pass with specified targets
-        model_output.backward(gradient=one_hot_output.to('cuda'), retain_graph=True)
+        model_output.backward(gradient=one_hot_output.to(device=device), retain_graph=True)
         # Get hooked gradients
         guided_gradients = self.extractor.gradients.data.cpu().numpy()[0]
         # Get convolution outputs

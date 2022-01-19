@@ -68,9 +68,9 @@ for name, model in zip(names, models):
     predictions = None
     ground_truth = None
     # Iterate through test dataset
-    # , 'ScoreCAM', 'AblationCAM'
+    #
     columns = ["id", "Original Image", "Predicted", "Truth", "GradCAM", 'GradCAMPlusPlus',
-               'XGradCAM', 'EigenCAM', 'FullGrad'] + ['layer cam {}'.format(i) for i in
+               'XGradCAM', 'EigenCAM', 'FullGrad', 'ScoreCAM', 'AblationCAM'] + ['layer cam {}'.format(i) for i in
                                                       range(
                                                           8)]  # + ['coloured_guided','grey_guided','pos_guided','neg_guided']
     # for a in label_names:
@@ -106,7 +106,7 @@ for name, model in zip(names, models):
         target_layers = [model.resnet.layer4[-1]]
         # print(model.resnet)
         # , ScoreCAM, AblationCAM
-        cams = [GradCAM, GradCAMPlusPlus, XGradCAM, EigenCAM, FullGrad]
+        cams = [GradCAM, GradCAMPlusPlus, XGradCAM, EigenCAM, FullGrad, ScoreCAM, AblationCAM]
 
         grayscales = []
 
