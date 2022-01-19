@@ -129,6 +129,7 @@ for name, model in zip(names, models):
         # for each grayscale:
         res = []
         for grayscale_cam in grayscales:
+            print("new")
             heatmap = np.uint8(255 * grayscale_cam)
             heatmap = cv.applyColorMap(heatmap, cv.COLORMAP_JET)
             superimposed_img = heatmap * 0.01 + images.squeeze().permute(1, 2, 0).cpu().detach().numpy() * 5
