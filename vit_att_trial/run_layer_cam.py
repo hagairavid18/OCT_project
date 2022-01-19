@@ -22,7 +22,7 @@ from layer_cam import LayerCam,save_class_activation_images
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
 print(dir_path)
-wandb.init(project="test_gradcam")
+wandb.init(project="layer_gradcam")
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
@@ -39,7 +39,7 @@ def_args = {
     "train": ["../../../../data/kermany/train"],
     "val": ["../../../../data/kermany/val"],
     # "test": ["../../../Documents/GitHub/test"],
-    "test": ["../../../data/kermany/test"],
+    "test": ["../../data/kermany/test"],
 }
 
 print("ma")
@@ -54,7 +54,7 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=1,
                                           shuffle=False)
 # names = ["res18", "res50", "res101", "res152"]
-names = ["../res18"]
+names = ["res18"]
 
 # models = [Resnet18(4), Resnet50(4), Resnet101(4), Resnet152(4)]
 models = [Resnet18(4)]
@@ -69,9 +69,9 @@ for name, model in zip(names, models):
     predictions = None
     ground_truth = None
     # Iterate through test dataset
-
-    columns = ["id", "Original Image", "Predicted", "Truth", "GradCAM", 'ScoreCAM', 'GradCAMPlusPlus', 'AblationCAM',
-               'XGradCAM', 'EigenCAM', 'FullGrad']+['layer cam {}'.format(i) for i in range(8)]
+    #
+    columns = ["id", "Original Image", "Predicted", "Truth", "GradCAM", 'GradCAMPlusPlus',
+               'XGradCAM', 'EigenCAM', 'FullGrad','ScoreCAM', 'AblationCAM']+['layer cam {}'.format(i) for i in range(8)]
     # for a in label_names:
     #     columns.append("score_" + a)
     test_dt = wandb.Table(columns=columns)
@@ -103,7 +103,9 @@ for name, model in zip(names, models):
             ground_truth = torch.cat((ground_truth, labels), 0)
 
         target_layers = [model.resnet.layer4[-1]]
-        cams = [GradCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, XGradCAM, EigenCAM, FullGrad]
+        print(model.resnet)
+        #
+        cams = [GradCAM,  GradCAMPlusPlus, XGradCAM, EigenCAM, FullGrad, ScoreCAM, AblationCAM]
         res = []
 
 
@@ -113,25 +115,36 @@ for name, model in zip(names, models):
             # Generate cam mask
             # print(images.shape)
             # print(labels.item())
-            cam = layer_cam.generate_cam(images, labels.item())
+            target_category = labels.item()
+
+            grayscale_cam = layer_cam.generate_cam(images, labels.item())
+
+            # grayscale_cam = cam(input_tensor=images)
+            heatmap = np.uint8(255 * grayscale_cam)
+            heatmap = cv.applyColorMap(heatmap, cv.COLORMAP_JET)
+            superimposed_img = heatmap * 0.01 + images.squeeze().permute(1, 2, 0).cpu().detach().numpy() * 5
+            superimposed_img *= 255.0 / superimposed_img.max()
+            layer_grad.append(superimposed_img / 255)
+
             # print(len(cam))
             # print(len(cam[0]))
             # Save mask
-            transform = transforms.ToPILImage(mode='RGB')
-            # print(images[0].permute(1, 2, 0).shape)
-            # print(transform(images[0].permute(0,2,1)))
-            # print(cam.size())
-            layer_grad.append(save_class_activation_images(transform(images[0]), cam, "layer {}".format(layer)))
-            print('Layer cam completed')
-        print(len(layer_grad))
+            # transform = transforms.ToPILImage(mode='RGB')
+            # # print(images[0].permute(1, 2, 0).shape)
+            # # print(transform(images[0].permute(0,2,1)))
+            # # print(cam.size())
+            # layer_grad.append(save_class_activation_images(transform(images[0]), cam, "layer {}".format(layer)))
+        #     print('Layer cam completed')
+        # print(len(layer_grad))
 
 
         for cam_algo in cams:
+            # print(cam_algo)
             cam = cam_algo(model=model, target_layers=target_layers,
                            use_cuda=True if torch.cuda.is_available() else False)
             target_category = labels.item()
             grayscale_cam = cam(input_tensor=images)
-            print(grayscale_cam.shape)
+            # print(grayscale_cam.shape)
             grayscale_cam = grayscale_cam[0, :]
 
             heatmap = np.uint8(255 * grayscale_cam)
@@ -142,7 +155,7 @@ for name, model in zip(names, models):
         gradcam = res
         row = [i, wandb.Image(images), label_names[predicted.item()], label_names[labels.item()],
                wandb.Image(gradcam[0]), wandb.Image(gradcam[1]), wandb.Image(gradcam[2]), wandb.Image(gradcam[3]),
-               wandb.Image(gradcam[4]), wandb.Image(gradcam[5]), wandb.Image(gradcam[6])]+[wandb.Image(layer_grad[i]) for i in range(len(layer_grad))]
+               wandb.Image(gradcam[4]),wandb.Image(gradcam[5]),wandb.Image(gradcam[6])]+[wandb.Image(layer_grad[i]) for i in range(len(layer_grad))]
         test_dt.add_data(*row)
 
         # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
