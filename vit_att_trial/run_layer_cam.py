@@ -42,6 +42,7 @@ def_args = {
     "test": ["../../data/kermany/test"],
 }
 
+print("ma")
 label_names = [
     "NORMAL",
     "CNV",
