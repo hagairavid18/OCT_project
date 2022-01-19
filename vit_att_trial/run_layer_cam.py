@@ -133,6 +133,7 @@ for name, model in zip(names, models):
             heatmap = cv.applyColorMap(heatmap, cv.COLORMAP_JET)
             superimposed_img = heatmap * 0.01 + images.squeeze().permute(1, 2, 0).cpu().detach().numpy() * 5
             superimposed_img *= 255.0 / superimposed_img.max()
+            print(superimposed_img / 255)
             res.append(superimposed_img / 255)
 
         row = [i, wandb.Image(images), label_names[predicted.item()], label_names[labels.item()]] + [
