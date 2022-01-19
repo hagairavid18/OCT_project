@@ -139,13 +139,14 @@ for name, model in zip(names, models):
 
 
         for cam_algo in cams:
-            # print(cam_algo)
+
+            print(cam_algo)
             cam = cam_algo(model=model, target_layers=target_layers,
                            use_cuda=True if torch.cuda.is_available() else False)
             target_category = labels.item()
             grayscale_cam = cam(input_tensor=images)
             # print(grayscale_cam.shape)
-            grayscale_cam = grayscale_cam[0, :]
+            grayscale_cam =  grayscale_cam[0, :]
 
             heatmap = np.uint8(255 * grayscale_cam)
             heatmap = cv.applyColorMap(heatmap, cv.COLORMAP_JET)
