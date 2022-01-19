@@ -21,7 +21,6 @@ from misc_functions import preprocess_image
 from layer_cam import LayerCam, save_class_activation_images
 import os
 
-from vit_att_trial.guided_backprop import GuidedBackprop
 
 wandb.init(project="layer_gradcam")
 from vit_att_trial.misc_functions import convert_to_grayscale, get_positive_negative_saliency, save_gradient_images
