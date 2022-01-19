@@ -1,0 +1,22 @@
+{
+    "os": "Windows-10-10.0.19042-SP0",
+    "python": "3.9.7",
+    "heartbeatAt": "2022-01-08T13:56:53.923417",
+    "startedAt": "2022-01-08T13:56:50.815198",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "C:/Users/guylu/Academy/MSc_WIZ/BasriLab/OCTransfomer/OCTransformer/breakdown/testings/train.py",
+    "codePath": "breakdown\\testings\\train.py",
+    "git": {
+        "remote": "https://github.com/sgvdan/OCTransformer.git",
+        "commit": "9d6df2b87091082c1e726da2d69138f61effc599"
+    },
+    "email": "guylutsker96@gmail.com",
+    "root": "C:/Users/guylu/Academy/MSc_WIZ/BasriLab/OCTransfomer/OCTransformer",
+    "host": "DESKTOP-0PEER5I",
+    "username": "guylu",
+    "executable": "C:\\Users\\guylu\\anaconda3\\python.exe"
+}

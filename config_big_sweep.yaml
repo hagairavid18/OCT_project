@@ -1,0 +1,55 @@
+method: random
+metric:
+  goal: maximize
+  name: val accuracy
+parameters:
+  batch_size:
+    distribution: int_uniform
+    max: 8
+    min: 2
+  learning_rate:
+    distribution: uniform
+    max: 0.001
+    min: 0
+  mom:
+    distribution: uniform
+    max: 0.9
+    min: 0
+  optimizer:
+    distribution: categorical
+    values:
+      - adam
+      - sgd
+  architecture:
+    distribution: categorical
+    values:
+      - res18
+      - res50
+      - res101
+      - res152
+      - vit_base_patch32_384
+      - vit_large_patch16_224
+      - vit_large_patch16_384
+      - efficientnetv2_s
+      - efficientnetv2_m
+      - efficientnetv2_l
+      - efficientnetv2_xl
+      - convnext_base
+      - convnext_large
+      - convnext_xlarge
+      - convmixer_1536_20
+      - convmixer_768_32
+      - convmixer_1024_20_ks9_p14
+  pretrain:
+    distribution: categorical
+    values:
+      - "true"
+      - "false"
+  weight_decay:
+    distribution: uniform
+    max: 0.16
+    min: 0
+early_terminate:
+  type: hyperband
+  min_iter: 2
+program: train.py

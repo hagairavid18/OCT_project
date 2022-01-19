@@ -1,0 +1,14 @@
+image : 0
+torch.Size([1, 3, 496, 512])
+1
+Traceback (most recent call last):
+  File "run_layer_cam.py", line 103, in <module>
+    cam = layer_cam.generate_cam(images, labels.item())
+  File "/home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/layer_cam.py", line 72, in generate_cam
+    conv_output, model_output = self.extractor.forward_pass(input_image)
+  File "/home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/layer_cam.py", line 52, in forward_pass
+    x = self.model.resnet.fc(x.squeeze(2,3))
+TypeError: squeeze() received an invalid combination of arguments - got (int, int), but expected one of:
+ * ()
+ * (int dim)
+ * (name dim)

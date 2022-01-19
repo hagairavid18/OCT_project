@@ -1,0 +1,164 @@
+2022-01-16 22:55:57,467 INFO    MainThread:50250 [internal.py:wandb_internal():87] W&B internal server running at pid: 50250, started at: 2022-01-16 22:55:57.467213
+2022-01-16 22:55:57,469 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: check_version
+2022-01-16 22:55:57,469 INFO    WriterThread:50250 [datastore.py:open_for_write():77] open: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/run-3qz8iimn.wandb
+2022-01-16 22:55:57,470 DEBUG   SenderThread:50250 [sender.py:send():234] send: header
+2022-01-16 22:55:57,470 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: check_version
+2022-01-16 22:55:57,765 DEBUG   SenderThread:50250 [sender.py:send():234] send: run
+2022-01-16 22:55:58,158 INFO    SenderThread:50250 [dir_watcher.py:__init__():169] watching files in: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files
+2022-01-16 22:55:58,158 INFO    SenderThread:50250 [sender.py:_start_run_threads():804] run started: 3qz8iimn with start time 1642366556
+2022-01-16 22:55:58,158 DEBUG   SenderThread:50250 [sender.py:send():234] send: summary
+2022-01-16 22:55:58,159 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: run_start
+2022-01-16 22:55:58,159 INFO    SenderThread:50250 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-16 22:55:58,992 DEBUG   HandlerThread:50250 [meta.py:__init__():40] meta init
+2022-01-16 22:55:58,992 DEBUG   HandlerThread:50250 [meta.py:__init__():54] meta init done
+2022-01-16 22:55:58,992 DEBUG   HandlerThread:50250 [meta.py:probe():214] probe
+2022-01-16 22:55:59,000 DEBUG   HandlerThread:50250 [meta.py:_setup_git():204] setup git
+2022-01-16 22:55:59,013 DEBUG   HandlerThread:50250 [meta.py:_setup_git():211] setup git done
+2022-01-16 22:55:59,013 DEBUG   HandlerThread:50250 [meta.py:_save_pip():58] save pip
+2022-01-16 22:55:59,013 DEBUG   HandlerThread:50250 [meta.py:_save_pip():72] save pip done
+2022-01-16 22:55:59,014 DEBUG   HandlerThread:50250 [meta.py:_save_conda():79] save conda
+2022-01-16 22:55:59,160 INFO    Thread-8  :50250 [dir_watcher.py:_on_file_created():217] file/dir created: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/conda-environment.yaml
+2022-01-16 22:55:59,160 INFO    Thread-8  :50250 [dir_watcher.py:_on_file_created():217] file/dir created: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/wandb-summary.json
+2022-01-16 22:55:59,160 INFO    Thread-8  :50250 [dir_watcher.py:_on_file_created():217] file/dir created: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/requirements.txt
+2022-01-16 22:55:59,913 DEBUG   HandlerThread:50250 [meta.py:_save_conda():89] save conda done
+2022-01-16 22:55:59,913 DEBUG   HandlerThread:50250 [meta.py:probe():252] probe done
+2022-01-16 22:55:59,916 DEBUG   SenderThread:50250 [sender.py:send():234] send: files
+2022-01-16 22:55:59,916 INFO    SenderThread:50250 [sender.py:_save_file():939] saving file wandb-metadata.json with policy now
+2022-01-16 22:55:59,921 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-16 22:55:59,922 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: stop_status
+2022-01-16 22:56:00,160 INFO    Thread-8  :50250 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/conda-environment.yaml
+2022-01-16 22:56:00,160 INFO    Thread-8  :50250 [dir_watcher.py:_on_file_created():217] file/dir created: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/wandb-metadata.json
+2022-01-16 22:56:00,161 INFO    Thread-8  :50250 [dir_watcher.py:_on_file_created():217] file/dir created: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/output.log
+2022-01-16 22:56:00,976 INFO    Thread-11 :50250 [upload_job.py:push():137] Uploaded file /tmp/tmpno1shgxvwandb/2a6eyfbs-wandb-metadata.json
+2022-01-16 22:56:06,163 INFO    Thread-8  :50250 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/output.log
+2022-01-16 22:56:06,655 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:06,656 DEBUG   SenderThread:50250 [sender.py:send():234] send: telemetry
+2022-01-16 22:56:06,656 DEBUG   SenderThread:50250 [sender.py:send():234] send: exit
+2022-01-16 22:56:06,656 INFO    SenderThread:50250 [sender.py:send_exit():366] handling exit code: 1
+2022-01-16 22:56:06,656 INFO    SenderThread:50250 [sender.py:send_exit():368] handling runtime: 8
+2022-01-16 22:56:06,656 INFO    SenderThread:50250 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-16 22:56:06,656 INFO    SenderThread:50250 [sender.py:send_exit():374] send defer
+2022-01-16 22:56:06,656 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:06,657 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: defer
+2022-01-16 22:56:06,657 INFO    HandlerThread:50250 [handler.py:handle_request_defer():147] handle defer: 0
+2022-01-16 22:56:06,657 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: defer
+2022-01-16 22:56:06,657 INFO    SenderThread:50250 [sender.py:send_request_defer():383] handle sender defer: 0
+2022-01-16 22:56:06,657 INFO    SenderThread:50250 [sender.py:transition_state():387] send defer: 1
+2022-01-16 22:56:06,657 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: defer
+2022-01-16 22:56:06,657 INFO    HandlerThread:50250 [handler.py:handle_request_defer():147] handle defer: 1
+2022-01-16 22:56:06,711 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: defer
+2022-01-16 22:56:06,711 INFO    SenderThread:50250 [sender.py:send_request_defer():383] handle sender defer: 1
+2022-01-16 22:56:06,711 INFO    SenderThread:50250 [sender.py:transition_state():387] send defer: 2
+2022-01-16 22:56:06,711 DEBUG   SenderThread:50250 [sender.py:send():234] send: stats
+2022-01-16 22:56:06,711 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: defer
+2022-01-16 22:56:06,712 INFO    HandlerThread:50250 [handler.py:handle_request_defer():147] handle defer: 2
+2022-01-16 22:56:06,712 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: defer
+2022-01-16 22:56:06,712 INFO    SenderThread:50250 [sender.py:send_request_defer():383] handle sender defer: 2
+2022-01-16 22:56:06,712 INFO    SenderThread:50250 [sender.py:transition_state():387] send defer: 3
+2022-01-16 22:56:06,712 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: defer
+2022-01-16 22:56:06,712 INFO    HandlerThread:50250 [handler.py:handle_request_defer():147] handle defer: 3
+2022-01-16 22:56:06,712 DEBUG   SenderThread:50250 [sender.py:send():234] send: summary
+2022-01-16 22:56:06,712 INFO    SenderThread:50250 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-16 22:56:06,712 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: defer
+2022-01-16 22:56:06,712 INFO    SenderThread:50250 [sender.py:send_request_defer():383] handle sender defer: 3
+2022-01-16 22:56:06,713 INFO    SenderThread:50250 [sender.py:transition_state():387] send defer: 4
+2022-01-16 22:56:06,713 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: defer
+2022-01-16 22:56:06,713 INFO    HandlerThread:50250 [handler.py:handle_request_defer():147] handle defer: 4
+2022-01-16 22:56:06,713 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: defer
+2022-01-16 22:56:06,713 INFO    SenderThread:50250 [sender.py:send_request_defer():383] handle sender defer: 4
+2022-01-16 22:56:06,759 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:07,136 INFO    SenderThread:50250 [sender.py:transition_state():387] send defer: 5
+2022-01-16 22:56:07,137 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:07,137 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: defer
+2022-01-16 22:56:07,137 INFO    HandlerThread:50250 [handler.py:handle_request_defer():147] handle defer: 5
+2022-01-16 22:56:07,137 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: defer
+2022-01-16 22:56:07,137 INFO    SenderThread:50250 [sender.py:send_request_defer():383] handle sender defer: 5
+2022-01-16 22:56:07,137 INFO    SenderThread:50250 [dir_watcher.py:finish():283] shutting down directory watcher
+2022-01-16 22:56:07,164 INFO    SenderThread:50250 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/config.yaml
+2022-01-16 22:56:07,164 INFO    SenderThread:50250 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/wandb-summary.json
+2022-01-16 22:56:07,164 INFO    SenderThread:50250 [dir_watcher.py:_on_file_modified():230] file/dir modified: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/output.log
+2022-01-16 22:56:07,164 INFO    SenderThread:50250 [dir_watcher.py:finish():313] scan: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files
+2022-01-16 22:56:07,164 INFO    SenderThread:50250 [dir_watcher.py:finish():327] scan save: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/conda-environment.yaml conda-environment.yaml
+2022-01-16 22:56:07,165 INFO    SenderThread:50250 [dir_watcher.py:finish():327] scan save: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/wandb-metadata.json wandb-metadata.json
+2022-01-16 22:56:07,165 INFO    SenderThread:50250 [dir_watcher.py:finish():327] scan save: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/config.yaml config.yaml
+2022-01-16 22:56:07,167 INFO    SenderThread:50250 [dir_watcher.py:finish():327] scan save: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/requirements.txt requirements.txt
+2022-01-16 22:56:07,167 INFO    SenderThread:50250 [dir_watcher.py:finish():327] scan save: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/wandb-summary.json wandb-summary.json
+2022-01-16 22:56:07,169 INFO    SenderThread:50250 [dir_watcher.py:finish():327] scan save: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/output.log output.log
+2022-01-16 22:56:07,171 INFO    SenderThread:50250 [sender.py:transition_state():387] send defer: 6
+2022-01-16 22:56:07,173 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: defer
+2022-01-16 22:56:07,175 INFO    HandlerThread:50250 [handler.py:handle_request_defer():147] handle defer: 6
+2022-01-16 22:56:07,176 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: defer
+2022-01-16 22:56:07,176 INFO    SenderThread:50250 [sender.py:send_request_defer():383] handle sender defer: 6
+2022-01-16 22:56:07,176 INFO    SenderThread:50250 [file_pusher.py:finish():177] shutting down file pusher
+2022-01-16 22:56:07,238 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:07,239 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:07,340 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:07,340 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:07,442 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:07,442 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:07,543 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:07,543 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:07,645 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:07,645 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:07,747 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:07,747 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:07,849 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:07,849 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:07,951 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:07,951 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:08,052 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:08,052 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:08,154 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:08,154 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:08,255 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:08,255 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:08,357 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:08,357 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:08,458 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:08,459 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:08,560 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:08,560 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:08,662 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:08,662 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:08,693 INFO    Thread-14 :50250 [upload_job.py:push():137] Uploaded file /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/requirements.txt
+2022-01-16 22:56:08,764 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:08,764 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:08,802 INFO    Thread-12 :50250 [upload_job.py:push():137] Uploaded file /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/conda-environment.yaml
+2022-01-16 22:56:08,807 INFO    Thread-15 :50250 [upload_job.py:push():137] Uploaded file /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/wandb-summary.json
+2022-01-16 22:56:08,819 INFO    Thread-16 :50250 [upload_job.py:push():137] Uploaded file /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/output.log
+2022-01-16 22:56:08,828 INFO    Thread-13 :50250 [upload_job.py:push():137] Uploaded file /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/files/config.yaml
+2022-01-16 22:56:08,865 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:08,865 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:08,967 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:08,967 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:09,029 INFO    Thread-7  :50250 [sender.py:transition_state():387] send defer: 7
+2022-01-16 22:56:09,029 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: defer
+2022-01-16 22:56:09,029 INFO    HandlerThread:50250 [handler.py:handle_request_defer():147] handle defer: 7
+2022-01-16 22:56:09,029 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: defer
+2022-01-16 22:56:09,029 INFO    SenderThread:50250 [sender.py:send_request_defer():383] handle sender defer: 7
+2022-01-16 22:56:09,068 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:09,254 INFO    SenderThread:50250 [sender.py:transition_state():387] send defer: 8
+2022-01-16 22:56:09,254 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:09,255 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: defer
+2022-01-16 22:56:09,255 INFO    HandlerThread:50250 [handler.py:handle_request_defer():147] handle defer: 8
+2022-01-16 22:56:09,255 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: defer
+2022-01-16 22:56:09,255 INFO    SenderThread:50250 [sender.py:send_request_defer():383] handle sender defer: 8
+2022-01-16 22:56:09,255 INFO    SenderThread:50250 [sender.py:transition_state():387] send defer: 9
+2022-01-16 22:56:09,255 DEBUG   SenderThread:50250 [sender.py:send():234] send: final
+2022-01-16 22:56:09,255 DEBUG   SenderThread:50250 [sender.py:send():234] send: footer
+2022-01-16 22:56:09,255 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: defer
+2022-01-16 22:56:09,255 INFO    HandlerThread:50250 [handler.py:handle_request_defer():147] handle defer: 9
+2022-01-16 22:56:09,256 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: defer
+2022-01-16 22:56:09,256 INFO    SenderThread:50250 [sender.py:send_request_defer():383] handle sender defer: 9
+2022-01-16 22:56:09,356 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-16 22:56:09,356 DEBUG   SenderThread:50250 [sender.py:send_request():248] send_request: poll_exit
+2022-01-16 22:56:09,356 INFO    SenderThread:50250 [file_pusher.py:join():182] waiting for file pusher
+2022-01-16 22:56:10,102 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: get_summary
+2022-01-16 22:56:10,102 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: sampled_history
+2022-01-16 22:56:10,102 DEBUG   HandlerThread:50250 [handler.py:handle_request():130] handle_request: shutdown
+2022-01-16 22:56:10,102 INFO    HandlerThread:50250 [handler.py:finish():731] shutting down handler
+2022-01-16 22:56:10,255 INFO    WriterThread:50250 [datastore.py:close():281] close: /home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/wandb/run-20220116_225556-3qz8iimn/run-3qz8iimn.wandb
+2022-01-16 22:56:11,101 INFO    SenderThread:50250 [sender.py:finish():1070] shutting down sender
+2022-01-16 22:56:11,101 INFO    SenderThread:50250 [file_pusher.py:finish():177] shutting down file pusher
+2022-01-16 22:56:11,101 INFO    SenderThread:50250 [file_pusher.py:join():182] waiting for file pusher
+2022-01-16 22:56:11,102 INFO    MainThread:50250 [internal.py:handle_exit():77] Internal process exited

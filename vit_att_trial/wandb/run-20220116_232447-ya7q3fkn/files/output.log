@@ -1,0 +1,13 @@
+image : 0
+torch.Size([1, 3, 496, 512])
+1
+torch.Size([1, 3, 496, 512])
+torch.Size([1, 512])
+Traceback (most recent call last):
+  File "run_layer_cam.py", line 108, in <module>
+    save_class_activation_images(transforms.ToPILImage(images[0]), cam, "output")
+  File "/home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/misc_functions.py", line 60, in save_class_activation_images
+    heatmap, heatmap_on_image = apply_colormap_on_image(org_img, activation_map, 'hsv')
+  File "/home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/misc_functions.py", line 90, in apply_colormap_on_image
+    heatmap_on_image = Image.new("RGBA", org_im.size)
+AttributeError: 'ToPILImage' object has no attribute 'size'
