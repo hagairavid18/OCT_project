@@ -38,8 +38,8 @@ print(device)
 def_args = {
     "train": ["../../../../data/kermany/train"],
     "val": ["../../../../data/kermany/val"],
-    # "test": ["../../../Documents/GitHub/test"],
-    "test": ["../../data/kermany/test"],
+    "test": ["../../../Documents/GitHub/test"],
+    # "test": ["../../data/kermany/test"],
 }
 
 label_names = [
@@ -48,6 +48,21 @@ label_names = [
     "DME",
     "DRUSEN",
 ]
+
+def reshape_transform(tensor, height=31, width=32):
+    result = tensor[:, 1:, :].reshape(tensor.size(0),
+                                      height, width, tensor.size(2))
+
+    # Bring the channels to the first dimension,
+    # like in CNNs.
+    result = result.transpose(2, 3).transpose(1, 2)
+    return result
+def show_cam_on_image(img, mask):
+    heatmap = cv.applyColorMap(np.uint8(255 * mask), cv2.COLORMAP_JET)
+    heatmap = np.float32(heatmap) / 255
+    cam = heatmap * 0.4 + np.float32(img)
+    cam = cam / np.max(cam)
+    return cam
 test_dataset = Kermany_DataSet(def_args['test'][0])
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=1,
@@ -69,8 +84,8 @@ for name, model in zip(names, models):
     ground_truth = None
     # Iterate through test dataset
     #, 'ScoreCAM', 'AblationCAM'
-    columns = ["id", "Original Image", "Predicted", "Truth", "GradCAM", 'GradCAMPlusPlus',
-               'XGradCAM', 'EigenCAM', 'FullGrad', 'ScoreCAM', 'AblationCAM'] + ['layer cam {}'.format(i) for i in
+    columns = ["id", "Original Image", "Predicted", "Truth","curr_target","curr_target_score", "GradCAM", 'GradCAMPlusPlus',
+               'XGradCAM', 'EigenCAM', 'FullGrad'] + ['layer cam {}'.format(i) for i in
                                                       range(
                                                           8)]  # + ['coloured_guided','grey_guided','pos_guided','neg_guided']
     # for a in label_names:
@@ -84,6 +99,7 @@ for name, model in zip(names, models):
         labels = labels.to(device)
         # Forward pass only to get logits/output
         outputs = model(images)
+
 
         # Get predictions from the maximum value
         _, predicted = torch.max(outputs.data, 1)
@@ -106,70 +122,57 @@ for name, model in zip(names, models):
         target_layers = [model.resnet.layer4[-1]]
         # print(model.resnet)
         # , ScoreCAM, AblationCAM
-        cams = [GradCAM, GradCAMPlusPlus, XGradCAM, EigenCAM, FullGrad, ScoreCAM, AblationCAM]
+        cams = [GradCAM, GradCAMPlusPlus, XGradCAM, EigenCAM, FullGrad]
+        for j in range(1):
+            grayscales = []
 
-        grayscales = []
+            # all grad-cam models
+            for cam_algo in cams:
 
-        # all grad-cam models
-        for cam_algo in cams:
-            # print(cam_algo)
-            cam = cam_algo(model=model, target_layers=target_layers,
-                           use_cuda=True if torch.cuda.is_available() else False)
-            target_category = labels.item()
-            grayscale_cam = cam(input_tensor=images)
-            # print(grayscale_cam.shape)
-            grayscales.append(grayscale_cam[0, :])
+                target_categories = [j]
+                targets = [ClassifierOutputTarget(category) for category in target_categories]
+                # targets = [ClassifierOutputTarget(category) for category in target_categories]
+                # print(cam_algo)
+                cam = cam_algo(model=model, target_layers=target_layers,
+                               use_cuda=True if torch.cuda.is_available() else False)
+                target_category = labels.item()
+                grayscale_cam = cam(input_tensor=images,targets=targets)
+                # print(grayscale_cam.shape)
+                grayscales.append(grayscale_cam[0, :])
 
-        # layer cam model
-        for layer in range(8):
-            layer_cam = LayerCam(model, target_layer=layer)
-            target_category = labels.item()
-            grayscales.append(layer_cam.generate_cam(images, labels.item()))
+            # layer cam model
+            for layer in range(8):
+                layer_cam = LayerCam(model, target_layer=layer)
+                target_category = labels.item()
+                grayscales.append(layer_cam.generate_cam(images,target_class= j))
 
-        # for each grayscale:
-        res = []
-        for grayscale_cam in grayscales:
-            print("new")
-            heatmap = np.uint8(255 * grayscale_cam)
-            heatmap = cv.applyColorMap(heatmap, cv.COLORMAP_JET)
-            superimposed_img = heatmap * 0.01 + images.squeeze().permute(1, 2, 0).cpu().detach().numpy() * 5
-            superimposed_img *= 255.0 / superimposed_img.max()
-            print(superimposed_img / 255)
-            res.append(superimposed_img)
+            # for each grayscale:
+            res = []
+            for k,grayscale_cam in enumerate(grayscales):
+                # print("new")
+                heatmap = np.uint8(255 * grayscale_cam)
+                # if j == 0 and k == 0:
+                #     for row in range(0,np.size(heatmap,0),10):
+                #         print(heatmap[row])
+                #         print(grayscale_cam[row])
+                #     print('finishh-----------------------------------------------')
+                heatmap = cv.applyColorMap(heatmap, cv.COLORMAP_JET)
+                # if j==0 and k==0:
+                #     print(heatmap)
+                superimposed_img = heatmap * 0.01 + images.squeeze().permute(1, 2, 0).cpu().detach().numpy() * 5
+                # if j==0 and k==0:
+                #     print(superimposed_img)
+                #
+                #     print(superimposed_img.max())
+                superimposed_img *= (255.0 / superimposed_img.max())
 
-        row = [i, wandb.Image(images), label_names[predicted.item()], label_names[labels.item()]] + [
-            wandb.Image(res[i]) for i in range(len(res))]
+                res.append(superimposed_img)
 
-        # guided_res = []
-        # # Guided backprop
-        # GBP = GuidedBackprop(model)
-        # # Get gradients
-        # target_category = labels.item()
-        # guided_grads = GBP.generate_gradients(images, labels.item())
-        # print(guided_grads.dtype)
-        # print(guided_grads.shape)
-        # file_name_to_export = 'mamama'
-        # save_gradient_images(guided_grads, file_name_to_export + '_Guided_BP_color')
-        # # Convert to grayscale
-        # grayscale_guided_grads = convert_to_grayscale(guided_grads)
-        # # Save grayscale gradients
-        # save_gradient_images(grayscale_guided_grads, file_name_to_export + '_Guided_BP_gray')
-        # # Positive and negative saliency maps
-        # pos_sal, neg_sal = get_positive_negative_saliency(guided_grads)
-        # save_gradient_images(pos_sal, file_name_to_export + '_pos_sal')
-        # save_gradient_images(neg_sal, file_name_to_export + '_neg_sal')
+            row = [i, wandb.Image(images), label_names[predicted.item()], label_names[labels.item()],label_names[j],outputs[0,j]] + [
+                wandb.Image(res[i]) for i in range(len(res))]
 
-        # guided_res.append(guided_grads)
-        # guided_res.append(convert_to_grayscale(guided_grads))
-        # pos_sal, neg_sal = get_positive_negative_saliency(guided_grads)
-        # guided_res+=[pos_sal, neg_sal]
-        # for guided in  guided_res:
-        #     print(guided)
-        #     guided = guided - guided.min()
-        #     guided /= guided.max()
-        #
-        # row +=guided_res
-        test_dt.add_data(*row)
+
+            test_dt.add_data(*row)
 
     # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
     #                                                    y_true=ground_truth, preds=predictions,

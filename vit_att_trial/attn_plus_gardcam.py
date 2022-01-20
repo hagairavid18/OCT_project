@@ -118,7 +118,8 @@ def_args = dot_dict({
 
     "train": ["../../../../data/kermany/train"],
     "val": ["../../../../data/kermany/val"],
-    "test": ["../../../../data/Kermany/test"],
+    "test": ["../../../Documents/GitHub/test"],
+    # "test": ["../../../../data/Kermany/test"],
 })
 
 label_names = [
