@@ -68,7 +68,7 @@ for name, model in zip(names, models):
     predictions = None
     ground_truth = None
     # Iterate through test dataset
-    #
+    #, 'ScoreCAM', 'AblationCAM'
     columns = ["id", "Original Image", "Predicted", "Truth", "GradCAM", 'GradCAMPlusPlus',
                'XGradCAM', 'EigenCAM', 'FullGrad', 'ScoreCAM', 'AblationCAM'] + ['layer cam {}'.format(i) for i in
                                                       range(
@@ -135,7 +135,7 @@ for name, model in zip(names, models):
             superimposed_img = heatmap * 0.01 + images.squeeze().permute(1, 2, 0).cpu().detach().numpy() * 5
             superimposed_img *= 255.0 / superimposed_img.max()
             print(superimposed_img / 255)
-            res.append(superimposed_img / 255)
+            res.append(superimposed_img)
 
         row = [i, wandb.Image(images), label_names[predicted.item()], label_names[labels.item()]] + [
             wandb.Image(res[i]) for i in range(len(res))]
@@ -171,9 +171,9 @@ for name, model in zip(names, models):
         # row +=guided_res
         test_dt.add_data(*row)
 
-        # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
-        #                                                    y_true=ground_truth, preds=predictions,
-        #                                                    class_names=label_names)})
+    # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
+    #                                                    y_true=ground_truth, preds=predictions,
+    #                                                    class_names=label_names)})
 
     accuracy = correct / total
     metrics = {f'Test Accuracy_{name}': accuracy}
