@@ -164,7 +164,7 @@ for name, model in zip(names, models):
             row = [i, wandb.Image(images), label_names[predicted.item()], label_names[labels.item()],label_names[j],outputs[0,j]]+[
                     wandb.Image(gradcam[i]) for i in range(len(gradcam))]
             test_dt.add_data(*row)
-        space_row = [0 for k in row]
+        space_row = [None for k in row]
         test_dt.add_data(*space_row)
 
         # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
