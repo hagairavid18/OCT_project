@@ -19,7 +19,7 @@ from torchvision import transforms as transforms
 import cv2 as cv
 import cv2
 
-from vit_att_trial.layer_cam import LayerCam
+from layer_cam import LayerCam
 
 
 def reshape_transform(tensor, height=31, width=32):
