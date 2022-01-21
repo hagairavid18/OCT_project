@@ -178,11 +178,11 @@ for i, (images, labels) in enumerate(test_loader):
             # print(images.shape)
             target_categories = [j]
             targets = [ClassifierOutputTarget(category) for category in target_categories]
-            cam = cam_algo(model=model_timm, target_layers=target_layers,targets=targets,
+            cam = cam_algo(model=model_timm, target_layers=target_layers,
                            use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
                            )
             target_category = labels.item()
-            grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True)
+            grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True,targets=targets)
             just_grads.append(grayscale_cam[0, :])
             image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
             image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
