@@ -130,7 +130,7 @@ ground_truth = None
 # Iterate through test dataset
 # , 'EigenCAM', 'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenGradCAM',
 columns = ["id", "Original Image", "Predicted", "Logits", "Truth", "Correct", "Attention",
-           "GradCAM"] + ["level {}".format(i) for i in range(3)] + ['Avg']
+           "GradCAM"] + ["level {}".format(i) for i in range(0,len(model_timm.blocks),2)] + ['Avg']
 # for a in label_names:
 #     columns.append("score_" + a)
 test_dt = wandb.Table(columns=columns)
@@ -194,7 +194,7 @@ for i, (images, labels) in enumerate(test_loader):
             vis = np.uint8(255 * vis)
             vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
             res.append(vis)  # superimposed_img / 255)
-        for level in range(0,len(model_timm.blocks),4):
+        for level in range(0,len(model_timm.blocks),2):
             target_layers = [model_timm.blocks[level].norm1]
 
             cam = cam_algo(model=model_timm, target_layers=target_layers,
