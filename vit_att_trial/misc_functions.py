@@ -59,13 +59,13 @@ def save_class_activation_images(org_img, activation_map, file_name):
     # Grayscale activation map
     heatmap, heatmap_on_image = apply_colormap_on_image(org_img, activation_map, 'hsv')
     # Save colored heatmap
-    path_to_file = os.path.join('../results', file_name+'_Cam_Heatmap.png')
+    path_to_file = os.path.join('../results', file_name + '_Cam_Heatmap.png')
     save_image(heatmap, path_to_file)
     # Save heatmap on iamge
-    path_to_file = os.path.join('../results', file_name+'_Cam_On_Image.png')
+    path_to_file = os.path.join('../results', file_name + '_Cam_On_Image.png')
     save_image(heatmap_on_image, path_to_file)
     # SAve grayscale heatmap
-    path_to_file = os.path.join('../results', file_name+'_Cam_Grayscale.png')
+    path_to_file = os.path.join('../results', file_name + '_Cam_Grayscale.png')
     save_image(activation_map, path_to_file)
     return heatmap_on_image
 
