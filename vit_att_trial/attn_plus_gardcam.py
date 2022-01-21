@@ -129,7 +129,7 @@ predictions = None
 ground_truth = None
 # Iterate through test dataset
 # , 'EigenCAM', 'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenGradCAM',
-columns = ["id", "Original Image", "Predicted", "Logits", "Truth", "Correct", "Attention",
+columns = ["id", "Original Image", "Predicted", "Logits", "Truth", "Correct","curr_target", "Attention",
            "GradCAM"] + ["level {}".format(i) for i in range(0,len(model_timm.blocks),2)] + ['Avg']
 # for a in label_names:
 #     columns.append("score_" + a)
@@ -170,7 +170,6 @@ for i, (images, labels) in enumerate(test_loader):
     just_grads = []
     images = images.unsqueeze(0)
     image_transformer_attribution = None
-    print('here1')
     for j in range(4):
         res = []
         attn_diff_cls = []
@@ -217,7 +216,6 @@ for i, (images, labels) in enumerate(test_loader):
         # images = images.squeeze()
         cat, attn_map = generate_visualization(images.squeeze())
 
-        print('here2')
 
         attention = generate_visualization(images.squeeze(), class_index=j)[0]
         avg = attn_map.copy() * 6
@@ -256,7 +254,7 @@ for i, (images, labels) in enumerate(test_loader):
         # , wandb.Image(gradcam[4]), wandb.Image(gradcam[1]), wandb.Image(gradcam[2]),
         #            wandb.Image(gradcam[3]), wandb.Image(gradcam[4]), wandb.Image(gradcam[4])
         row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
-               wandb.Image(attention)] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
+               label_names[j],wandb.Image(attention)] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
         test_dt.add_data(*row)
     # if i % 50 == 0:
     #     wandb.log({f"Grads_{name}_{i}": test_dt})
