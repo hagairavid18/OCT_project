@@ -176,7 +176,9 @@ for i, (images, labels) in enumerate(test_loader):
     for j in range(4):
         for cam_algo in cams:
             # print(images.shape)
-            cam = cam_algo(model=model_timm, target_layers=target_layers,
+            target_categories = [j]
+            targets = [ClassifierOutputTarget(category) for category in target_categories]
+            cam = cam_algo(model=model_timm, target_layers=target_layers,targets=targets,
                            use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
                            )
             target_category = labels.item()
