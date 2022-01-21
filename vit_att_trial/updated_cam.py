@@ -88,7 +88,7 @@ for name, model in zip(names, models):
     # Iterate through test dataset
     # 'ScoreCAM','AblationCAM',
     columns = ["id", "Original Image", "Predicted", "Truth","curr_target","curr_target_score", "GradCAM",  'GradCAMPlusPlus',
-               'XGradCAM', 'EigenCAM', 'FullGrad','ScoreCAM','AblationCAM']+ ['layer cam {}'.format(i) for i in
+               'XGradCAM', 'EigenCAM', 'FullGrad','AblationCAM']+ ['layer cam {}'.format(i) for i in
                                                       range(
                                                           8)]
     # for a in label_names:
@@ -123,7 +123,7 @@ for name, model in zip(names, models):
 
         target_layers = [model.resnet.layer4[-1]]
         #, ScoreCAM, AblationCAM
-        cams = [GradCAM, GradCAMPlusPlus, XGradCAM, EigenCAM, FullGrad, ScoreCAM, AblationCAM]
+        cams = [GradCAM, GradCAMPlusPlus, XGradCAM, EigenCAM, FullGrad, AblationCAM]
         for j in range(4):
             res = []
             just_grads = []
