@@ -128,9 +128,9 @@ total_arr = [0.0] * 10
 predictions = None
 ground_truth = None
 # Iterate through test dataset
-# , 'EigenCAM', 'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenGradCAM',
+#  'XGradCAM', 'EigenGradCAM',
 columns = ["id", "Original Image", "Predicted", "Logits", "Truth", "Correct","curr_target", "Attention",
-           "GradCAM"] + ["level {}".format(i) for i in range(0,len(model_timm.blocks),2)] + ['Avg']
+           "GradCAM",'EigenCAM', 'ScoreCAM', 'GradCAMPlusPlus'] + ["level {}".format(i) for i in range(0,len(model_timm.blocks),2)] + ['Avg']
 # for a in label_names:
 #     columns.append("score_" + a)
 test_dt = wandb.Table(columns=columns)
@@ -166,11 +166,12 @@ for i, (images, labels) in enumerate(test_loader):
 
     target_layers = [model_timm.blocks[-1].norm1]
     # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
-    cams = [GradCAM]
-    just_grads = []
+    cams = [GradCAM, ScoreCAM, EigenCAM, GradCAMPlusPlus]
+
     images = images.unsqueeze(0)
     image_transformer_attribution = None
     for j in range(4):
+        just_grads = []
         res = []
         attn_diff_cls = []
 
