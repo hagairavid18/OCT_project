@@ -257,6 +257,8 @@ for i, (images, labels) in enumerate(test_loader):
         row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
                label_names[k],wandb.Image(attention)] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
         test_dt.add_data(*row)
+    space_row = [None for _ in row]
+    test_dt.add_data(*space_row)
     # if i % 50 == 0:
     #     wandb.log({f"Grads_{name}_{i}": test_dt})
     # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
