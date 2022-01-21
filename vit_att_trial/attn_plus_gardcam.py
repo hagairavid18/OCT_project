@@ -229,10 +229,11 @@ for i, (images, labels) in enumerate(test_loader):
     img_buf = io.BytesIO()
     plt.savefig(img_buf, format='png')
     im = Image.open(img_buf)
-    #, wandb.Image(gradcam[2]),wandb.Image(gradcam[3]), wandb.Image(gradcam[4]), wandb.Image(gradcam[4]),
+    # , wandb.Image(gradcam[4]), wandb.Image(gradcam[1]), wandb.Image(gradcam[2]),
+    #            wandb.Image(gradcam[3]), wandb.Image(gradcam[4]), wandb.Image(gradcam[4])
     row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
            wandb.Image(attn_diff_cls[0]), wandb.Image(attn_diff_cls[1]), wandb.Image(attn_diff_cls[2]),
-           wandb.Image(attn_diff_cls[3]), wandb.Image(gradcam[4]), wandb.Image(gradcam[1]), wandb.Image(avg)]
+           wandb.Image(attn_diff_cls[3]), wandb.Image(gradcam[1]), wandb.Image(avg)]
     # test_dt.add_data(*row)
     # if i % 50 == 0:
     #     wandb.log({f"Grads_{name}_{i}": test_dt})
