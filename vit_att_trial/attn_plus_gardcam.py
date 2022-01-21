@@ -134,7 +134,7 @@ columns = ["id", "Original Image", "Predicted", "Logits", "Truth", "Correct", "A
            "Attention DRUSEN", "GradCAM"] + ["ma" for i in range(5)] + ['Avg']
 # for a in label_names:
 #     columns.append("score_" + a)
-# test_dt = wandb.Table(columns=columns)
+test_dt = wandb.Table(columns=columns)
 
 for i, (images, labels) in enumerate(test_loader):
     if i % 10 == 0:
