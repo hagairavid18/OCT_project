@@ -192,12 +192,12 @@ for i, (images, labels) in enumerate(test_loader):
             vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
             res.append(vis)  # superimposed_img / 255)
         gradcam = res
-        images = images.squeeze()
-        cat, attn_map = generate_visualization(images)
+        # images = images.squeeze()
+        cat, attn_map = generate_visualization(images.squeeze())
         attn_diff_cls = []
         print('here2')
 
-        attention = generate_visualization(images, class_index=j)[0]
+        attention = generate_visualization(images.squeeze(), class_index=j)[0]
         avg = attn_map.copy() * 6
         # print(avg.max())
         for j, grad in enumerate(just_grads):
