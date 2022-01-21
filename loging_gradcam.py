@@ -1,4 +1,4 @@
-from data import Kermany_DataSet
+from data_for_tests import Kermany_DataSet
 import timm
 import wandb
 import os
@@ -16,6 +16,27 @@ import torch
 import matplotlib.pyplot as plt
 from torchvision import transforms as transforms
 import cv2 as cv
+import cv2
+
+
+def reshape_transform(tensor, height=31, width=32):
+    result = tensor[:, 1:, :].reshape(tensor.size(0),
+                                      height, width, tensor.size(2))
+
+    # Bring the channels to the first dimension,
+    # like in CNNs.
+    result = result.transpose(2, 3).transpose(1, 2)
+    return result
+
+
+# create heatmap from mask on image
+def show_cam_on_image(img, mask):
+    heatmap = cv2.applyColorMap(np.uint8(255 * mask), cv2.COLORMAP_JET)
+    heatmap = np.float32(heatmap) / 255
+    cam = heatmap * 0.4 + np.float32(img)
+    cam = cam / np.max(cam)
+    return cam
+
 
 wandb.init(project="test_gradcam")
 
@@ -93,18 +114,22 @@ for name, model in zip(names, models):
         target_layers = [model.resnet.layer4[-1]]
         cams = [GradCAM, ScoreCAM, GradCAMPlusPlus, AblationCAM, XGradCAM, EigenCAM, FullGrad]
         res = []
+        just_grads = []
         for cam_algo in cams:
+            # print(images.shape)
             cam = cam_algo(model=model, target_layers=target_layers,
-                           use_cuda=True if torch.cuda.is_available() else False)
+                           use_cuda=True if torch.cuda.is_available() else False,
+                           )
             target_category = labels.item()
-            grayscale_cam = cam(input_tensor=images)
-            grayscale_cam = grayscale_cam[0, :]
-
-            heatmap = np.uint8(255 * grayscale_cam)
-            heatmap = cv.applyColorMap(heatmap, cv.COLORMAP_JET)
-            superimposed_img = heatmap * 0.01 + images.squeeze().permute(1, 2, 0).cpu().detach().numpy() * 5
-            superimposed_img *= 255.0 / superimposed_img.max()
-            res.append(superimposed_img / 255)
+            grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True)
+            just_grads.append(grayscale_cam[0, :])
+            image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
+            image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
+                    image_transformer_attribution.max() - image_transformer_attribution.min())
+            vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[0, :])
+            vis = np.uint8(255 * vis)
+            vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+            res.append(vis)  # superimposed_img / 255)
         gradcam = res
         row = [i, wandb.Image(images), label_names[predicted.item()], label_names[labels.item()],
                wandb.Image(gradcam[0]), wandb.Image(gradcam[1]), wandb.Image(gradcam[2]), wandb.Image(gradcam[3]),

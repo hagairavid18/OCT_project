@@ -35,7 +35,7 @@ class dino(torch.nn.Module):
         )
 
     def forward(self, x):
-        print(f'input {x.shape}')
+        # print(f'input {x.shape}')
         x = self.learner(x)
-        print(f'output {x.shape}')
+        # print(f'output {x.shape}')
         return x
