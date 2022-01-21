@@ -1,0 +1,57 @@
+cpu
+image : 0
+Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
+[[30 30 30 ... 23 23 23]
+ [30 30 30 ... 23 23 23]
+ [30 30 30 ... 23 23 23]
+ ...
+ [53 53 53 ... 67 67 67]
+ [53 53 53 ... 67 67 67]
+ [53 53 53 ... 67 67 67]]
+finishh-----------------------------------------------
+[[[248   0   0]
+  [248   0   0]
+  [248   0   0]
+  ...
+  [220   0   0]
+  [220   0   0]
+  [220   0   0]]
+ [[248   0   0]
+  [248   0   0]
+  [248   0   0]
+  ...
+  [220   0   0]
+  [220   0   0]
+  [220   0   0]]
+ [[248   0   0]
+  [248   0   0]
+  [248   0   0]
+  ...
+  [220   0   0]
+  [220   0   0]
+  [220   0   0]]
+ ...
+ [[255  84   0]
+  [255  84   0]
+  [255  84   0]
+  ...
+  [255 140   0]
+  [255 140   0]
+  [255 140   0]]
+ [[255  84   0]
+  [255  84   0]
+  [255  84   0]
+  ...
+  [255 140   0]
+  [255 140   0]
+  [255 140   0]]
+ [[255  84   0]
+  [255  84   0]
+  [255  84   0]
+  ...
+  [255 140   0]
+  [255 140   0]
+  [255 140   0]]]
+Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
+Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
+Warning: target_layers is ignored in FullGrad. All bias layers will be used instead

@@ -1,0 +1,47 @@
+2022-01-20 11:33:09,979 INFO    MainThread:3740 [internal.py:wandb_internal():90] W&B internal server running at pid: 3740, started at: 2022-01-20 11:33:09.978606
+2022-01-20 11:33:09,981 INFO    WriterThread:3740 [datastore.py:open_for_write():77] open: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\run-383ieu3r.wandb
+2022-01-20 11:33:09,982 DEBUG   HandlerThread:3740 [handler.py:handle_request():130] handle_request: check_version
+2022-01-20 11:33:09,985 DEBUG   SenderThread:3740 [sender.py:send():234] send: header
+2022-01-20 11:33:09,985 DEBUG   SenderThread:3740 [sender.py:send_request():248] send_request: check_version
+2022-01-20 11:33:10,371 DEBUG   SenderThread:3740 [sender.py:send():234] send: run
+2022-01-20 11:33:10,865 INFO    SenderThread:3740 [dir_watcher.py:__init__():169] watching files in: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files
+2022-01-20 11:33:10,866 INFO    SenderThread:3740 [sender.py:_start_run_threads():807] run started: 383ieu3r with start time 1642671188
+2022-01-20 11:33:10,866 DEBUG   SenderThread:3740 [sender.py:send():234] send: summary
+2022-01-20 11:33:10,866 DEBUG   HandlerThread:3740 [handler.py:handle_request():130] handle_request: run_start
+2022-01-20 11:33:10,870 INFO    SenderThread:3740 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-20 11:33:11,280 DEBUG   HandlerThread:3740 [meta.py:__init__():40] meta init
+2022-01-20 11:33:11,281 DEBUG   HandlerThread:3740 [meta.py:__init__():54] meta init done
+2022-01-20 11:33:11,281 DEBUG   HandlerThread:3740 [meta.py:probe():214] probe
+2022-01-20 11:33:11,360 DEBUG   HandlerThread:3740 [meta.py:_setup_git():204] setup git
+2022-01-20 11:33:11,483 DEBUG   HandlerThread:3740 [meta.py:_setup_git():211] setup git done
+2022-01-20 11:33:11,483 DEBUG   HandlerThread:3740 [meta.py:_save_pip():58] save pip
+2022-01-20 11:33:11,485 DEBUG   HandlerThread:3740 [meta.py:_save_pip():72] save pip done
+2022-01-20 11:33:11,485 DEBUG   HandlerThread:3740 [meta.py:probe():252] probe done
+2022-01-20 11:33:11,497 DEBUG   SenderThread:3740 [sender.py:send():234] send: files
+2022-01-20 11:33:11,497 INFO    SenderThread:3740 [sender.py:_save_file():939] saving file wandb-metadata.json with policy now
+2022-01-20 11:33:11,509 DEBUG   HandlerThread:3740 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 11:33:11,509 DEBUG   SenderThread:3740 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 11:33:11,870 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\wandb-metadata.json
+2022-01-20 11:33:11,871 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\output.log
+2022-01-20 11:33:11,871 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\requirements.txt
+2022-01-20 11:33:11,872 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\wandb-summary.json
+2022-01-20 11:33:12,805 INFO    Thread-17 :3740 [upload_job.py:push():137] Uploaded file C:\Users\USER\AppData\Local\Temp\tmp6glzw1q8wandb\14qrmk76-wandb-metadata.json
+2022-01-20 11:33:13,872 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\output.log
+2022-01-20 11:33:17,881 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\output.log
+2022-01-20 11:33:26,916 DEBUG   HandlerThread:3740 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 11:33:26,917 DEBUG   SenderThread:3740 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 11:33:28,916 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\output.log
+2022-01-20 11:33:30,928 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\output.log
+2022-01-20 11:33:32,377 DEBUG   SenderThread:3740 [sender.py:send():234] send: history
+2022-01-20 11:33:32,378 DEBUG   SenderThread:3740 [sender.py:send():234] send: summary
+2022-01-20 11:33:32,380 INFO    SenderThread:3740 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-20 11:33:32,942 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\wandb-summary.json
+2022-01-20 11:33:32,957 DEBUG   HandlerThread:3740 [handler.py:handle_request():130] handle_request: log_artifact
+2022-01-20 11:33:32,958 DEBUG   SenderThread:3740 [sender.py:send_request():248] send_request: log_artifact
+2022-01-20 11:33:33,953 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\media\table\Grads_res18_1_2e3a22766dcc515ff8d3.table.json
+2022-01-20 11:33:33,953 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\media
+2022-01-20 11:33:33,954 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\media\table
+2022-01-20 11:33:34,995 DEBUG   HandlerThread:3740 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 11:33:35,975 INFO    Thread-12 :3740 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_113308-383ieu3r\files\output.log
+2022-01-20 11:33:36,841 INFO    Thread-19 :3740 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\4a\d3ff4f6c130b5fe01640c49a055253
+2022-01-20 11:33:38,436 INFO    Thread-23 :3740 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\52\b6ec1e535ab9cfba70140c8d0d421b

@@ -1,0 +1,12 @@
+image : 0
+torch.Size([1, 3, 496, 512])
+1
+torch.Size([1, 512])
+Traceback (most recent call last):
+  File "run_layer_cam.py", line 103, in <module>
+    cam = layer_cam.generate_cam(images, labels.item())
+  File "/home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/layer_cam.py", line 73, in generate_cam
+    conv_output, model_output = self.extractor.forward_pass(input_image)
+  File "/home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/layer_cam.py", line 53, in forward_pass
+    x = self.model.resnet.fc(x.squeeze(2).squeeze(2))
+IndexError: Dimension out of range (expected to be in range of [-2, 1], but got 2)

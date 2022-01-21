@@ -1,0 +1,151 @@
+2022-01-20 09:43:52,505 INFO    MainThread:8024 [internal.py:wandb_internal():90] W&B internal server running at pid: 8024, started at: 2022-01-20 09:43:52.504014
+2022-01-20 09:43:52,508 INFO    WriterThread:8024 [datastore.py:open_for_write():77] open: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\run-1gkji87x.wandb
+2022-01-20 09:43:52,509 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: check_version
+2022-01-20 09:43:52,513 DEBUG   SenderThread:8024 [sender.py:send():234] send: header
+2022-01-20 09:43:52,513 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: check_version
+2022-01-20 09:43:57,530 DEBUG   SenderThread:8024 [sender.py:send():234] send: run
+2022-01-20 09:43:58,085 INFO    SenderThread:8024 [dir_watcher.py:__init__():169] watching files in: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files
+2022-01-20 09:43:58,086 INFO    SenderThread:8024 [sender.py:_start_run_threads():807] run started: 1gkji87x with start time 1642664631
+2022-01-20 09:43:58,086 DEBUG   SenderThread:8024 [sender.py:send():234] send: summary
+2022-01-20 09:43:58,088 INFO    SenderThread:8024 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-20 09:43:58,089 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: run_start
+2022-01-20 09:43:58,107 DEBUG   HandlerThread:8024 [meta.py:__init__():40] meta init
+2022-01-20 09:43:58,107 DEBUG   HandlerThread:8024 [meta.py:__init__():54] meta init done
+2022-01-20 09:43:58,107 DEBUG   HandlerThread:8024 [meta.py:probe():214] probe
+2022-01-20 09:43:58,176 DEBUG   HandlerThread:8024 [meta.py:_setup_git():204] setup git
+2022-01-20 09:43:58,314 DEBUG   HandlerThread:8024 [meta.py:_setup_git():211] setup git done
+2022-01-20 09:43:58,314 DEBUG   HandlerThread:8024 [meta.py:_save_pip():58] save pip
+2022-01-20 09:43:58,315 DEBUG   HandlerThread:8024 [meta.py:_save_pip():72] save pip done
+2022-01-20 09:43:58,316 DEBUG   HandlerThread:8024 [meta.py:probe():252] probe done
+2022-01-20 09:43:58,326 DEBUG   SenderThread:8024 [sender.py:send():234] send: files
+2022-01-20 09:43:58,326 INFO    SenderThread:8024 [sender.py:_save_file():939] saving file wandb-metadata.json with policy now
+2022-01-20 09:43:58,339 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 09:43:58,339 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 09:43:59,101 INFO    Thread-12 :8024 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\wandb-metadata.json
+2022-01-20 09:43:59,102 INFO    Thread-12 :8024 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\wandb-summary.json
+2022-01-20 09:43:59,103 INFO    Thread-12 :8024 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\output.log
+2022-01-20 09:43:59,104 INFO    Thread-12 :8024 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\requirements.txt
+2022-01-20 09:43:59,381 DEBUG   SenderThread:8024 [sender.py:send():234] send: telemetry
+2022-01-20 09:43:59,383 DEBUG   SenderThread:8024 [sender.py:send():234] send: exit
+2022-01-20 09:43:59,383 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:43:59,384 INFO    SenderThread:8024 [sender.py:send_exit():366] handling exit code: 1
+2022-01-20 09:43:59,385 INFO    SenderThread:8024 [sender.py:send_exit():368] handling runtime: 1
+2022-01-20 09:43:59,386 INFO    SenderThread:8024 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-20 09:43:59,388 INFO    SenderThread:8024 [sender.py:send_exit():374] send defer
+2022-01-20 09:43:59,388 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:43:59,389 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 09:43:59,389 INFO    HandlerThread:8024 [handler.py:handle_request_defer():147] handle defer: 0
+2022-01-20 09:43:59,390 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: defer
+2022-01-20 09:43:59,390 INFO    SenderThread:8024 [sender.py:send_request_defer():383] handle sender defer: 0
+2022-01-20 09:43:59,390 INFO    SenderThread:8024 [sender.py:transition_state():387] send defer: 1
+2022-01-20 09:43:59,391 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 09:43:59,391 INFO    HandlerThread:8024 [handler.py:handle_request_defer():147] handle defer: 1
+2022-01-20 09:43:59,500 INFO    Thread-17 :8024 [upload_job.py:push():137] Uploaded file C:\Users\USER\AppData\Local\Temp\tmpitovld3rwandb\3mmn4jiz-wandb-metadata.json
+2022-01-20 09:43:59,530 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: defer
+2022-01-20 09:43:59,530 INFO    SenderThread:8024 [sender.py:send_request_defer():383] handle sender defer: 1
+2022-01-20 09:43:59,531 INFO    SenderThread:8024 [sender.py:transition_state():387] send defer: 2
+2022-01-20 09:43:59,531 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:43:59,531 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:43:59,531 DEBUG   SenderThread:8024 [sender.py:send():234] send: stats
+2022-01-20 09:43:59,532 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 09:43:59,532 INFO    HandlerThread:8024 [handler.py:handle_request_defer():147] handle defer: 2
+2022-01-20 09:43:59,532 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: defer
+2022-01-20 09:43:59,533 INFO    SenderThread:8024 [sender.py:send_request_defer():383] handle sender defer: 2
+2022-01-20 09:43:59,533 INFO    SenderThread:8024 [sender.py:transition_state():387] send defer: 3
+2022-01-20 09:43:59,533 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 09:43:59,533 INFO    HandlerThread:8024 [handler.py:handle_request_defer():147] handle defer: 3
+2022-01-20 09:43:59,534 DEBUG   SenderThread:8024 [sender.py:send():234] send: summary
+2022-01-20 09:43:59,535 INFO    SenderThread:8024 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-20 09:43:59,535 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: defer
+2022-01-20 09:43:59,535 INFO    SenderThread:8024 [sender.py:send_request_defer():383] handle sender defer: 3
+2022-01-20 09:43:59,535 INFO    SenderThread:8024 [sender.py:transition_state():387] send defer: 4
+2022-01-20 09:43:59,536 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 09:43:59,536 INFO    HandlerThread:8024 [handler.py:handle_request_defer():147] handle defer: 4
+2022-01-20 09:43:59,536 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: defer
+2022-01-20 09:43:59,536 INFO    SenderThread:8024 [sender.py:send_request_defer():383] handle sender defer: 4
+2022-01-20 09:43:59,636 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:00,035 INFO    SenderThread:8024 [sender.py:transition_state():387] send defer: 5
+2022-01-20 09:44:00,035 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:00,035 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 09:44:00,036 INFO    HandlerThread:8024 [handler.py:handle_request_defer():147] handle defer: 5
+2022-01-20 09:44:00,036 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: defer
+2022-01-20 09:44:00,036 INFO    SenderThread:8024 [sender.py:send_request_defer():383] handle sender defer: 5
+2022-01-20 09:44:00,036 INFO    SenderThread:8024 [dir_watcher.py:finish():283] shutting down directory watcher
+2022-01-20 09:44:00,107 INFO    SenderThread:8024 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\wandb-summary.json
+2022-01-20 09:44:00,107 INFO    SenderThread:8024 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\output.log
+2022-01-20 09:44:00,107 INFO    SenderThread:8024 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\config.yaml
+2022-01-20 09:44:00,108 INFO    SenderThread:8024 [dir_watcher.py:finish():313] scan: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files
+2022-01-20 09:44:00,108 INFO    SenderThread:8024 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\config.yaml config.yaml
+2022-01-20 09:44:00,109 INFO    SenderThread:8024 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\output.log output.log
+2022-01-20 09:44:00,110 INFO    SenderThread:8024 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\requirements.txt requirements.txt
+2022-01-20 09:44:00,117 INFO    SenderThread:8024 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\wandb-metadata.json wandb-metadata.json
+2022-01-20 09:44:00,117 INFO    SenderThread:8024 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\wandb-summary.json wandb-summary.json
+2022-01-20 09:44:00,119 INFO    SenderThread:8024 [sender.py:transition_state():387] send defer: 6
+2022-01-20 09:44:00,124 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 09:44:00,124 INFO    HandlerThread:8024 [handler.py:handle_request_defer():147] handle defer: 6
+2022-01-20 09:44:00,124 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: defer
+2022-01-20 09:44:00,124 INFO    SenderThread:8024 [sender.py:send_request_defer():383] handle sender defer: 6
+2022-01-20 09:44:00,124 INFO    SenderThread:8024 [file_pusher.py:finish():177] shutting down file pusher
+2022-01-20 09:44:00,152 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:00,153 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:00,263 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:00,264 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:00,376 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:00,378 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:00,485 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:00,486 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:00,595 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:00,596 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:00,705 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:00,706 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:00,819 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:00,820 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:00,925 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:00,926 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:01,034 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:01,034 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:01,141 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:01,141 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:01,251 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:01,251 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:01,280 INFO    Thread-20 :8024 [upload_job.py:push():137] Uploaded file C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\requirements.txt
+2022-01-20 09:44:01,288 INFO    Thread-19 :8024 [upload_job.py:push():137] Uploaded file C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\output.log
+2022-01-20 09:44:01,291 INFO    Thread-21 :8024 [upload_job.py:push():137] Uploaded file C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\wandb-summary.json
+2022-01-20 09:44:01,359 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:01,360 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:01,365 INFO    Thread-18 :8024 [upload_job.py:push():137] Uploaded file C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\files\config.yaml
+2022-01-20 09:44:01,467 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:01,467 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:01,577 INFO    Thread-11 :8024 [sender.py:transition_state():387] send defer: 7
+2022-01-20 09:44:01,578 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:01,578 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:01,579 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 09:44:01,579 INFO    HandlerThread:8024 [handler.py:handle_request_defer():147] handle defer: 7
+2022-01-20 09:44:01,579 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: defer
+2022-01-20 09:44:01,580 INFO    SenderThread:8024 [sender.py:send_request_defer():383] handle sender defer: 7
+2022-01-20 09:44:01,688 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:02,189 INFO    SenderThread:8024 [sender.py:transition_state():387] send defer: 8
+2022-01-20 09:44:02,190 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:02,191 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 09:44:02,192 INFO    HandlerThread:8024 [handler.py:handle_request_defer():147] handle defer: 8
+2022-01-20 09:44:02,192 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: defer
+2022-01-20 09:44:02,193 INFO    SenderThread:8024 [sender.py:send_request_defer():383] handle sender defer: 8
+2022-01-20 09:44:02,194 INFO    SenderThread:8024 [sender.py:transition_state():387] send defer: 9
+2022-01-20 09:44:02,196 DEBUG   SenderThread:8024 [sender.py:send():234] send: final
+2022-01-20 09:44:02,197 DEBUG   SenderThread:8024 [sender.py:send():234] send: footer
+2022-01-20 09:44:02,197 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 09:44:02,199 INFO    HandlerThread:8024 [handler.py:handle_request_defer():147] handle defer: 9
+2022-01-20 09:44:02,199 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: defer
+2022-01-20 09:44:02,199 INFO    SenderThread:8024 [sender.py:send_request_defer():383] handle sender defer: 9
+2022-01-20 09:44:02,298 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 09:44:02,299 DEBUG   SenderThread:8024 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 09:44:02,299 INFO    SenderThread:8024 [file_pusher.py:join():182] waiting for file pusher
+2022-01-20 09:44:03,256 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: get_summary
+2022-01-20 09:44:03,258 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: sampled_history
+2022-01-20 09:44:03,261 DEBUG   HandlerThread:8024 [handler.py:handle_request():130] handle_request: shutdown
+2022-01-20 09:44:03,261 INFO    HandlerThread:8024 [handler.py:finish():731] shutting down handler
+2022-01-20 09:44:04,211 INFO    WriterThread:8024 [datastore.py:close():281] close: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_094350-1gkji87x\run-1gkji87x.wandb
+2022-01-20 09:44:04,257 INFO    SenderThread:8024 [sender.py:finish():1070] shutting down sender
+2022-01-20 09:44:04,257 INFO    SenderThread:8024 [file_pusher.py:finish():177] shutting down file pusher
+2022-01-20 09:44:04,257 INFO    SenderThread:8024 [file_pusher.py:join():182] waiting for file pusher
+2022-01-20 09:44:04,268 INFO    MainThread:8024 [internal.py:handle_exit():77] Internal process exited

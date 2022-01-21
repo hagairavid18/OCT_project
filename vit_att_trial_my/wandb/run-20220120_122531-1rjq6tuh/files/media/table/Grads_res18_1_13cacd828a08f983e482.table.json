@@ -1,0 +1,1 @@
+{"columns": ["id", "Original Image", "Predicted", "Truth", "GradCAM", "GradCAMPlusPlus", "XGradCAM", "EigenCAM", "FullGrad"], "data": [[0, "Image", "CNV", "CNV", "Image", "Image", "Image", "Image", "Image"]]}

@@ -1,0 +1,8 @@
+cpu
+image : 0
+Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
+Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
+Traceback (most recent call last):
+  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/run_layer_cam.py", line 145, in <module>
+    row = [i, wandb.Image(images), label_names[predicted.item()], label_names[labels.item()],label_names[j],outputs[j]] + [
+IndexError: index 1 is out of bounds for dimension 0 with size 1

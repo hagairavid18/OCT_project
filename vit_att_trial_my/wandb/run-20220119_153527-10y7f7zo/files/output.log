@@ -1,0 +1,6 @@
+cpu
+ma
+Traceback (most recent call last):
+  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/run_layer_cam.py", line 74, in <module>
+    'XGradCAM', 'EigenCAM', 'FullGrad']+['layer cam {}'.format(i) for i in range(8)].drop('ScoreCam')
+AttributeError: 'list' object has no attribute 'drop'

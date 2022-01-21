@@ -1,0 +1,17 @@
+image : 0
+torch.Size([1, 3, 496, 512])
+1
+torch.Size([1, 3, 496, 512])
+torch.Size([1, 4])
+Traceback (most recent call last):
+  File "run_layer_cam.py", line 103, in <module>
+    cam = layer_cam.generate_cam(images, labels.item())
+  File "/home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/layer_cam.py", line 83, in generate_cam
+    model_output.backward(gradient=one_hot_output, retain_graph=True)
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/_tensor.py", line 307, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/autograd/__init__.py", line 150, in backward
+    grad_tensors_ = _make_grads(tensors, grad_tensors_)
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/autograd/__init__.py", line 34, in _make_grads
+    raise RuntimeError("Mismatch in shape: grad_output["
+RuntimeError: Mismatch in shape: grad_output[0] has a shape of torch.Size([1, 1, 4]) and output[0] has a shape of torch.Size([4]).

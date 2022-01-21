@@ -1,0 +1,87 @@
+0
+image : 0
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.23it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/nn/functional.py:3631: UserWarning: Default upsampling behavior when mode=bilinear is changed to align_corners=False since 0.4.0. Please specify align_corners=True if the old behavior is desired. See the documentation of nn.Upsample for details.
+  warnings.warn(

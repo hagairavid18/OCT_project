@@ -1,0 +1,12 @@
+cpu
+image : 0
+Traceback (most recent call last):
+  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/run_layer_cam.py", line 120, in <module>
+    grayscale_cam = cam(input_tensor=images,targets=[i])
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\pytorch_grad_cam\base_cam.py", line 185, in __call__
+    targets, eigen_smooth)
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\pytorch_grad_cam\base_cam.py", line 81, in forward
+    loss = sum([target(output) for target, output in zip(targets, outputs)])
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\pytorch_grad_cam\base_cam.py", line 81, in <listcomp>
+    loss = sum([target(output) for target, output in zip(targets, outputs)])
+TypeError: 'int' object is not callable

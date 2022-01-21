@@ -1,0 +1,53 @@
+
+cpu
+image : 0
+63488
+torch.Size([1, 3, 496, 512])
+253952
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x261050CD160>
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x261050CD518>
+Layer cam completed
+63488
+torch.Size([1, 3, 496, 512])
+253952
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x261050CD940>
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x26109011C18>
+Layer cam completed
+63488
+torch.Size([1, 3, 496, 512])
+253952
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x261050CD4E0>
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x26109011FD0>
+Layer cam completed
+15872
+torch.Size([1, 3, 496, 512])
+253952
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x261050CD390>
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x26109032080>
+Layer cam completed
+15872
+torch.Size([1, 3, 496, 512])
+253952
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x261050CD0B8>
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x261090320B8>
+Layer cam completed
+3968
+torch.Size([1, 3, 496, 512])
+253952
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x26109011F98>
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x2610903D128>
+Layer cam completed
+992
+torch.Size([1, 3, 496, 512])
+253952
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x261050CD438>
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x261090421D0>
+Layer cam completed
+256
+torch.Size([1, 3, 496, 512])
+253952
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x261050B42B0>
+<PIL.Image.Image image mode=RGBA size=512x496 at 0x26109048240>
+Layer cam completed
+8
+(1, 496, 512)

@@ -1,0 +1,139 @@
+cpu
+ma
+image : 0
+63488
+torch.Size([1, 3, 496, 512])
+253952
+here
+(496, 512)
+Layer cam completed
+63488
+torch.Size([1, 3, 496, 512])
+253952
+here
+(496, 512)
+Layer cam completed
+63488
+torch.Size([1, 3, 496, 512])
+253952
+here
+(496, 512)
+Layer cam completed
+15872
+torch.Size([1, 3, 496, 512])
+253952
+here
+(496, 512)
+Layer cam completed
+15872
+torch.Size([1, 3, 496, 512])
+253952
+here
+(496, 512)
+Layer cam completed
+3968
+torch.Size([1, 3, 496, 512])
+253952
+here
+(496, 512)
+Layer cam completed
+992
+torch.Size([1, 3, 496, 512])
+253952
+here
+(496, 512)
+Layer cam completed
+256
+torch.Size([1, 3, 496, 512])
+253952
+here
+(496, 512)
+Layer cam completed
+8
+(1, 496, 512)
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+100%|██████████| 32/32 [01:55<00:00,  3.60s/it]
+(1, 496, 512)
+(1, 496, 512)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+100%|██████████| 16/16 [01:52<00:00,  7.04s/it]
+(1, 496, 512)
+(1, 496, 512)
+(1, 496, 512)
+Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
+(1, 496, 512)
+Traceback (most recent call last):
+  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/run_layer_cam.py", line 171, in <module>
+    wandb.log({f"Grads_{name}": test_dt})
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\sdk\wandb_run.py", line 1339, in log
+    self.history._row_add(data)
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\sdk\wandb_history.py", line 44, in _row_add
+    self._flush()
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\sdk\wandb_history.py", line 59, in _flush
+    self._callback(row=self._data, step=self._step)
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\sdk\wandb_run.py", line 1018, in _history_callback
+    row, step, publish_step=not_using_tensorboard
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\sdk\interface\interface.py", line 496, in publish_history
+    data = data_types.history_dict_to_json(run, data, step=step)
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\sdk\data_types.py", line 2597, in history_dict_to_json
+    payload[key] = val_to_json(run, key, val, namespace=step)
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\sdk\data_types.py", line 2669, in val_to_json
+    art.add(val, key)
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\sdk\wandb_artifacts.py", line 520, in add
+    with self.new_file(name) as f:
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python37\lib\contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\sdk\wandb_artifacts.py", line 364, in new_file
+    with util.fsync_open(path, mode) as f:
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python37\lib\contextlib.py", line 112, in __enter__
+    return next(self.gen)
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\util.py", line 1345, in fsync_open
+    with open(path, mode) as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\USER\\AppData\\Local\\Temp\\tmpdrifjigk\\Grads_../res18.table.json'

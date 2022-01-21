@@ -1,0 +1,6 @@
+
+cpu
+Traceback (most recent call last):
+  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/run_layer_cam.py", line 83, in <module>
+    labels = labels.unsqueeze(0)
+AttributeError: 'int' object has no attribute 'unsqueeze'

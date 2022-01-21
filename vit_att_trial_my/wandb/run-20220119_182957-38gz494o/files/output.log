@@ -1,0 +1,13 @@
+cpu
+image : 0
+Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
+Traceback (most recent call last):
+  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/run_layer_cam.py", line 126, in <module>
+    GBP = GuidedBackprop(model)
+  File "C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\guided_backprop.py", line 24, in __init__
+    self.update_relus()
+  File "C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\guided_backprop.py", line 58, in update_relus
+    for pos, module in self.model.features._modules.items():
+  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\torch\nn\modules\module.py", line 1178, in __getattr__
+    type(self).__name__, name))
+AttributeError: 'Resnet18' object has no attribute 'features'

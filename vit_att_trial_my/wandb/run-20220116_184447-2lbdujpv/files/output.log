@@ -1,0 +1,1072 @@
+20
+0
+image : 0
+  0%|                                                    | 0/48 [00:00<?, ?it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.24it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.22it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/nn/functional.py:3631: UserWarning: Default upsampling behavior when mode=bilinear is changed to align_corners=False since 0.4.0. Please specify align_corners=True if the old behavior is desired. See the documentation of nn.Upsample for details.
+  warnings.warn(
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+1
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+2
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+3
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+4
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+5
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+6
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+7
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+8
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+9
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+10
+image : 10
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+11
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.20it/s]
+<class 'numpy.ndarray'>
+(496, 512, 3)
+<class 'numpy.ndarray'>
+(496, 512, 3)
+(0, 255)
+(0, 255)
+i:0 range:(0, 255)
+i:1 range:(0, 255)
+i:2 range:(0, 255)
+i:3 range:(0, 255)
+i:4 range:(0, 255)
+i:5 range:(0, 255)
+(0, 255)
+(0, 255)
+(496, 512, 3)
+12
+Warning: You are using ScoreCAM with target layers, however ScoreCAM will ignore them.
+
+
+
+
+
+
+
+
+
+
+100%|███████████████████████████████████████████| 48/48 [00:21<00:00,  2.21it/s]
+
+
+
+
+
+
+
+
+
+ 96%|█████████████████████████████████████████▏ | 46/48 [00:20<00:00,  2.20it/s]
+Traceback (most recent call last):
+  File "attn_plus_gardcam.py", line 202, in <module>
+    grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True)
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/pytorch_grad_cam/base_cam.py", line 181, in __call__
+    return self.forward_augmentation_smoothing(
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/pytorch_grad_cam/base_cam.py", line 156, in forward_augmentation_smoothing
+    cam = self.forward(augmented_tensor,
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/pytorch_grad_cam/base_cam.py", line 93, in forward
+    cam_per_layer = self.compute_cam_per_layer(input_tensor,
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/pytorch_grad_cam/base_cam.py", line 125, in compute_cam_per_layer
+    cam = self.get_cam_image(input_tensor,
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/pytorch_grad_cam/base_cam.py", line 50, in get_cam_image
+    weights = self.get_cam_weights(input_tensor,
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/pytorch_grad_cam/score_cam.py", line 58, in get_cam_weights
+    outputs = [target(o).cpu().item() for o in self.model(batch)]
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/timm/models/vision_transformer.py", line 363, in forward
+    x = self.forward_features(x)
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/timm/models/vision_transformer.py", line 355, in forward_features
+    x = self.blocks(x)
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/nn/modules/container.py", line 141, in forward
+    input = module(input)
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/timm/models/vision_transformer.py", line 230, in forward
+    x = x + self.drop_path(self.mlp(self.norm2(x)))
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/timm/models/layers/mlp.py", line 26, in forward
+    x = self.fc1(x)
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1102, in _call_impl
+    return forward_call(*input, **kwargs)
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/nn/modules/linear.py", line 103, in forward
+    return F.linear(input, self.weight, self.bias)
+  File "/home/labs/testing/class57/.local/lib/python3.8/site-packages/torch/nn/functional.py", line 1848, in linear
+    return torch._C._nn.linear(input, weight, bias)
+KeyboardInterrupt

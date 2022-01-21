@@ -1,0 +1,6 @@
+
+0
+Traceback (most recent call last):
+  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/attn_plus_gardcam.py", line 244, in <module>
+    accuracy = correct / total
+ZeroDivisionError: float division by zero

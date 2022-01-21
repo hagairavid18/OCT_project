@@ -1,0 +1,22 @@
+2022-01-19 16:14:21,768 INFO    MainThread:15432 [wandb_setup.py:_flush():71] setting env: {}
+2022-01-19 16:14:21,769 INFO    MainThread:15432 [wandb_setup.py:_flush():71] setting login settings: {}
+2022-01-19 16:14:21,769 INFO    MainThread:15432 [wandb_init.py:_log_setup():371] Logging user logs to C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220119_161421-33ubzxrn\logs\debug.log
+2022-01-19 16:14:21,770 INFO    MainThread:15432 [wandb_init.py:_log_setup():372] Logging internal logs to C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220119_161421-33ubzxrn\logs\debug-internal.log
+2022-01-19 16:14:21,772 INFO    MainThread:15432 [wandb_init.py:init():404] calling init triggers
+2022-01-19 16:14:21,775 INFO    MainThread:15432 [wandb_init.py:init():411] wandb.init called with sweep_config: {}
+config: {}
+2022-01-19 16:14:21,777 INFO    MainThread:15432 [wandb_init.py:init():460] starting backend
+2022-01-19 16:14:21,777 INFO    MainThread:15432 [backend.py:_multiprocessing_setup():101] multiprocessing start_methods=spawn, using: spawn
+2022-01-19 16:14:21,788 INFO    MainThread:15432 [backend.py:ensure_launched():216] starting backend process...
+2022-01-19 16:14:22,327 INFO    MainThread:15432 [backend.py:ensure_launched():222] started backend process with pid: 388
+2022-01-19 16:14:22,328 INFO    MainThread:15432 [wandb_init.py:init():469] backend started and connected
+2022-01-19 16:14:22,331 INFO    MainThread:15432 [wandb_init.py:init():533] updated telemetry
+2022-01-19 16:14:22,489 INFO    MainThread:15432 [wandb_init.py:init():563] communicating current version
+2022-01-19 16:14:23,932 INFO    MainThread:15432 [wandb_init.py:init():568] got version response 
+2022-01-19 16:14:23,933 INFO    MainThread:15432 [wandb_init.py:init():578] communicating run to backend with 30 second timeout
+2022-01-19 16:14:24,399 INFO    MainThread:15432 [wandb_init.py:init():606] starting run threads in backend
+2022-01-19 16:14:25,035 INFO    MainThread:15432 [wandb_run.py:_console_start():1810] atexit reg
+2022-01-19 16:14:25,037 INFO    MainThread:15432 [wandb_run.py:_redirect():1684] redirect: SettingsConsole.WRAP
+2022-01-19 16:14:25,037 INFO    MainThread:15432 [wandb_run.py:_redirect():1721] Wrapping output streams.
+2022-01-19 16:14:25,039 INFO    MainThread:15432 [wandb_run.py:_redirect():1745] Redirects installed.
+2022-01-19 16:14:25,039 INFO    MainThread:15432 [wandb_init.py:init():633] run started, returning control to user process

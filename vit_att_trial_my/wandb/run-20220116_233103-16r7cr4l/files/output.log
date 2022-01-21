@@ -1,0 +1,15 @@
+image : 0
+torch.Size([1, 3, 496, 512])
+1
+torch.Size([1, 3, 496, 512])
+torch.Size([1, 512])
+(512, 496)
+torch.Size([496, 512, 3])
+Traceback (most recent call last):
+  File "run_layer_cam.py", line 110, in <module>
+    print(transform(images[0].permute(1, 2, 0)).size())
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/torchvision/transforms/transforms.py", line 184, in __call__
+    return F.to_pil_image(pic, self.mode)
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/torchvision/transforms/functional.py", line 243, in to_pil_image
+    raise ValueError('pic should not have > 4 channels. Got {} channels.'.format(pic.shape[-3]))
+ValueError: pic should not have > 4 channels. Got 496 channels.

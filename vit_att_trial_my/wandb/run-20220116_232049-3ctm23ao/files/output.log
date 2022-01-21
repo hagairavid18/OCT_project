@@ -1,0 +1,16 @@
+image : 0
+torch.Size([1, 3, 496, 512])
+1
+torch.Size([1, 3, 496, 512])
+torch.Size([1, 512])
+Traceback (most recent call last):
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/PIL/Image.py", line 2813, in fromarray
+    mode, rawmode = _fromarray_typemap[typekey]
+KeyError: ((1, 1, 512), '<f4')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "run_layer_cam.py", line 107, in <module>
+    save_class_activation_images(Image.fromarray(images[0].cpu().numpy()), cam, "output")
+  File "/home/labs/testing/class57/anaconda3/envs/proj/lib/python3.8/site-packages/PIL/Image.py", line 2815, in fromarray
+    raise TypeError("Cannot handle this data type: %s, %s" % typekey) from e
+TypeError: Cannot handle this data type: (1, 1, 512), <f4

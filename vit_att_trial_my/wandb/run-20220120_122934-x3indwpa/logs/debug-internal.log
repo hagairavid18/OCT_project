@@ -1,0 +1,245 @@
+2022-01-20 12:29:36,430 INFO    MainThread:8112 [internal.py:wandb_internal():90] W&B internal server running at pid: 8112, started at: 2022-01-20 12:29:36.429161
+2022-01-20 12:29:36,432 INFO    WriterThread:8112 [datastore.py:open_for_write():77] open: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\run-x3indwpa.wandb
+2022-01-20 12:29:36,433 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: check_version
+2022-01-20 12:29:36,436 DEBUG   SenderThread:8112 [sender.py:send():234] send: header
+2022-01-20 12:29:36,437 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: check_version
+2022-01-20 12:29:36,858 DEBUG   SenderThread:8112 [sender.py:send():234] send: run
+2022-01-20 12:29:37,503 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: run_start
+2022-01-20 12:29:37,507 INFO    SenderThread:8112 [dir_watcher.py:__init__():169] watching files in: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files
+2022-01-20 12:29:37,507 INFO    SenderThread:8112 [sender.py:_start_run_threads():807] run started: x3indwpa with start time 1642674575
+2022-01-20 12:29:37,507 DEBUG   SenderThread:8112 [sender.py:send():234] send: summary
+2022-01-20 12:29:37,509 INFO    SenderThread:8112 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-20 12:29:37,919 DEBUG   HandlerThread:8112 [meta.py:__init__():40] meta init
+2022-01-20 12:29:37,919 DEBUG   HandlerThread:8112 [meta.py:__init__():54] meta init done
+2022-01-20 12:29:37,919 DEBUG   HandlerThread:8112 [meta.py:probe():214] probe
+2022-01-20 12:29:37,994 DEBUG   HandlerThread:8112 [meta.py:_setup_git():204] setup git
+2022-01-20 12:29:38,129 DEBUG   HandlerThread:8112 [meta.py:_setup_git():211] setup git done
+2022-01-20 12:29:38,129 DEBUG   HandlerThread:8112 [meta.py:_save_pip():58] save pip
+2022-01-20 12:29:38,131 DEBUG   HandlerThread:8112 [meta.py:_save_pip():72] save pip done
+2022-01-20 12:29:38,131 DEBUG   HandlerThread:8112 [meta.py:probe():252] probe done
+2022-01-20 12:29:38,142 DEBUG   SenderThread:8112 [sender.py:send():234] send: files
+2022-01-20 12:29:38,142 INFO    SenderThread:8112 [sender.py:_save_file():939] saving file wandb-metadata.json with policy now
+2022-01-20 12:29:38,162 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:29:38,162 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:29:38,522 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\output.log
+2022-01-20 12:29:38,522 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\wandb-summary.json
+2022-01-20 12:29:38,523 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\wandb-metadata.json
+2022-01-20 12:29:38,523 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\requirements.txt
+2022-01-20 12:29:39,389 INFO    Thread-17 :8112 [upload_job.py:push():137] Uploaded file C:\Users\USER\AppData\Local\Temp\tmp_1x22cwjwandb\1gbg4qck-wandb-metadata.json
+2022-01-20 12:29:42,527 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\output.log
+2022-01-20 12:29:53,581 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:29:53,582 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:30:04,578 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\output.log
+2022-01-20 12:30:08,402 DEBUG   SenderThread:8112 [sender.py:send():234] send: stats
+2022-01-20 12:30:09,095 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:30:09,096 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:30:24,538 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:30:24,538 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:30:40,021 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:30:40,021 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:30:42,737 DEBUG   SenderThread:8112 [sender.py:send():234] send: stats
+2022-01-20 12:30:55,492 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:30:55,493 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:31:10,903 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:31:10,903 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:31:15,875 DEBUG   SenderThread:8112 [sender.py:send():234] send: stats
+2022-01-20 12:31:19,072 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\output.log
+2022-01-20 12:31:26,311 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:31:26,312 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:31:41,722 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:31:41,723 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:31:49,493 DEBUG   SenderThread:8112 [sender.py:send():234] send: stats
+2022-01-20 12:31:57,153 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:31:57,154 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:32:12,580 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:32:12,581 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:32:23,550 DEBUG   SenderThread:8112 [sender.py:send():234] send: stats
+2022-01-20 12:32:28,040 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:32:28,041 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:32:43,479 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:32:43,479 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:32:43,764 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\output.log
+2022-01-20 12:32:56,867 DEBUG   SenderThread:8112 [sender.py:send():234] send: stats
+2022-01-20 12:32:58,999 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:32:59,004 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:33:14,482 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:33:14,482 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:33:29,968 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:33:29,969 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:33:30,556 DEBUG   SenderThread:8112 [sender.py:send():234] send: stats
+2022-01-20 12:33:45,397 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:33:45,397 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:34:00,851 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:34:00,852 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:34:02,258 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\output.log
+2022-01-20 12:34:04,379 DEBUG   SenderThread:8112 [sender.py:send():234] send: stats
+2022-01-20 12:34:16,291 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:34:16,292 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:34:31,730 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: stop_status
+2022-01-20 12:34:31,731 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: stop_status
+2022-01-20 12:34:37,394 DEBUG   SenderThread:8112 [sender.py:send():234] send: stats
+2022-01-20 12:34:40,743 DEBUG   SenderThread:8112 [sender.py:send():234] send: history
+2022-01-20 12:34:40,743 DEBUG   SenderThread:8112 [sender.py:send():234] send: summary
+2022-01-20 12:34:40,745 INFO    SenderThread:8112 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-20 12:34:41,508 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\wandb-summary.json
+2022-01-20 12:34:41,621 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: log_artifact
+2022-01-20 12:34:41,622 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: log_artifact
+2022-01-20 12:34:42,515 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\media\table\Grads_res18_1_386e12d47dd926dd597b.table.json
+2022-01-20 12:34:42,516 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\media
+2022-01-20 12:34:42,517 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_created():217] file/dir created: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\media\table
+2022-01-20 12:34:43,588 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:44,543 INFO    Thread-12 :8112 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\output.log
+2022-01-20 12:34:44,786 INFO    Thread-19 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\9e\52760d3bdef80289b29108f27c1fd6
+2022-01-20 12:34:48,701 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:50,884 INFO    Thread-25 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\58\6304a1b53575d16c7bb3f7e54091fe
+2022-01-20 12:34:51,053 INFO    Thread-39 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\f3\d962b8fbdc0b92ed9059a5fd731585
+2022-01-20 12:34:51,873 INFO    Thread-41 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\f7\e3bc4391a260c1119214d1ea9aa38f
+2022-01-20 12:34:52,053 INFO    Thread-28 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\7b\568cc279523c50fd015b2f25ea555c
+2022-01-20 12:34:52,495 INFO    Thread-27 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\7b\564aec46261aeacc34767b1bcd9583
+2022-01-20 12:34:52,747 INFO    Thread-34 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\bd\ea2754770049bbebb568abd4e5d87c
+2022-01-20 12:34:53,080 INFO    Thread-32 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\97\08de48785f6b08eaa1a666cc6a4acf
+2022-01-20 12:34:53,249 INFO    Thread-29 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\80\a921bb1cb35b5b411945159426b974
+2022-01-20 12:34:53,304 INFO    Thread-38 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\f3\c33d96081aa2f6b6da86f7f50bed00
+2022-01-20 12:34:53,355 INFO    Thread-20 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\23\cc5a74dcf28a72f165a02b5634dde1
+2022-01-20 12:34:53,465 INFO    Thread-33 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\a0\426d5d7d8dd16a6008cecd897c24db
+2022-01-20 12:34:53,809 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:53,865 INFO    Thread-40 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\f6\8fcd48dfd6773f299098e81146e4de
+2022-01-20 12:34:53,901 INFO    Thread-35 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\c9\ca1220f9d47b094cd076b1fa5afb28
+2022-01-20 12:34:54,006 INFO    Thread-23 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\46\bf1f8e4f9afcf10c41c2a8c345074d
+2022-01-20 12:34:54,037 INFO    Thread-36 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\de\015a77a90d1b4586240603eec91cda
+2022-01-20 12:34:54,118 INFO    Thread-31 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\8d\d2a4b8330d112b5acca002663156ab
+2022-01-20 12:34:54,144 INFO    Thread-30 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\82\d2bfd0866880a90c9d36d7beda9e22
+2022-01-20 12:34:54,144 INFO    Thread-37 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\ee\64dc5e7389c723e2b374965e1f830c
+2022-01-20 12:34:54,163 INFO    Thread-26 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\76\658dc763e83404143fb44fb7eea6cd
+2022-01-20 12:34:54,474 INFO    Thread-24 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\50\91ae6ab59158ff99bb931061235136
+2022-01-20 12:34:54,521 INFO    Thread-21 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\30\004195d9f506a7024dd322992bf07f
+2022-01-20 12:34:54,803 INFO    Thread-22 :8112 [upload_job.py:push():95] Uploaded file C:\Users\USER\.cache\wandb\artifacts\obj\md5\3d\1b1955f9ae20ffde5041bedb9a6790
+2022-01-20 12:34:56,708 INFO    SenderThread:8112 [sender.py:send_request_log_artifact():968] logged artifact run-x3indwpa-Grads_res18 - {'id': 'QXJ0aWZhY3Q6NjY2ODk4OTY=', 'digest': 'e7e98c537c3e08dbb62c479c577f28f3', 'state': 'PENDING', 'aliases': [], 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjk3NjQzNjc=', 'latestArtifact': None}, 'version': 'latest'}
+2022-01-20 12:34:56,708 DEBUG   SenderThread:8112 [sender.py:send():234] send: files
+2022-01-20 12:34:56,709 INFO    SenderThread:8112 [sender.py:_save_file():939] saving file media\table\Grads_res18_1_386e12d47dd926dd597b.table.json with policy now
+2022-01-20 12:34:56,711 DEBUG   SenderThread:8112 [sender.py:send():234] send: history
+2022-01-20 12:34:56,711 DEBUG   SenderThread:8112 [sender.py:send():234] send: summary
+2022-01-20 12:34:56,713 INFO    SenderThread:8112 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-20 12:34:56,714 DEBUG   SenderThread:8112 [sender.py:send():234] send: telemetry
+2022-01-20 12:34:56,714 DEBUG   SenderThread:8112 [sender.py:send():234] send: exit
+2022-01-20 12:34:56,714 INFO    SenderThread:8112 [sender.py:send_exit():366] handling exit code: 0
+2022-01-20 12:34:56,715 INFO    SenderThread:8112 [sender.py:send_exit():368] handling runtime: 306
+2022-01-20 12:34:56,717 INFO    SenderThread:8112 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-20 12:34:56,718 INFO    SenderThread:8112 [sender.py:send_exit():374] send defer
+2022-01-20 12:34:56,718 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:56,718 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:56,719 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:56,720 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 12:34:56,720 INFO    HandlerThread:8112 [handler.py:handle_request_defer():147] handle defer: 0
+2022-01-20 12:34:56,721 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: defer
+2022-01-20 12:34:56,721 INFO    SenderThread:8112 [sender.py:send_request_defer():383] handle sender defer: 0
+2022-01-20 12:34:56,721 INFO    SenderThread:8112 [sender.py:transition_state():387] send defer: 1
+2022-01-20 12:34:56,722 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 12:34:56,723 INFO    HandlerThread:8112 [handler.py:handle_request_defer():147] handle defer: 1
+2022-01-20 12:34:56,860 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: defer
+2022-01-20 12:34:56,860 INFO    SenderThread:8112 [sender.py:send_request_defer():383] handle sender defer: 1
+2022-01-20 12:34:56,860 INFO    SenderThread:8112 [sender.py:transition_state():387] send defer: 2
+2022-01-20 12:34:56,860 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:56,861 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:56,861 DEBUG   SenderThread:8112 [sender.py:send():234] send: stats
+2022-01-20 12:34:56,862 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 12:34:56,862 INFO    HandlerThread:8112 [handler.py:handle_request_defer():147] handle defer: 2
+2022-01-20 12:34:56,862 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: defer
+2022-01-20 12:34:56,862 INFO    SenderThread:8112 [sender.py:send_request_defer():383] handle sender defer: 2
+2022-01-20 12:34:56,862 INFO    SenderThread:8112 [sender.py:transition_state():387] send defer: 3
+2022-01-20 12:34:56,862 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 12:34:56,863 INFO    HandlerThread:8112 [handler.py:handle_request_defer():147] handle defer: 3
+2022-01-20 12:34:56,863 DEBUG   SenderThread:8112 [sender.py:send():234] send: summary
+2022-01-20 12:34:56,864 INFO    SenderThread:8112 [sender.py:_save_file():939] saving file wandb-summary.json with policy end
+2022-01-20 12:34:56,865 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: defer
+2022-01-20 12:34:56,865 INFO    SenderThread:8112 [sender.py:send_request_defer():383] handle sender defer: 3
+2022-01-20 12:34:56,865 INFO    SenderThread:8112 [sender.py:transition_state():387] send defer: 4
+2022-01-20 12:34:56,865 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 12:34:56,866 INFO    HandlerThread:8112 [handler.py:handle_request_defer():147] handle defer: 4
+2022-01-20 12:34:56,866 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: defer
+2022-01-20 12:34:56,866 INFO    SenderThread:8112 [sender.py:send_request_defer():383] handle sender defer: 4
+2022-01-20 12:34:56,973 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:57,288 INFO    SenderThread:8112 [sender.py:transition_state():387] send defer: 5
+2022-01-20 12:34:57,289 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:57,289 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 12:34:57,290 INFO    HandlerThread:8112 [handler.py:handle_request_defer():147] handle defer: 5
+2022-01-20 12:34:57,290 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: defer
+2022-01-20 12:34:57,290 INFO    SenderThread:8112 [sender.py:send_request_defer():383] handle sender defer: 5
+2022-01-20 12:34:57,290 INFO    SenderThread:8112 [dir_watcher.py:finish():283] shutting down directory watcher
+2022-01-20 12:34:57,395 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:57,685 INFO    SenderThread:8112 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\wandb-summary.json
+2022-01-20 12:34:57,685 INFO    SenderThread:8112 [dir_watcher.py:_on_file_modified():230] file/dir modified: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\config.yaml
+2022-01-20 12:34:57,686 INFO    SenderThread:8112 [dir_watcher.py:finish():313] scan: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files
+2022-01-20 12:34:57,686 INFO    SenderThread:8112 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\config.yaml config.yaml
+2022-01-20 12:34:57,687 INFO    SenderThread:8112 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\output.log output.log
+2022-01-20 12:34:57,688 INFO    SenderThread:8112 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\requirements.txt requirements.txt
+2022-01-20 12:34:57,696 INFO    SenderThread:8112 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\wandb-metadata.json wandb-metadata.json
+2022-01-20 12:34:57,697 INFO    SenderThread:8112 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\wandb-summary.json wandb-summary.json
+2022-01-20 12:34:57,710 INFO    SenderThread:8112 [dir_watcher.py:finish():327] scan save: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\media\table\Grads_res18_1_386e12d47dd926dd597b.table.json media\table\Grads_res18_1_386e12d47dd926dd597b.table.json
+2022-01-20 12:34:57,710 INFO    SenderThread:8112 [sender.py:transition_state():387] send defer: 6
+2022-01-20 12:34:57,710 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:57,711 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 12:34:57,712 INFO    HandlerThread:8112 [handler.py:handle_request_defer():147] handle defer: 6
+2022-01-20 12:34:57,712 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: defer
+2022-01-20 12:34:57,712 INFO    SenderThread:8112 [sender.py:send_request_defer():383] handle sender defer: 6
+2022-01-20 12:34:57,712 INFO    SenderThread:8112 [file_pusher.py:finish():177] shutting down file pusher
+2022-01-20 12:34:57,820 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:57,820 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:57,868 INFO    Thread-42 :8112 [upload_job.py:push():137] Uploaded file C:\Users\USER\AppData\Local\Temp\tmp_1x22cwjwandb\1ewph9hu-media/table/Grads_res18_1_386e12d47dd926dd597b.table.json
+2022-01-20 12:34:57,929 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:57,929 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:58,036 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:58,036 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:58,142 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:58,143 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:58,247 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:58,248 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:58,353 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:58,353 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:58,461 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:58,462 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:58,581 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:58,581 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:58,688 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:58,688 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:58,796 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:58,796 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:58,860 INFO    Thread-44 :8112 [upload_job.py:push():137] Uploaded file C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\output.log
+2022-01-20 12:34:58,868 INFO    Thread-43 :8112 [upload_job.py:push():137] Uploaded file C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\config.yaml
+2022-01-20 12:34:58,876 INFO    Thread-46 :8112 [upload_job.py:push():137] Uploaded file C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\wandb-summary.json
+2022-01-20 12:34:58,887 INFO    Thread-45 :8112 [upload_job.py:push():137] Uploaded file C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\files\requirements.txt
+2022-01-20 12:34:58,915 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:58,916 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:59,022 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:59,023 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:59,096 INFO    Thread-11 :8112 [sender.py:transition_state():387] send defer: 7
+2022-01-20 12:34:59,098 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 12:34:59,100 INFO    HandlerThread:8112 [handler.py:handle_request_defer():147] handle defer: 7
+2022-01-20 12:34:59,101 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: defer
+2022-01-20 12:34:59,102 INFO    SenderThread:8112 [sender.py:send_request_defer():383] handle sender defer: 7
+2022-01-20 12:34:59,126 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:59,728 INFO    SenderThread:8112 [sender.py:transition_state():387] send defer: 8
+2022-01-20 12:34:59,728 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:59,729 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 12:34:59,730 INFO    HandlerThread:8112 [handler.py:handle_request_defer():147] handle defer: 8
+2022-01-20 12:34:59,730 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: defer
+2022-01-20 12:34:59,730 INFO    SenderThread:8112 [sender.py:send_request_defer():383] handle sender defer: 8
+2022-01-20 12:34:59,730 INFO    SenderThread:8112 [sender.py:transition_state():387] send defer: 9
+2022-01-20 12:34:59,731 DEBUG   SenderThread:8112 [sender.py:send():234] send: final
+2022-01-20 12:34:59,731 DEBUG   SenderThread:8112 [sender.py:send():234] send: footer
+2022-01-20 12:34:59,732 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: defer
+2022-01-20 12:34:59,732 INFO    HandlerThread:8112 [handler.py:handle_request_defer():147] handle defer: 9
+2022-01-20 12:34:59,732 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: defer
+2022-01-20 12:34:59,732 INFO    SenderThread:8112 [sender.py:send_request_defer():383] handle sender defer: 9
+2022-01-20 12:34:59,838 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: poll_exit
+2022-01-20 12:34:59,839 DEBUG   SenderThread:8112 [sender.py:send_request():248] send_request: poll_exit
+2022-01-20 12:34:59,841 INFO    SenderThread:8112 [file_pusher.py:join():182] waiting for file pusher
+2022-01-20 12:35:00,433 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: get_summary
+2022-01-20 12:35:00,436 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: sampled_history
+2022-01-20 12:35:00,437 DEBUG   HandlerThread:8112 [handler.py:handle_request():130] handle_request: shutdown
+2022-01-20 12:35:00,437 INFO    HandlerThread:8112 [handler.py:finish():731] shutting down handler
+2022-01-20 12:35:00,771 INFO    WriterThread:8112 [datastore.py:close():281] close: C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\wandb\run-20220120_122934-x3indwpa\run-x3indwpa.wandb
+2022-01-20 12:35:01,441 INFO    SenderThread:8112 [sender.py:finish():1070] shutting down sender
+2022-01-20 12:35:01,441 INFO    SenderThread:8112 [file_pusher.py:finish():177] shutting down file pusher
+2022-01-20 12:35:01,441 INFO    SenderThread:8112 [file_pusher.py:join():182] waiting for file pusher
+2022-01-20 12:35:01,442 INFO    MainThread:8112 [internal.py:handle_exit():77] Internal process exited

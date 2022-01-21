@@ -1,0 +1,24 @@
+{
+    "os": "Windows-10-10.0.19041-SP0",
+    "python": "3.7.0",
+    "heartbeatAt": "2022-01-20T07:45:53.150543",
+    "startedAt": "2022-01-20T07:45:45.840221",
+    "docker": null,
+    "gpu": "GeForce 940MX",
+    "gpu_count": 1,
+    "cpu_count": 4,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/run_layer_cam.py",
+    "codePath": "vit_att_trial\\run_layer_cam.py",
+    "git": {
+        "remote": "https://github.com/hagairavid18/OCT_project.git",
+        "commit": "a1133805f6201ac0e33d443cc6a5c1a98f76de54"
+    },
+    "email": "hagairavid18@gmail.com",
+    "root": "C:/Users/USER/PycharmProjects/DL_project",
+    "host": "LAPTOP-CEMQOAR2",
+    "username": "USER",
+    "executable": "C:\\Users\\USER\\PycharmProjects\\DL_project\\venv\\Scripts\\python.exe"
+}

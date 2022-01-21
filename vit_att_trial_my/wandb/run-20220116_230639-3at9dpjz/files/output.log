@@ -1,0 +1,11 @@
+image : 0
+torch.Size([1, 3, 496, 512])
+1
+torch.Size([1, 3, 496, 512])
+torch.Size([1, 512])
+Traceback (most recent call last):
+  File "run_layer_cam.py", line 103, in <module>
+    cam = layer_cam.generate_cam(images.to('cuda'), labels.item())
+  File "/home/labs/testing/class57/OCTransformer/breakdown/testings/vit_att_trial/layer_cam.py", line 88, in generate_cam
+    target = conv_output.data.numpy()[0]
+TypeError: can't convert cuda:0 device type tensor to numpy. Use Tensor.cpu() to copy the tensor to host memory first.
