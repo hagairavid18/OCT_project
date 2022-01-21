@@ -193,7 +193,7 @@ for i, (images, labels) in enumerate(test_loader):
             vis = np.uint8(255 * vis)
             vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
             res.append(vis)  # superimposed_img / 255)
-        for level in len(model_timm.blocks):
+        for level in range(len(model_timm.blocks)):
             target_layers = [model_timm.blocks[level].norm1]
 
             cam = cam_algo(model=model_timm, target_layers=target_layers,
