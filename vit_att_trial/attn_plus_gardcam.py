@@ -174,10 +174,12 @@ for i, (images, labels) in enumerate(test_loader):
     image_transformer_attribution = None
     print('here1')
     for j in range(4):
+        target_categories = [j]
+        targets = [ClassifierOutputTarget(category) for category in target_categories]
+
         for cam_algo in cams:
             # print(images.shape)
-            target_categories = [j]
-            targets = [ClassifierOutputTarget(category) for category in target_categories]
+
             cam = cam_algo(model=model_timm, target_layers=target_layers,
                            use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
                            )
@@ -191,6 +193,25 @@ for i, (images, labels) in enumerate(test_loader):
             vis = np.uint8(255 * vis)
             vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
             res.append(vis)  # superimposed_img / 255)
+        for depth in model_timm.depth:
+            target_layers = [model_timm.blocks[depth].norm1]
+
+            cam = cam_algo(model=model_timm, target_layers=target_layers,
+                           use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
+                           )
+            target_category = labels.item()
+            grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True, targets=targets)
+            # just_grads.append(grayscale_cam[0, :])
+            image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
+            image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
+                    image_transformer_attribution.max() - image_transformer_attribution.min())
+            vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[0, :])
+            vis = np.uint8(255 * vis)
+            vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+            res.append(vis)  # superimposed_img / 255)
+
+
+
         gradcam = res
         # images = images.squeeze()
         cat, attn_map = generate_visualization(images.squeeze())
@@ -234,7 +255,7 @@ for i, (images, labels) in enumerate(test_loader):
         # , wandb.Image(gradcam[4]), wandb.Image(gradcam[1]), wandb.Image(gradcam[2]),
         #            wandb.Image(gradcam[3]), wandb.Image(gradcam[4]), wandb.Image(gradcam[4])
         row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
-               wandb.Image(attention), wandb.Image(gradcam[0]), wandb.Image(avg)]
+               wandb.Image(attention)] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
         # test_dt.add_data(*row)
     # if i % 50 == 0:
     #     wandb.log({f"Grads_{name}_{i}": test_dt})

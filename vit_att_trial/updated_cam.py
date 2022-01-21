@@ -131,6 +131,7 @@ for name, model in zip(names, models):
 
             for cam_algo in cams:
                 # print(images.shape)
+
                 target_categories = [j]
                 targets = [ClassifierOutputTarget(category) for category in target_categories]
                 cam = cam_algo(model=model, target_layers=target_layers,
