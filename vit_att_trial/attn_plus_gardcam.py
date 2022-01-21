@@ -38,7 +38,7 @@ random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-# wandb.init(project="test_attn_plus_gradcam")
+wandb.init(project="test_attn_plus_gradcam")
 
 label_names = {
     0: "NORMAL",
@@ -82,8 +82,8 @@ attribution_generator = LRP(model_attn)
 
 pytorch_total_params = sum(p.numel() for p in model_timm.parameters())
 pytorch_total_params_train = sum(p.numel() for p in model_timm.parameters() if p.requires_grad)
-# wandb.log({"Total Params": pytorch_total_params})
-# wandb.log({"Trainable Params": pytorch_total_params_train})
+wandb.log({"Total Params": pytorch_total_params})
+wandb.log({"Trainable Params": pytorch_total_params_train})
 
 
 def generate_visualization(original_image, class_index=None):
@@ -131,7 +131,7 @@ ground_truth = None
 # , 'EigenCAM', 'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenGradCAM',
 columns = ["id", "Original Image", "Predicted", "Logits", "Truth", "Correct", "Attention NORMAL", "Attention CNV",
            "Attention DME",
-           "Attention DRUSEN", "GradCAM" 'Avg']
+           "Attention DRUSEN", "GradCAM"] + ["ma" for i in range(5)] + ['Avg']
 # for a in label_names:
 #     columns.append("score_" + a)
 # test_dt = wandb.Table(columns=columns)
@@ -193,7 +193,7 @@ for i, (images, labels) in enumerate(test_loader):
             vis = np.uint8(255 * vis)
             vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
             res.append(vis)  # superimposed_img / 255)
-        for level in range(len(model_timm.blocks)):
+        for level in range(0,len(model_timm.blocks),4):
             target_layers = [model_timm.blocks[level].norm1]
 
             cam = cam_algo(model=model_timm, target_layers=target_layers,
@@ -256,7 +256,7 @@ for i, (images, labels) in enumerate(test_loader):
         #            wandb.Image(gradcam[3]), wandb.Image(gradcam[4]), wandb.Image(gradcam[4])
         row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
                wandb.Image(attention)] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
-        # test_dt.add_data(*row)
+        test_dt.add_data(*row)
     # if i % 50 == 0:
     #     wandb.log({f"Grads_{name}_{i}": test_dt})
     # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
@@ -267,5 +267,5 @@ accuracy = correct / total
 metrics = {f'Test Accuracy_{name}': accuracy}
 for label in range(4):
     metrics[f'Test Accuracy_{name}' + label_names[label]] = correct_arr[label] / total_arr[label]
-# wandb.log(metrics)
-# wandb.log({f"Grads_{name}": test_dt})
+wandb.log(metrics)
+wandb.log({f"Grads_{name}": test_dt})
