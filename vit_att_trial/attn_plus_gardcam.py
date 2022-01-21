@@ -167,12 +167,14 @@ for i, (images, labels) in enumerate(test_loader):
     target_layers = [model_timm.blocks[-1].norm1]
     # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
     cams = [GradCAM]
-    res = []
     just_grads = []
     images = images.unsqueeze(0)
     image_transformer_attribution = None
     print('here1')
     for j in range(4):
+        res = []
+        attn_diff_cls = []
+
         target_categories = [j]
         targets = [ClassifierOutputTarget(category) for category in target_categories]
 
@@ -214,7 +216,7 @@ for i, (images, labels) in enumerate(test_loader):
         gradcam = res
         # images = images.squeeze()
         cat, attn_map = generate_visualization(images.squeeze())
-        attn_diff_cls = []
+
         print('here2')
 
         attention = generate_visualization(images.squeeze(), class_index=j)[0]
