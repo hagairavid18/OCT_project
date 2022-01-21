@@ -173,68 +173,67 @@ for i, (images, labels) in enumerate(test_loader):
     images = images.unsqueeze(0)
     image_transformer_attribution = None
     print('here1')
+    for j in range(4):
+        for cam_algo in cams:
+            # print(images.shape)
+            cam = cam_algo(model=model_timm, target_layers=target_layers,
+                           use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
+                           )
+            target_category = labels.item()
+            grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True)
+            just_grads.append(grayscale_cam[0, :])
+            image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
+            image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
+                    image_transformer_attribution.max() - image_transformer_attribution.min())
+            vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[0, :])
+            vis = np.uint8(255 * vis)
+            vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+            res.append(vis)  # superimposed_img / 255)
+        gradcam = res
+        images = images.squeeze()
+        cat, attn_map = generate_visualization(images)
+        attn_diff_cls = []
+        print('here2')
 
-    for cam_algo in cams:
-        # print(images.shape)
-        cam = cam_algo(model=model_timm, target_layers=target_layers,
-                       use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
-                       )
-        target_category = labels.item()
-        grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True)
-        just_grads.append(grayscale_cam[0, :])
-        image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
-        image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
-                image_transformer_attribution.max() - image_transformer_attribution.min())
-        vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[0, :])
+        attention = generate_visualization(images, class_index=j)[0]
+        avg = attn_map.copy() * 6
+        # print(avg.max())
+        for j, grad in enumerate(just_grads):
+            g = grad.copy()
+            # plt.imshow(g)
+            # plt.title(str(j))
+            # plt.show()
+            g = np.where(g < g.max() / 4, g / 7, g)
+            g = np.exp(g)
+            g = g - g.min()
+            g = g / g.max()
+            # plt.imshow(g)
+            # plt.title(str(j))
+            # plt.show()
+            avg += g
+            # print(avg.max())
+        avg = avg / avg.max()
+        # plt.imshow(avg)
+        # plt.show()
+        vis = show_cam_on_image(image_transformer_attribution, avg)
         vis = np.uint8(255 * vis)
         vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-        res.append(vis)  # superimposed_img / 255)
-    gradcam = res
-    images = images.squeeze()
-    cat, attn_map = generate_visualization(images)
-    attn_diff_cls = []
-    print('here2')
-    for j in range(4):
-        attn_diff_cls.append(generate_visualization(images, class_index=j)[0])
-    avg = attn_map.copy() * 6
-    # print(avg.max())
-    for j, grad in enumerate(just_grads):
-        g = grad.copy()
-        # plt.imshow(g)
-        # plt.title(str(j))
+        # plt.imshow(vis)
         # plt.show()
-        g = np.where(g < g.max() / 4, g / 7, g)
-        g = np.exp(g)
-        g = g - g.min()
-        g = g / g.max()
-        # plt.imshow(g)
-        # plt.title(str(j))
-        # plt.show()
-        avg += g
-        # print(avg.max())
-    avg = avg / avg.max()
-    # plt.imshow(avg)
-    # plt.show()
-    vis = show_cam_on_image(image_transformer_attribution, avg)
-    vis = np.uint8(255 * vis)
-    vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-    # plt.imshow(vis)
-    # plt.show()
-    avg = vis
-    T = predicted.item() == labels.item()
-    out = outputs_timm
+        avg = vis
+        T = predicted.item() == labels.item()
+        out = outputs_timm
 
-    plt.bar(label_names, out.cpu().detach().numpy()[0])
-    # plt.xlabel(label_names)
-    img_buf = io.BytesIO()
-    plt.savefig(img_buf, format='png')
-    im = Image.open(img_buf)
-    # , wandb.Image(gradcam[4]), wandb.Image(gradcam[1]), wandb.Image(gradcam[2]),
-    #            wandb.Image(gradcam[3]), wandb.Image(gradcam[4]), wandb.Image(gradcam[4])
-    row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
-           wandb.Image(attn_diff_cls[0]), wandb.Image(attn_diff_cls[1]), wandb.Image(attn_diff_cls[2]),
-           wandb.Image(attn_diff_cls[3]), wandb.Image(gradcam[0]), wandb.Image(avg)]
-    # test_dt.add_data(*row)
+        plt.bar(label_names, out.cpu().detach().numpy()[0])
+        # plt.xlabel(label_names)
+        img_buf = io.BytesIO()
+        plt.savefig(img_buf, format='png')
+        im = Image.open(img_buf)
+        # , wandb.Image(gradcam[4]), wandb.Image(gradcam[1]), wandb.Image(gradcam[2]),
+        #            wandb.Image(gradcam[3]), wandb.Image(gradcam[4]), wandb.Image(gradcam[4])
+        row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
+               wandb.Image(attention), wandb.Image(gradcam[0]), wandb.Image(avg)]
+        # test_dt.add_data(*row)
     # if i % 50 == 0:
     #     wandb.log({f"Grads_{name}_{i}": test_dt})
     # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
