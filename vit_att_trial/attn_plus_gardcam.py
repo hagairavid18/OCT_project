@@ -218,7 +218,7 @@ for i, (images, labels) in enumerate(test_loader):
         cat, attn_map = generate_visualization(images.squeeze())
 
 
-        attention = generate_visualization(images.squeeze(), class_index=j)[0]
+        attention = generate_visualization(images.squeeze(), class_index=k)[0]
         avg = attn_map.copy() * 6
         # print(avg.max())
         for j, grad in enumerate(just_grads):
