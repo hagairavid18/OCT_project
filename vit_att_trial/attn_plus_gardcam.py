@@ -129,9 +129,8 @@ predictions = None
 ground_truth = None
 # Iterate through test dataset
 # , 'EigenCAM', 'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenGradCAM',
-columns = ["id", "Original Image", "Predicted", "Logits", "Truth", "Correct", "Attention NORMAL", "Attention CNV",
-           "Attention DME",
-           "Attention DRUSEN", "GradCAM"] + ["level {}".format(i) for i in range(10)] + ['Avg']
+columns = ["id", "Original Image", "Predicted", "Logits", "Truth", "Correct", "Attention",
+           "GradCAM"] + ["level {}".format(i) for i in range(5)] + ['Avg']
 # for a in label_names:
 #     columns.append("score_" + a)
 test_dt = wandb.Table(columns=columns)
