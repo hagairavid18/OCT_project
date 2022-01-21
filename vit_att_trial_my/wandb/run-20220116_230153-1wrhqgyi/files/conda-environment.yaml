@@ -1,5 +1,0 @@
-name: proj
-channels:
-  - conda-forge
-  - defaults
-prefix: /home/labs/testing/class57/.conda/envs/proj

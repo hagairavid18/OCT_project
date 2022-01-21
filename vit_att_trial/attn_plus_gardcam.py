@@ -170,12 +170,12 @@ for i, (images, labels) in enumerate(test_loader):
 
     images = images.unsqueeze(0)
     image_transformer_attribution = None
-    for j in range(4):
+    for k in range(4):
         just_grads = []
         res = []
         attn_diff_cls = []
 
-        target_categories = [j]
+        target_categories = [k]
         targets = [ClassifierOutputTarget(category) for category in target_categories]
 
         for cam_algo in cams:
@@ -255,7 +255,7 @@ for i, (images, labels) in enumerate(test_loader):
         # , wandb.Image(gradcam[4]), wandb.Image(gradcam[1]), wandb.Image(gradcam[2]),
         #            wandb.Image(gradcam[3]), wandb.Image(gradcam[4]), wandb.Image(gradcam[4])
         row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
-               label_names[j],wandb.Image(attention)] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
+               label_names[k],wandb.Image(attention)] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
         test_dt.add_data(*row)
     # if i % 50 == 0:
     #     wandb.log({f"Grads_{name}_{i}": test_dt})

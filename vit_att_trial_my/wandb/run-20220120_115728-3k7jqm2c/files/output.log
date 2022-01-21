@@ -1,3 +1,0 @@
-cpu
-image : 0
-Warning: target_layers is ignored in FullGrad. All bias layers will be used instead

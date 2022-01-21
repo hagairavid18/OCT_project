@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "run_layer_cam.py", line 127, in <module>
-    accuracy = correct / total
-ZeroDivisionError: float division by zero

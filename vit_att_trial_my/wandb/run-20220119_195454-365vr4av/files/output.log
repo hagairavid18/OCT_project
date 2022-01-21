@@ -1,9 +1,0 @@
-cpu
-image : 0
-Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
-Traceback (most recent call last):
-  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/run_layer_cam.py", line 175, in <module>
-    test_dt.add_data(*row)
-  File "C:\Users\USER\PycharmProjects\DL_project\venv\lib\site-packages\wandb\data_types.py", line 420, in add_data
-    len(self.columns), self.columns, len(data)
-ValueError: This table expects 21 columns: ['id', 'Original Image', 'Predicted', 'Truth', 'GradCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'FullGrad', 'layer cam 0', 'layer cam 1', 'layer cam 2', 'layer cam 3', 'layer cam 4', 'layer cam 5', 'layer cam 6', 'layer cam 7', 'coloured_guided', 'grey_guided', 'pos_guided', 'neg_guided'], found 17

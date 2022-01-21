@@ -1,7 +1,0 @@
-
-image : 0
-Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
-Traceback (most recent call last):
-  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/updated_cam.py", line 143, in <module>
-    wandb.Image(gradcam[4]), wandb.Image(gradcam[5]), wandb.Image(gradcam[6])]
-IndexError: list index out of range

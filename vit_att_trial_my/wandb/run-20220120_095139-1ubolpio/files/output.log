@@ -1,8 +1,0 @@
-
-cpu
-Traceback (most recent call last):
-  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/run_layer_cam.py", line 51, in <module>
-    test_dataset = Kermany_DataSet(def_args['test'][0])
-  File "C:\Users\USER\PycharmProjects\DL_project\vit_att_trial\data.py", line 13, in __init__
-    self.t = transforms.Compose([transforms.ToTensor(), transforms.Crop((496, 512))])
-AttributeError: module 'torchvision.transforms' has no attribute 'Crop'

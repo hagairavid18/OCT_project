@@ -1,7 +1,0 @@
-cpu
-image : 0
-Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
-Traceback (most recent call last):
-  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/run_layer_cam.py", line 140, in <module>
-    for row in len(np.size(heatmap,0)):
-TypeError: object of type 'int' has no len()

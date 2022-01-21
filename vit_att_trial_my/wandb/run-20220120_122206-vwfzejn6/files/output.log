@@ -1,7 +1,0 @@
-
-image : 0
-Warning: target_layers is ignored in FullGrad. All bias layers will be used instead
-Traceback (most recent call last):
-  File "C:/Users/USER/PycharmProjects/DL_project/vit_att_trial/updated_cam.py", line 141, in <module>
-    row = [i, wandb.Image(images), label_names[predicted.item()], label_names[labels.item()]]+[wandb.Image(gradcam[i]) in range(cams)]
-TypeError: 'list' object cannot be interpreted as an integer

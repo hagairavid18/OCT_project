@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "run_layer_cam.py", line 46, in <module>
-    test_dataset = Kermany_DataSet(def_args.test[0])
-AttributeError: 'dict' object has no attribute 'test'

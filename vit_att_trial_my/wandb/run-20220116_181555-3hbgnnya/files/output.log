@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "attn_plus_gardcam.py", line 241, in <module>
-    accuracy = correct / total
-ZeroDivisionError: float division by zero
