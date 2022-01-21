@@ -197,7 +197,7 @@ for i, (images, labels) in enumerate(test_loader):
         for level in range(0,len(model_timm.blocks),2):
             target_layers = [model_timm.blocks[level].norm1]
 
-            cam = cam_algo(model=model_timm, target_layers=target_layers,
+            cam = GradCAM(model=model_timm, target_layers=target_layers,
                            use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
                            )
             target_category = labels.item()
