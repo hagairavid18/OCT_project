@@ -186,7 +186,7 @@ for name, model in zip(names, models):
 
         if name =='res18':
             target_layers = [model.resnet.layer4[-1]]
-            target_layers = [model_timm.blocks[-1].norm1]
+            # target_layers = [model_timm.blocks[-1].norm1]
         elif name == 'vit_base_patch16_224':
             target_layers = [model.blocks[-1].norm1]
         else:
@@ -213,8 +213,8 @@ for name, model in zip(names, models):
                 # print(images.shape)
 
                 cam = cam_algo(model=model_timm, target_layers=target_layers,
-                               use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
-                               )
+                               use_cuda=True if torch.cuda.is_available() else False)#, reshape_transform=reshape_transform,
+                      #         )
                 target_category = labels.item()
                 grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True,targets=targets)
                 just_grads.append(grayscale_cam[0, :])
