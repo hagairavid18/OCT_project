@@ -216,7 +216,7 @@ for name, model in zip(names, models):
                                use_cuda=True if torch.cuda.is_available() else False)#, reshape_transform=reshape_transform,
                       #         )
                 target_category = labels.item()
-                grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True,targets=targets)
+                grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True)
                 just_grads.append(grayscale_cam[0, :])
                 image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
                 image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
