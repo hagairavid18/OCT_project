@@ -265,14 +265,14 @@ for name, model in zip(names, models):
             vis = show_cam_on_image(image_transformer_attribution, avg)
             vis = np.uint8(255 * vis)
             vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-            # plt.imshow(vis)
-            # plt.show()
+            plt.imshow(vis)
+            plt.show()
             avg = vis
             T = predicted.item() == labels.item()
-            # out = outputs_timm
-            #
-            # plt.bar(label_names, out.cpu().detach().numpy()[0])
-            # plt.xlabel(label_names)
+            out = outputs
+
+            plt.bar(label_names, out.cpu().detach().numpy()[0])
+            plt.xlabel(label_names)
             img_buf = io.BytesIO()
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
@@ -280,6 +280,7 @@ for name, model in zip(names, models):
             row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
                    label_names[k]]+[ None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
             if name == 'vit_base_patch16_224':
+                print('here')
                 row[7] =wandb.Image(attention)
             test_dt.add_data(*row)
         space_row = [None for _ in row]
