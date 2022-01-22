@@ -40,7 +40,7 @@ random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-# wandb.init(project="test_attn_plus_gradcam")
+wandb.init(project="test_attn_plus_gradcam")
 
 label_names = {
     0: "NORMAL",
@@ -84,8 +84,8 @@ attribution_generator = LRP(model_attn)
 
 pytorch_total_params = sum(p.numel() for p in model_timm.parameters())
 pytorch_total_params_train = sum(p.numel() for p in model_timm.parameters() if p.requires_grad)
-# wandb.log({"Total Params": pytorch_total_params})
-# wandb.log({"Trainable Params": pytorch_total_params_train})
+wandb.log({"Total Params": pytorch_total_params})
+wandb.log({"Trainable Params": pytorch_total_params_train})
 
 
 def generate_visualization(original_image, class_index=None):
@@ -130,7 +130,13 @@ total_arr = [0.0] * 10
 predictions = None
 ground_truth = None
 # Iterate through test dataset
-#  'XGradCAM', 'EigenGradCAM','EigenCAM', 'GradCAMPlusPlus'
+#  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
+
+columns = ["id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention", "GradCAM",
+            'Avg']
+# for a in label_names:
+#     columns.append("score_" + a)
+test_dt = wandb.Table(columns=columns)
 
 names = ["res18", 'vit_base_patch16_224']
 models = [Resnet18(4),model_timm ]
@@ -272,10 +278,12 @@ for name, model in zip(names, models):
             im = Image.open(img_buf)
 
             row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
-                   label_names[k]]+[wandb.Image(attention) if attention else None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
-            # test_dt.add_data(*row)
+                   label_names[k]]+[ None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
+            if name == 'vit_base_patch16_224':
+                row[7] =wandb.Image(attention)
+            test_dt.add_data(*row)
         space_row = [None for _ in row]
-        # test_dt.add_data(*space_row)
+        test_dt.add_data(*space_row)
         # if i % 50 == 0:
         #     wandb.log({f"Grads_{name}_{i}": test_dt})
         # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
@@ -286,5 +294,5 @@ for name, model in zip(names, models):
     metrics = {f'Test Accuracy_{name}': accuracy}
     for label in range(4):
         metrics[f'Test Accuracy_{name}' + label_names[label]] = correct_arr[label] / total_arr[label]
-    # wandb.log(metrics)
-    # wandb.log({f"Grads_{name}": test_dt})
+    wandb.log(metrics)
+    wandb.log({f"Grads_{name}": test_dt})
