@@ -186,6 +186,7 @@ for name, model in zip(names, models):
 
         if name =='res18':
             target_layers = [model.resnet.layer4[-1]]
+            target_layers = [model_timm.blocks[-1].norm1]
         elif name == 'vit_base_patch16_224':
             target_layers = [model.blocks[-1].norm1]
         else:
