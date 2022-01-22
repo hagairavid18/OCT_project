@@ -191,6 +191,7 @@ for name, model in zip(names, models):
         # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
         cams = [GradCAM]
         print(target_layers)
+        print(target_layers[0])
         print(Resnet18(4).resnet.layer4[-1])
 
 
