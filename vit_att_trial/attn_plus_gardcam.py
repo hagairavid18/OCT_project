@@ -282,6 +282,7 @@ for name, model in zip(names, models):
             if name == 'vit_base_patch16_224':
                 print('here')
                 row[7] =wandb.Image(attention)
+            print(row[7])
             test_dt.add_data(*row)
         space_row = [None for _ in row]
         test_dt.add_data(*space_row)
