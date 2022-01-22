@@ -38,7 +38,7 @@ np.random.seed(seed)
 random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-use_wandb= False
+use_wandb= True
 
 if use_wandb:
     wandb.init(project="test_attn_plus_gradcam")
