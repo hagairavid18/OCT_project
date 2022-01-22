@@ -184,6 +184,7 @@ for name, model in zip(names, models):
             predictions = torch.cat((predictions, predicted), 0)
             ground_truth = torch.cat((ground_truth, labels), 0)
         target_layers = [model.stages[-1][-1]]
+        print(target_layers)
         if "res" in name:
             target_layers = [model.resnet.layer4[-1]]
         elif name == 'vit_base_patch16_224':
