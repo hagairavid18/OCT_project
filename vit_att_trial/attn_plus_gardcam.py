@@ -111,8 +111,8 @@ def generate_visualization(original_image, class_index=None):
 def_args = {
     "train": ["../../../data/kermany/train"],
     "val": ["../../../data/kermany/val"],
-    # "test": ["../../data/kermany/test"],
-    "test": ["../../../Documents/GitHub/test"],
+    "test": ["../../data/kermany/test"],
+    # "test": ["../../../Documents/GitHub/test"],
 }
 
 label_names = [
