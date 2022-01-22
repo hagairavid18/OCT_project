@@ -143,20 +143,21 @@ if use_wandb:
 
 names = ["res18","convnext_xlarge", 'vit_base_patch16_224']
 models = [Resnet18(4),convnext_base(),model_timm ]
-for name, model in zip(names, models):
-    print(name)
-    if name != 'vit_base_patch16_224':
-        model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
-        model = model.to(device)
+for i, (images, labels) in enumerate(test_loader):
 
-    correct = 0.0
-    correct_arr = [0.0] * 10
-    total = 0.0
-    total_arr = [0.0] * 10
-    predictions = None
-    ground_truth = None
-    # Iterate through test dataset
-    for i, (images, labels) in enumerate(test_loader):
+    for name, model in zip(names, models):
+        print(name)
+        if name != 'vit_base_patch16_224':
+            model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
+            model = model.to(device)
+
+        correct = 0.0
+        correct_arr = [0.0] * 10
+        total = 0.0
+        total_arr = [0.0] * 10
+        predictions = None
+        ground_truth = None
+        # Iterate through test dataset
         if i % 10 == 0:
             print(f'image : {i}\n\n\n')
         images = Variable(images).to(device)
