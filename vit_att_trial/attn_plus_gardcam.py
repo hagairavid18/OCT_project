@@ -296,5 +296,5 @@ for name, model in zip(names, models):
     metrics = {f'Test Accuracy_{name}': accuracy}
     for label in range(4):
         metrics[f'Test Accuracy_{name}' + label_names[label]] = correct_arr[label] / total_arr[label]
-    wandb.log(metrics)
-    wandb.log({f"Grads_{name}": test_dt})
+wandb.log(metrics)
+wandb.log({f"Grads_{name}": test_dt})
