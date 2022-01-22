@@ -213,8 +213,8 @@ for name, model in zip(names, models):
                 # print(images.shape)
 
                 cam = cam_algo(model=model, target_layers=target_layers,
-                               use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
-                               )
+                               use_cuda=True if torch.cuda.is_available() else False)#, reshape_transform=reshape_transform,
+                               # )
                 target_category = labels.item()
                 grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True,targets=targets)
                 just_grads.append(grayscale_cam[0, :])
