@@ -148,6 +148,7 @@ for name, model in zip(names, models):
     if name != 'vit_base_patch16_224':
         model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
         model = model.to(device)
+
     correct = 0.0
     correct_arr = [0.0] * 10
     total = 0.0
