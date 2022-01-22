@@ -190,7 +190,7 @@ for name, model in zip(names, models):
             target_layers = [model.blocks[-1].norm1]
         # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
         cams = [GradCAM]
-        print(target_layers[0]['dwconv'])
+        print(target_layers[0])
         # print(target_layers[0])
         print([Resnet18(4).resnet.layer4[-1]])
 
