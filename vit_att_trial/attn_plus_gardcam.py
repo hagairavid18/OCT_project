@@ -183,11 +183,13 @@ for name, model in zip(names, models):
         else:
             predictions = torch.cat((predictions, predicted), 0)
             ground_truth = torch.cat((ground_truth, labels), 0)
-        target_layers = [model.downsample_layers[-1]]
+
         if name =='res18':
             target_layers = [model.resnet.layer4[-1]]
         elif name == 'vit_base_patch16_224':
             target_layers = [model.blocks[-1].norm1]
+        else:
+            target_layers = [model.downsample_layers[-1]]
         # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
         cams = [GradCAM]
         print(target_layers[0])
