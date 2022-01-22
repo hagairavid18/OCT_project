@@ -38,7 +38,7 @@ np.random.seed(seed)
 random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
-use_wandb= False
+use_wandb= True
 
 if use_wandb:
     wandb.init(project="test_attn_plus_gradcam")
@@ -215,6 +215,8 @@ for name, model in zip(names, models):
                 cam = cam_algo(model=model, target_layers=target_layers,
                                use_cuda=True if torch.cuda.is_available() else False)#, reshape_transform=reshape_transform,
                                # )
+                if name== 'vit_base_patch16_224':
+                    cam_algo.reshape_transform=reshape_transform
                 target_category = labels.item()
                 grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True,targets=targets)
                 just_grads.append(grayscale_cam[0, :])
