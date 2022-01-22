@@ -141,8 +141,8 @@ columns = ["id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","cur
 if use_wandb:
     test_dt = wandb.Table(columns=columns)
 
-names = ["convnext_xlarge","res18", 'vit_base_patch16_224']
-models = [convnext_base(),Resnet18(4),model_timm ]
+names = ["res18","convnext_xlarge", 'vit_base_patch16_224']
+models = [Resnet18(4),convnext_base(),model_timm ]
 for name, model in zip(names, models):
     print(name)
     if name != 'vit_base_patch16_224':
