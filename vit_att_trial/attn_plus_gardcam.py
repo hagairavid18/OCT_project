@@ -193,9 +193,9 @@ for name, model in zip(names, models):
             target_layers = [model.downsample_layers[-1]]
         # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
         cams = [GradCAM]
-        print(target_layers[0])
         # print(target_layers[0])
-        print([Resnet18(4).resnet.layer4[-1]])
+        # print(target_layers[0])
+        # print([Resnet18(4).resnet.layer4[-1]])
 
 
         # images = images.unsqueeze(0)
@@ -216,7 +216,9 @@ for name, model in zip(names, models):
                                use_cuda=True if torch.cuda.is_available() else False)#, reshape_transform=reshape_transform,
                                # )
                 if name== 'vit_base_patch16_224':
-                    cam_algo.reshape_transform=reshape_transform
+                    cam = cam_algo(model=model, target_layers=target_layers,
+                                   use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
+                    )
                 target_category = labels.item()
                 grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True,targets=targets)
                 just_grads.append(grayscale_cam[0, :])
