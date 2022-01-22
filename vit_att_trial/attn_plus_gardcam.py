@@ -27,8 +27,7 @@ from baselines.ViT.ViT_LRP import vit_base_patch16_224 as vit_LRP
 from baselines.ViT.ViT_explanation_generator import LRP
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
 from res_models import *
-
-
+from convnext import convnext_xlarge, convnext_base
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
@@ -39,8 +38,10 @@ np.random.seed(seed)
 random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
+use_wandb= False
 
-wandb.init(project="test_attn_plus_gradcam")
+if use_wandb:
+    wandb.init(project="test_attn_plus_gradcam")
 
 label_names = {
     0: "NORMAL",
@@ -84,8 +85,9 @@ attribution_generator = LRP(model_attn)
 
 pytorch_total_params = sum(p.numel() for p in model_timm.parameters())
 pytorch_total_params_train = sum(p.numel() for p in model_timm.parameters() if p.requires_grad)
-wandb.log({"Total Params": pytorch_total_params})
-wandb.log({"Trainable Params": pytorch_total_params_train})
+if use_wandb:
+    wandb.log({"Total Params": pytorch_total_params})
+    wandb.log({"Trainable Params": pytorch_total_params_train})
 
 
 def generate_visualization(original_image, class_index=None):
@@ -109,8 +111,8 @@ def generate_visualization(original_image, class_index=None):
 def_args = {
     "train": ["../../../data/kermany/train"],
     "val": ["../../../data/kermany/val"],
-    "test": ["../../data/kermany/test"],
-    # "test": ["../../../Documents/GitHub/test"],
+    # "test": ["../../data/kermany/test"],
+    "test": ["../../../Documents/GitHub/test"],
 }
 
 label_names = [
@@ -136,10 +138,11 @@ columns = ["id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","cur
             'Avg']
 # for a in label_names:
 #     columns.append("score_" + a)
-test_dt = wandb.Table(columns=columns)
+if use_wandb:
+    test_dt = wandb.Table(columns=columns)
 
-names = ["res18", 'vit_base_patch16_224']
-models = [Resnet18(4),model_timm ]
+names = ["convnext_xlarge","res18", 'vit_base_patch16_224']
+models = [convnext_base(),Resnet18(4),model_timm ]
 for name, model in zip(names, models):
     print(name)
     if name != 'vit_base_patch16_224':
@@ -265,14 +268,14 @@ for name, model in zip(names, models):
             vis = show_cam_on_image(image_transformer_attribution, avg)
             vis = np.uint8(255 * vis)
             vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-            plt.imshow(vis)
-            plt.show()
+            # plt.imshow(vis)
+            # plt.show()
             avg = vis
             T = predicted.item() == labels.item()
             out = outputs
 
             plt.bar(label_names, out.cpu().detach().numpy()[0])
-            plt.xlabel(label_names)
+            # plt.xlabel(label_names)
             img_buf = io.BytesIO()
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
@@ -283,9 +286,11 @@ for name, model in zip(names, models):
                 print('here')
                 row[7] =wandb.Image(attention)
             print(row[7])
-            test_dt.add_data(*row)
+            if use_wandb:
+                test_dt.add_data(*row)
         space_row = [None for _ in row]
-        test_dt.add_data(*space_row)
+        if use_wandb:
+            test_dt.add_data(*space_row)
         # if i % 50 == 0:
         #     wandb.log({f"Grads_{name}_{i}": test_dt})
         # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
@@ -296,5 +301,6 @@ for name, model in zip(names, models):
     metrics = {f'Test Accuracy_{name}': accuracy}
     for label in range(4):
         metrics[f'Test Accuracy_{name}' + label_names[label]] = correct_arr[label] / total_arr[label]
-wandb.log(metrics)
-wandb.log({f"Grads_{name}": test_dt})
+if use_wandb:
+    wandb.log(metrics)
+    wandb.log({f"Grads_{name}": test_dt})
