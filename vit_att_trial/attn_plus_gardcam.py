@@ -217,8 +217,11 @@ for i, (images, labels) in enumerate(test_loader):
             img_buf = io.BytesIO()
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
+            print(len(config['vit_base_patch16_224']['target_layers']))
+            print(len(gradcam))
             while len(gradcam)!= len(config['vit_base_patch16_224']['target_layers']):
                 gradcam.append(None)
+            print(len(gradcam))
             row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
                    config['label_names'][k]]+[ None] + [wandb.Image(cam) if cam is not  None else None for cam in gradcam ] +[wandb.Image(avg_cam)]
             if name == 'vit_base_patch16_224':
