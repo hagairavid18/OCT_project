@@ -167,6 +167,7 @@ for i, (images, labels) in enumerate(test_loader):
 
                 # layer by layer grad cam
                 for target_layer in config[name]['target_layers']:
+                    print(target_layer)
                     target_layer = [target_layer]
                     vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layer,
                                                                                       name, images, labels, targets)
