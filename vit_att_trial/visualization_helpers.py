@@ -39,7 +39,7 @@ def generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets):
                        use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
                        )
     target_category = labels.item()
-    print(cam.shape)
+    # print(cam.shape)
     grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True, targets=targets)
     vis,curr_grads= [],[]
     print(grayscale_cam.shape)
