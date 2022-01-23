@@ -292,7 +292,7 @@ for i, (images, labels) in enumerate(test_loader):
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
 
-            row = [i, wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
+            row = [str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
                    config['label_names'][k]]+[ None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
             if name == 'vit_base_patch16_224':
                 print('here')
