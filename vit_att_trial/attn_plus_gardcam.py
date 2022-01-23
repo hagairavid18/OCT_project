@@ -231,7 +231,7 @@ for i, (images, labels) in enumerate(test_loader):
             if config['use_wandb']:
                 test_dt.add_data(*row)
             if not config['visualize_all_class']:
-                k=3
+                break
 
 
 
