@@ -146,7 +146,7 @@ for i, (images, labels) in enumerate(test_loader):
 
     for index, name in enumerate(names):
         space_row = [None for _ in columns]
-        space_row[0] = name
+        space_row[0] = "##### {} #####".format(name)
         if config['use_wandb']:
             test_dt.add_data(*space_row)
         model = models[index]
@@ -187,15 +187,9 @@ for i, (images, labels) in enumerate(test_loader):
             predictions = torch.cat((predictions, predicted), 0)
             ground_truth = torch.cat((ground_truth, labels), 0)
         target_layers = config[name]['target_layers']
-        # if name =='res18':
-        #     target_layers = [model.resnet.layer4[-1]]
-        #     # target_layers = [model_timm.blocks[-1].norm1]
-        # elif name == 'vit_base_patch16_224':
-        #     target_layers = [model.blocks[-1].norm1]
-        # else:
-        #     target_layers = [model.downsample_layers[-1]]
 
-        image_transformer_attribution = None
+
+        # image_transformer_attribution = None
         for k in range(4):
             print("curr label: {}".format(k))
             if not config['visualize_all_class']:
@@ -302,10 +296,7 @@ for i, (images, labels) in enumerate(test_loader):
                 test_dt.add_data(*row)
             if not config['visualize_all_class']:
                 break
-        # space_row = [None for _ in row]
-        # space_row[0] = name
-        # if config['use_wandb']:
-        #     test_dt.add_data(*space_row)
+
 
 
 if config['use_wandb']:
