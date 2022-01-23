@@ -147,7 +147,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer4[-1]]},
 
           }
 
-names = ["res18","res50","res101","convnext_xlarge", 'vit_base_patch16_224']
+names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
 for i, (images, labels) in enumerate(test_loader):
 
     for name, model in zip(names, models):
