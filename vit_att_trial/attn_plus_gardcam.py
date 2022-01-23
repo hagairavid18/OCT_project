@@ -87,7 +87,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer4[i] for i in range(le
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
 
 columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
-          +[ cam for cam in config['cam_names']]+['Avg'] +["layer" for i in range(len(config['vit_base_patch16_224']['target_layers']))]
+          +[ cam for cam in config['cam_names']]+['Avg'] +["layer {}".format(i) for i in range(len(config['vit_base_patch16_224']['target_layers']))]
 
     # "test": ["../../../Documents/GitHub/test"]
 
@@ -167,7 +167,7 @@ for i, (images, labels) in enumerate(test_loader):
 
                 # layer by layer grad cam
                 for target_layer in config[name]['target_layers']:
-                    print(target_layer)
+                    # print(target_layer)
                     target_layer = [target_layer]
                     vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layer,
                                                                                       name, images, labels, targets)
