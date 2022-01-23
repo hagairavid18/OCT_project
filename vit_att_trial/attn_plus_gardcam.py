@@ -122,7 +122,7 @@ if config['use_wandb']:
 names = ["res18","res50"]
 for i, (images, labels) in enumerate(test_loader):
 
-    for name, index in enumerate(names):
+    for index, name in enumerate(names):
         model = models[index]
         print(name)
         if name != 'vit_base_patch16_224':
