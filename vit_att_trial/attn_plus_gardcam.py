@@ -217,11 +217,7 @@ for i, (images, labels) in enumerate(test_loader):
             img_buf = io.BytesIO()
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
-            print(len(config['vit_base_patch16_224']['target_layers']))
-            print(len(gradcam))
-            # while len(layer_cam)!= len(config['vit_base_patch16_224']['target_layers']):
-            #     layer_cam.append(None)
-            print(len(gradcam))
+
             row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
                    config['label_names'][k]]+[ None] +[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[wandb.Image(avg_cam)]
             row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
@@ -235,7 +231,7 @@ for i, (images, labels) in enumerate(test_loader):
             if config['use_wandb']:
                 test_dt.add_data(*row)
             if not config['visualize_all_class']:
-                break
+                k=3
 
 
 
