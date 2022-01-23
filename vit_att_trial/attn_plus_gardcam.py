@@ -68,10 +68,10 @@ attribution_generator = LRP(model_attn)
 models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
 
 
-config = {'res18':{'target_layers':[models[0].resnet.layer4[i] for i in range(len(models[0].resnet.layer4))]},
-          'res50':{'target_layers':[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4))]},
-          'res101':{'target_layers':[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4))]},
-          'res152':{'target_layers':[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4))]},
+config = {'res18':{'target_layers':[models[0].resnet.layer3[i] for i in range(len(models[0].resnet.layer3))]+[models[0].resnet.layer4[i] for i in range(len(models[0].resnet.layer4))]},
+          'res50':{'target_layers':[models[1].resnet.layer3[i] for i in range(len(models[1].resnet.layer3))]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4))]},
+          'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(len(models[2].resnet.layer3))]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4))]},
+          'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(len(models[3].resnet.layer3))]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4))]},
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[-1]]},
           'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks),2)]},
           'use_wandb': True,
@@ -125,10 +125,10 @@ for i, (images, labels) in enumerate(test_loader):
             model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
             model = model.to(device)
 
-        correct = 0.0
-        correct_arr = [0.0] * 10
-        total = 0.0
-        total_arr = [0.0] * 10
+        # correct = 0.0
+        # correct_arr = [0.0] * 10
+        # total = 0.0
+        # total_arr = [0.0] * 10
 
 
         # Iterate through test dataset
@@ -146,20 +146,18 @@ for i, (images, labels) in enumerate(test_loader):
         _, predicted = torch.max(outputs.data, 1)
 
         # Total number of labels
-        total += labels.size(0)
-        correct += (predicted == labels).sum()
+        # total += labels.size(0)
+        # correct += (predicted == labels).sum()
         print(labels)
 
-        for label in range(4):
-            correct_arr[label] += (((predicted == labels) & (labels == label)).sum())
-            total_arr[label] += (labels == label).sum()
+        # for label in range(4):
+        #     correct_arr[label] += (((predicted == labels) & (labels == label)).sum())
+        #     total_arr[label] += (labels == label).sum()
 
         # if i == 0:
         predictions = predicted
         ground_truth = labels
-        # else:
-        #     predictions = torch.cat((predictions, predicted), 0)
-        #     ground_truth = torch.cat((ground_truth, labels), 0)
+
         target_layers = [config[name]['target_layers'][-1]]
 
 
@@ -175,39 +173,23 @@ for i, (images, labels) in enumerate(test_loader):
             for cam_algo in config['cam_algs']:
 
                 vis, curr_grads,image_transformer_attribution = generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets)
-                res.append(vis)  # superimposed_img / 255)
-                just_grads.append(curr_grads)
+                res+=vis
+                just_grads+=curr_grads
 
             if config['layer_by_layer_cam']:
 
-                # layer by layer grad cam
-                for target_layer in config[name]['target_layers']:
-                    # print(target_layer)
-                    target_layer = [target_layer]
-                    vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layer,
-                                                                                      name, images, labels, targets)
-                    layer_cam.append(vis)  # superimposed_img / 255)
-                    # just_grads.append(curr_grads)
+                # # layer by layer grad cam
+                # for target_layer in config[name]['target_layers']:
+                #     # print(target_layer)
+                #     target_layer = [target_layer]
+                vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, config[name]['target_layers'],
+                                                                                  name, images, labels, targets)
+                layer_cam=vis
 
-
-                    # cam = GradCAM(model=model, target_layers=target_layer,
-                    #                use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
-                    #                )
-                    # target_category = labels.item()
-                    # grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True, targets=targets)
-                    # # just_grads.append(grayscale_cam[0, :])
-                    # image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
-                    # image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
-                    #         image_transformer_attribution.max() - image_transformer_attribution.min())
-                    # vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[0, :])
-                    # vis = np.uint8(255 * vis)
-                    # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-                    # res.append(vis)  # superimposed_img / 255)
 
 
 
             gradcam = res
-            # images = images.squeeze()
             attention = None
             avg = just_grads[0].copy() * 0
 
@@ -250,5 +232,5 @@ for i, (images, labels) in enumerate(test_loader):
 
 
 
-if config['use_wandb']:
-    wandb.log({f"Grads_{name}": test_dt})
+    if config['use_wandb']:
+        wandb.log({f"Grads_{name}": test_dt})
