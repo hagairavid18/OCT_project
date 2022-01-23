@@ -87,7 +87,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer4[i] for i in range(le
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
 
 columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
-          +[ cam for cam in config['cam_names']] +["layer" for i in range(len(model_timm.blocks),2)]+['Avg']
+          +[ cam for cam in config['cam_names']] +["layer" for i in range(len(config['vit_base_patch16_224']['target_layers']))]+['Avg']
 
     # "test": ["../../../Documents/GitHub/test"]
 
