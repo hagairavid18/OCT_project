@@ -63,15 +63,15 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           'res50':{'target_layers':[models[1].resnet.layer2[i] for i in range(0,len(models[1].resnet.layer2),2)]+[models[1].resnet.layer3[i] for i in range(0,len(models[1].resnet.layer3),2)]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4),2)]},
           'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(0,len(models[2].resnet.layer3),3)]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4),2)]},
           'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),5)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4),2)]},
-          'convnext_xlarge':{'target_layers':[models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
+          'convnext_xlarge':{'target_layers':[models[4].downsample_layers[0],models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
           'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
           'use_wandb': True,
           'visualize_all_class': False,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
           'label_names':["NORMAL","CNV","DME","DRUSEN"],
-          'cam_algs': [GradCAM,GradCAMPlusPlus,XGradCAM],
-          'cam_names':['GradCAM','GradCAMPlusPlus','XGradCAM'],
+          'cam_algs': [GradCAM,GradCAMPlusPlus,XGradCAM,ScoreCAM],
+          'cam_names':['GradCAM','GradCAMPlusPlus','XGradCAM','ScoreCAM'],
           'layer_by_layer_cam' :True
           }
 # Iterate through test dataset
@@ -81,10 +81,6 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 
 columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
           +[ cam for cam in config['cam_names']]+['Avg'] +["layer {}".format(i) for i in range(len(config['vit_base_patch16_224']['target_layers']))]
-
-    # "test": ["../../../Documents/GitHub/test"]
-
-
 
 if config['use_wandb']:
     wandb.init(project="test_attn_plus_gradcam")
@@ -98,12 +94,9 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
 
 
 
-
-# ,"res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224'
 names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
-# print(len(test_dataset))
-predictions = None
-ground_truth = None
+# predictions = None
+# ground_truth = None
 count = 0
 for i, (images, labels) in enumerate(test_loader):
     if count == 10:
@@ -113,8 +106,7 @@ for i, (images, labels) in enumerate(test_loader):
     images = Variable(images).to(device)
 
     labels = labels.to(device)
-    # print(labels)
-    if labels.item() !=3:
+    if labels.item() !=2:
         continue
     count+=1
 
@@ -128,17 +120,12 @@ for i, (images, labels) in enumerate(test_loader):
             model = model.to(device)
 
 
-
-        # Forward pass only to get logits/output
-        # print(images.shape)
         if name == 'vit_base_patch16_224':
             outputs_attn = model_attn(images)
         outputs = model(images)
 
         # Get predictions from the maximum value
         _, predictions = torch.max(outputs.data, 1)
-
-
 
         target_layers = [config[name]['target_layers'][-1]]
 
@@ -180,16 +167,10 @@ for i, (images, labels) in enumerate(test_loader):
                 attention = generate_visualization(images.squeeze(), attribution_generator=attribution_generator,class_index=k,)[0]
                 avg = attn_map.copy() * 6
             avg_cam = create_avg_img(avg,image_transformer_attribution,just_grads)
-            # # plt.imshow(avg)
-            # # plt.show()
-            # vis = show_cam_on_image(image_transformer_attribution, avg_cam)
-            # vis = np.uint8(255 * vis)
-            # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-            # # plt.imshow(vis)
-            # # plt.show()
-            # avg_cam = vis
+
             T = predictions.item() == labels.item()
             out = outputs
+            plt.clf()
 
             plt.bar(config['label_names'], out.cpu().detach().numpy()[0])
             # plt.xlabel(label_names)
@@ -215,4 +196,4 @@ for i, (images, labels) in enumerate(test_loader):
 
 
     if config['use_wandb']:
-        wandb.log({f"image_{i}": test_dt})
+        wandb.log({f"image_{count}": test_dt})
