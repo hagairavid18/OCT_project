@@ -144,7 +144,7 @@ for i, (images, labels) in enumerate(test_loader):
         else:
             predictions = torch.cat((predictions, predicted), 0)
             ground_truth = torch.cat((ground_truth, labels), 0)
-        target_layers = config[name]['target_layers']
+        target_layers = config[name]['target_layers'][-1]
 
 
         image_transformer_attribution = None
