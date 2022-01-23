@@ -42,22 +42,7 @@ random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-# def reshape_transform(tensor, height=31, width=32):
-#     result = tensor[:, 1:, :].reshape(tensor.size(0),
-#                                       height, width, tensor.size(2))
-#
-#     # Bring the channels to the first dimension,
-#     # like in CNNs.
-#     result = result.transpose(2, 3).transpose(1, 2)
-#     return result
-#
-# # create heatmap from mask on image
-# def show_cam_on_image(img, mask):
-#     heatmap = cv2.applyColorMap(np.uint8(255 * mask), cv2.COLORMAP_JET)
-#     heatmap = np.float32(heatmap) / 255
-#     cam = heatmap * 0.4 + np.float32(img)
-#     cam = cam / np.max(cam)
-#     return cam
+
 
 name = 'vit_base_patch16_224'
 # initialize ViT pretrained
@@ -156,7 +141,7 @@ if config['use_wandb']:
     test_dt = wandb.Table(columns=columns)
 
 #,"res101","res152","convnext_xlarge", 'vit_base_patch16_224'
-names = ["res18","res50"]
+names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
 for i, (images, labels) in enumerate(test_loader):
 
     for index, name in enumerate(names):
