@@ -1,9 +1,11 @@
-from attn_data import Kermany_DataSet
+from vit_att_trial.attn_data import Kermany_DataSet
 import timm
 import wandb
 import os
 from timm.models.swin_transformer import SwinTransformer
-from utils2 import *
+from vit_att_trial.utils2 import *
+
+from loging_gradcam import reshape_transform
 from model_running import *
 import numpy as np
 import random
@@ -23,12 +25,14 @@ import cv2
 import os
 import io
 from PIL import Image
-from baselines.ViT.ViT_LRP import vit_base_patch16_224 as vit_LRP
-from baselines.ViT.ViT_explanation_generator import LRP
+# from baselines.ViT.ViT_LRP import vit_base_patch16_224 as vit_LRP
+# from baselines.ViT.ViT_explanation_generator import LRP
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
 from res_models import *
 from convnext import convnext_xlarge, convnext_base
+from vit_att_trial.visualization_helpers import create_vit_models,generate_visualization
 
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
 torch.cuda.manual_seed_all(hash("so runs are repeatable") % seed)
@@ -37,105 +41,8 @@ torch.backends.cudnn.benchmark = False
 np.random.seed(seed)
 random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-use_wandb= True
 
-if use_wandb:
-    wandb.init(project="test_attn_plus_gradcam")
-
-label_names = {
-    0: "NORMAL",
-    1: "CNV",
-    2: "DME",
-    3: "DRUSEN",
-}
-CLS2IDX = label_names
-
-
-def reshape_transform(tensor, height=31, width=32):
-    result = tensor[:, 1:, :].reshape(tensor.size(0),
-                                      height, width, tensor.size(2))
-
-    # Bring the channels to the first dimension,
-    # like in CNNs.
-    result = result.transpose(2, 3).transpose(1, 2)
-    return result
-
-
-# create heatmap from mask on image
-def show_cam_on_image(img, mask):
-    heatmap = cv2.applyColorMap(np.uint8(255 * mask), cv2.COLORMAP_JET)
-    heatmap = np.float32(heatmap) / 255
-    cam = heatmap * 0.4 + np.float32(img)
-    cam = cam / np.max(cam)
-    return cam
-
-
-name = 'vit_base_patch16_224'
-# initialize ViT pretrained
-model_timm = timm.create_model(name, num_classes=4, img_size=(496, 512))
-model_timm.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
-model_timm = model_timm.to(device)
-
-model_attn = vit_LRP(num_classes=4, img_size=(496, 512))
-model_attn.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
-model_attn = model_attn.to(device)
-model_attn.eval()
-attribution_generator = LRP(model_attn)
-
-pytorch_total_params = sum(p.numel() for p in model_timm.parameters())
-pytorch_total_params_train = sum(p.numel() for p in model_timm.parameters() if p.requires_grad)
-if use_wandb:
-    wandb.log({"Total Params": pytorch_total_params})
-    wandb.log({"Trainable Params": pytorch_total_params_train})
-
-
-def generate_visualization(original_image, class_index=None):
-    transformer_attribution = attribution_generator.generate_LRP(original_image.unsqueeze(0).to(device),
-                                                                 method="transformer_attribution",
-                                                                 index=class_index).detach()
-    transformer_attribution = transformer_attribution.reshape(1, 1, 31, 32)
-    transformer_attribution = torch.nn.functional.interpolate(transformer_attribution, scale_factor=16, mode='bilinear')
-    transformer_attribution = transformer_attribution.reshape(496, 512).to(device).data.cpu().numpy()
-    transformer_attribution = (transformer_attribution - transformer_attribution.min()) / (
-            transformer_attribution.max() - transformer_attribution.min())
-    image_transformer_attribution = original_image.permute(1, 2, 0).data.cpu().numpy()
-    image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
-            image_transformer_attribution.max() - image_transformer_attribution.min())
-    vis = show_cam_on_image(image_transformer_attribution, transformer_attribution)
-    vis = np.uint8(255 * vis)
-    vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-    return vis, transformer_attribution
-
-
-def_args = {
-    "train": ["../../../data/kermany/train"],
-    "val": ["../../../data/kermany/val"],
-    "test": ["../../data/kermany/test"],
-    # "test": ["../../../Documents/GitHub/test"],
-}
-
-label_names = [
-    "NORMAL",
-    "CNV",
-    "DME",
-    "DRUSEN",
-]
-test_dataset = Kermany_DataSet(def_args['test'][0])
-test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
-                                          batch_size=1,
-                                          shuffle=True)
-# , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
-cams = [GradCAM]
-# Iterate through test dataset
-#  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
-
-columns = ["id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
-          +[ str(cam) for cam in cams]+['Avg']
-# for a in label_names:
-#     columns.append("score_" + a)
-if use_wandb:
-    test_dt = wandb.Table(columns=columns)
+model_timm, model_attn,attribution_generator = create_vit_models(device)
 models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
 
 config = {'res18':{'target_layers':[models[0].resnet.layer4[-1]]},
@@ -143,9 +50,74 @@ config = {'res18':{'target_layers':[models[0].resnet.layer4[-1]]},
           'res101':{'target_layers':[models[2].resnet.layer4[-1]]},
           'res152':{'target_layers':[models[3].resnet.layer4[-1]]},
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[-1]]},
-          'vit_base_patch16_224':{'target_layers':[models[5].blocks[-1].norm1]}
-
+          'vit_base_patch16_224':{'target_layers':[models[5].blocks[-1].norm1]},
+          'use_wandb': True,
+          'visualize_all_class': True,
+          'seed': 25,
+          'test_path' :"../../data/kermany/test",
+          'label_names':["NORMAL","CNV","DME","DRUSEN"],
+          'cam_algs': [GradCAM],
           }
+# Iterate through test dataset
+#  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
+
+columns = ["id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
+          +[ str(cam) for cam in config['cam_algs']]+['Avg']
+
+    # "test": ["../../../Documents/GitHub/test"]
+
+
+# use_wandb= True
+
+if config['use_wandb']:
+    wandb.init(project="test_attn_plus_gradcam")
+#
+# label_names = {
+#     0: "NORMAL",
+#     1: "CNV",
+#     2: "DME",
+#     3: "DRUSEN",
+# }
+CLS2IDX = config['label_names']
+
+
+
+
+
+
+
+
+
+
+# pytorch_total_params = sum(p.numel() for p in model_timm.parameters())
+# pytorch_total_params_train = sum(p.numel() for p in model_timm.parameters() if p.requires_grad)
+# if config['use_wandb']:
+#     wandb.log({"Total Params": pytorch_total_params})
+#     wandb.log({"Trainable Params": pytorch_total_params_train})
+
+
+
+
+
+# def_args = {
+#     "train": ["../../../data/kermany/train"],
+#     "val": ["../../../data/kermany/val"],
+#     "test": ["../../data/kermany/test"],
+#     # "test": ["../../../Documents/GitHub/test"],
+# }
+
+
+test_dataset = Kermany_DataSet(config['test_path'][0])
+test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
+                                          batch_size=1,
+                                          shuffle=True)
+# , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
+
+# for a in label_names:
+#     columns.append("score_" + a)
+if config['use_wandb']:
+    test_dt = wandb.Table(columns=columns)
+
 
 names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
 for i, (images, labels) in enumerate(test_loader):
@@ -285,24 +257,24 @@ for i, (images, labels) in enumerate(test_loader):
             T = predicted.item() == labels.item()
             out = outputs
 
-            plt.bar(label_names, out.cpu().detach().numpy()[0])
+            plt.bar(config['label_names'], out.cpu().detach().numpy()[0])
             # plt.xlabel(label_names)
             img_buf = io.BytesIO()
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
 
-            row = [i, wandb.Image(images), label_names[predicted.item()], wandb.Image(im), label_names[labels.item()], T,
-                   label_names[k]]+[ None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
+            row = [i, wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
+                   config['label_names'][k]]+[ None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
             if name == 'vit_base_patch16_224':
                 print('here')
                 row[7] =wandb.Image(attention)
             print(row[7])
-            if use_wandb:
+            if config['use_wandb']:
                 test_dt.add_data(*row)
         space_row = [None for _ in row]
-        if use_wandb:
+        if config['use_wandb']:
             test_dt.add_data(*space_row)
 
 
-if use_wandb:
+if config['use_wandb']:
     wandb.log({f"Grads_{name}": test_dt})
