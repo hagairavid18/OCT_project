@@ -79,7 +79,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer4[-1]]},
           'seed': 25,
           'test_path' :"../../data/kermany/test",
           'label_names':["NORMAL","CNV","DME","DRUSEN"],
-          'cam_algs': [GradCAM],
+          'cam_algs': [GradCAM,GradCAMPlusPlus],
           }
 # Iterate through test dataset
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',

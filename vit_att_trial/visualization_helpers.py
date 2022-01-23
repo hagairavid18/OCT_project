@@ -82,24 +82,15 @@ def create_avg_img(init_avg,image_transformer_attribution,just_grads):
     avg = init_avg
     for j, grad in enumerate(just_grads):
         g = grad.copy()
-        # plt.imshow(g)
-        # plt.title(str(j))
-        # plt.show()
         g = np.where(g < g.max() / 4, g / 7, g)
         g = np.exp(g)
         g = g - g.min()
         g = g / g.max()
-        # plt.imshow(g)
-        # plt.title(str(j))
-        # plt.show()
         avg += g
-        # print(avg.max())
-        avg_cam =  avg / avg.max()
-        vis = show_cam_on_image(image_transformer_attribution, avg_cam)
-        vis = np.uint8(255 * vis)
-        vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-        # plt.imshow(vis)
-        # plt.show()
-        avg_cam = vis
-        return  avg_cam
+    avg_cam =  avg / avg.max()
+    vis = show_cam_on_image(image_transformer_attribution, avg_cam)
+    vis = np.uint8(255 * vis)
+    vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+    avg_cam = vis
+    return  avg_cam
 
