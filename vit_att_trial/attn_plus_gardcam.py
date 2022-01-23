@@ -211,8 +211,8 @@ for i, (images, labels) in enumerate(test_loader):
             row = ["##### {} #####".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
                    config['label_names'][k]]+[ None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg_cam)]
             if name == 'vit_base_patch16_224':
-                row[7] =wandb.Image(attention)
-            print(row[7])
+                row[8] =wandb.Image(attention)
+            # print(row[7])
             if config['use_wandb']:
                 test_dt.add_data(*row)
             if not config['visualize_all_class']:
