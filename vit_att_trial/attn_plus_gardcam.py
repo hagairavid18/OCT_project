@@ -73,7 +73,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer3[i] for i in range(0,
           'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(0,len(models[2].resnet.layer3),2)]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4),2)]},
           'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),2)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4),2)]},
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[-1]]},
-          'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
+          'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks),2)]},
           'use_wandb': True,
           'visualize_all_class': False,
           'seed': 25,
@@ -89,7 +89,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer3[i] for i in range(0,
 
 
 columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
-          +[ cam for cam in config['cam_names']]+['Avg'] +["layer {}".format(i) for i in range(len(config['vit_base_patch16_224']['target_layers']),2)]
+          +[ cam for cam in config['cam_names']]+['Avg'] +["layer {}".format(i) for i in range(len(config['vit_base_patch16_224']['target_layers']))]
 
     # "test": ["../../../Documents/GitHub/test"]
 
