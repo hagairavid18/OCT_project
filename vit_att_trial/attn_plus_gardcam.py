@@ -68,24 +68,25 @@ attribution_generator = LRP(model_attn)
 models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
 
 
-config = {'res18':{'target_layers':[models[0].resnet.layer4[-1]]},
-          'res50':{'target_layers':[models[1].resnet.layer4[-1]]},
-          'res101':{'target_layers':[models[2].resnet.layer4[-1]]},
-          'res152':{'target_layers':[models[3].resnet.layer4[-1]]},
-          'convnext_xlarge':{'target_layers':[models[4].downsample_layers[-1]]},
-          'vit_base_patch16_224':{'target_layers':[models[5].blocks[-1].norm1]},
+config = {'res18':{'target_layers':[models[0].resnet.layer1[-1],models[0].resnet.layer2[-1],models[0].resnet.layer3[-1],models[0].resnet.layer4[-1]]},
+          'res50':{'target_layers':[models[0].resnet.layer1[-1],models[0].resnet.layer2[-1],models[0].resnet.layer3[-1],models[0].resnet.layer4[-1]]},
+          'res101':{'target_layers':[models[0].resnet.layer1[-1],models[0].resnet.layer2[-1],models[0].resnet.layer3[-1],models[0].resnet.layer4[-1]]},
+          'res152':{'target_layers':[models[0].resnet.layer1[-1],models[0].resnet.layer2[-1],models[0].resnet.layer3[-1],models[0].resnet.layer4[-1]]},
+          'convnext_xlarge':{'target_layers':[models[4].downsample_layers[0],models[4].downsample_layers[2],models[4].downsample_layers[-1]]},
+          'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks),2)]},
           'use_wandb': True,
           'visualize_all_class': False,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
           'label_names':["NORMAL","CNV","DME","DRUSEN"],
-          'cam_algs': [GradCAM,GradCAMPlusPlus],
+          'cam_algs': [GradCAM,GradCAMPlusPlus,XGradCAM],
+          'cam_names':['GradCAM','GradCAMPlusPlus','XGradCAM']
           }
 # Iterate through test dataset
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
 
 columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
-          +[ str(cam) for cam in config['cam_algs']]+['Avg']
+          +[ cam for cam in config['cam_names']] +["layer" for i in range(len(model_timm.blocks),2)]+['Avg']
 
     # "test": ["../../../Documents/GitHub/test"]
 
@@ -161,23 +162,25 @@ for i, (images, labels) in enumerate(test_loader):
                 res.append(vis)  # superimposed_img / 255)
                 just_grads.append(curr_grads)
 
-            # # layer by layer grad cam
-            # for level in range(0,len(model_timm.blocks),2):
-            #     target_layers = [model_timm.blocks[level].norm1]
-            #
-            #     cam = GradCAM(model=model_timm, target_layers=target_layers,
-            #                    use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
-            #                    )
-            #     target_category = labels.item()
-            #     grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True, targets=targets)
-            #     # just_grads.append(grayscale_cam[0, :])
-            #     image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
-            #     image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
-            #             image_transformer_attribution.max() - image_transformer_attribution.min())
-            #     vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[0, :])
-            #     vis = np.uint8(255 * vis)
-            #     vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-            #     res.append(vis)  # superimposed_img / 255)
+            if config['layer_by_layer_cam']:
+
+                # layer by layer grad cam
+                for target_layer in config[name]['target_layers']:
+                    target_layer = [target_layer]
+
+                    cam = GradCAM(model=model, target_layers=target_layer,
+                                   use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
+                                   )
+                    target_category = labels.item()
+                    grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True, targets=targets)
+                    # just_grads.append(grayscale_cam[0, :])
+                    image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
+                    image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
+                            image_transformer_attribution.max() - image_transformer_attribution.min())
+                    vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[0, :])
+                    vis = np.uint8(255 * vis)
+                    vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+                    res.append(vis)  # superimposed_img / 255)
 
 
 
@@ -207,8 +210,9 @@ for i, (images, labels) in enumerate(test_loader):
             img_buf = io.BytesIO()
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
-
-            row = ["##### {} #####".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
+            while len(gradcam)!= len(config['vit_base_patch16_224']['target_layers']):
+                gradcam.append(None)
+            row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
                    config['label_names'][k]]+[ None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg_cam)]
             if name == 'vit_base_patch16_224':
                 row[8] =wandb.Image(attention)
