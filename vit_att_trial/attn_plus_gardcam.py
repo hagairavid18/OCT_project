@@ -72,7 +72,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           'res50':{'target_layers':[models[1].resnet.layer2[i] for i in range(0,len(models[1].resnet.layer2),2)]+[models[1].resnet.layer3[i] for i in range(0,len(models[1].resnet.layer3),2)]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4),2)]},
           'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(0,len(models[2].resnet.layer3),3)]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4),2)]},
           'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),5)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4),2)]},
-          'convnext_xlarge':{'target_layers':[models[4].downsample_layers[-1]]},
+          'convnext_xlarge':{'target_layers':[models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
           'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
           'use_wandb': True,
           'visualize_all_class': False,
@@ -106,15 +106,16 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           shuffle=True)
 
 
-if config['use_wandb']:
-    test_dt = wandb.Table(columns=columns)
 
 
-names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
+# ,"res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224'
+names = ["res18"]
 # print(len(test_dataset))
 predictions = None
 ground_truth = None
 for i, (images, labels) in enumerate(test_loader):
+    if config['use_wandb']:
+        test_dt = wandb.Table(columns=columns)
     print(i)
     for index, name in enumerate(names):
 
@@ -125,11 +126,6 @@ for i, (images, labels) in enumerate(test_loader):
             model = model.to(device)
 
 
-
-
-        # Iterate through test dataset
-        # if i % 10 == 0:
-        #     print(f'image : {i}\n\n\n')
         images = Variable(images).to(device)
         labels = labels.to(device)
         # Forward pass only to get logits/output
@@ -141,18 +137,7 @@ for i, (images, labels) in enumerate(test_loader):
         # Get predictions from the maximum value
         _, predictions = torch.max(outputs.data, 1)
 
-        # Total number of labels
-        # total += labels.size(0)
-        # correct += (predicted == labels).sum()
-        # print(labels)
 
-        # for label in range(4):
-        #     correct_arr[label] += (((predicted == labels) & (labels == label)).sum())
-        #     total_arr[label] += (labels == label).sum()
-
-        # if i == 0:
-        # predictions = predicted
-        # ground_truth = labels
 
         target_layers = [config[name]['target_layers'][-1]]
 
