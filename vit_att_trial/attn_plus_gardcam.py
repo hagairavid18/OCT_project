@@ -30,7 +30,7 @@ from baselines.ViT.ViT_explanation_generator import LRP
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
 from res_models import *
 from convnext import convnext_xlarge, convnext_base
-from visualization_helpers import generate_visualization,reshape_transform,show_cam_on_image,create_avg_img
+from visualization_helpers import generate_visualization,reshape_transform,show_cam_on_image,create_avg_img,generate_cam_vis
 
 
 seed = 25
@@ -90,45 +90,11 @@ columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "
     # "test": ["../../../Documents/GitHub/test"]
 
 
-# use_wandb= True
 
 if config['use_wandb']:
     wandb.init(project="test_attn_plus_gradcam")
-#
-# label_names = {
-#     0: "NORMAL",
-#     1: "CNV",
-#     2: "DME",
-#     3: "DRUSEN",
-# }
+
 CLS2IDX = config['label_names']
-
-
-
-
-
-
-
-
-
-
-# pytorch_total_params = sum(p.numel() for p in model_timm.parameters())
-# pytorch_total_params_train = sum(p.numel() for p in model_timm.parameters() if p.requires_grad)
-# if config['use_wandb']:
-#     wandb.log({"Total Params": pytorch_total_params})
-#     wandb.log({"Trainable Params": pytorch_total_params_train})
-
-
-
-
-
-# def_args = {
-#     "train": ["../../../data/kermany/train"],
-#     "val": ["../../../data/kermany/val"],
-#     "test": ["../../data/kermany/test"],
-#     # "test": ["../../../Documents/GitHub/test"],
-# }
-
 
 test_dataset = Kermany_DataSet(config['test_path'][0])
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
@@ -136,20 +102,17 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           shuffle=True)
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
-# for a in label_names:
-#     columns.append("score_" + a)
+
 if config['use_wandb']:
     test_dt = wandb.Table(columns=columns)
+
 
 #,"res101","res152","convnext_xlarge", 'vit_base_patch16_224'
 names = ["res18","res50"]
 for i, (images, labels) in enumerate(test_loader):
 
     for index, name in enumerate(names):
-        # space_row = [None for _ in columns]
-        # space_row[0] = "##### {} #####".format(name)
-        # if config['use_wandb']:
-        #     test_dt.add_data(*space_row)
+
         model = models[index]
         print(name)
         if name != 'vit_base_patch16_224':
@@ -173,13 +136,6 @@ for i, (images, labels) in enumerate(test_loader):
         # Get predictions from the maximum value
         _, predicted = torch.max(outputs.data, 1)
 
-        # Total number of labels
-        # # total += labels.size(0)
-        # # correct += (predicted == labels).sum()
-        #
-        # for label in range(4):
-        #     correct_arr[label] += (((predicted == labels) & (labels == label)).sum())
-        #     total_arr[label] += (labels == label).sum()
 
         if i == 0:
             predictions = predicted
@@ -195,33 +151,15 @@ for i, (images, labels) in enumerate(test_loader):
             print("curr label: {}".format(k))
             if not config['visualize_all_class']:
                 k=labels[0]
-            just_grads = []
-            res = []
-            attn_diff_cls = []
-
+            just_grads,res,attn_diff_cls = [],[],[]
             target_categories = [k]
             targets = [ClassifierOutputTarget(category) for category in target_categories]
 
             for cam_algo in config['cam_algs']:
-                # print(images.shape)
 
-                cam = cam_algo(model=model, target_layers=target_layers,
-                               use_cuda=True if torch.cuda.is_available() else False)#, reshape_transform=reshape_transform,
-                               # )
-                if name== 'vit_base_patch16_224':
-                    cam = cam_algo(model=model, target_layers=target_layers,
-                                   use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
-                    )
-                target_category = labels.item()
-                grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True,targets=targets)
-                just_grads.append(grayscale_cam[0, :])
-                image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
-                image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
-                        image_transformer_attribution.max() - image_transformer_attribution.min())
-                vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[0, :])
-                vis = np.uint8(255 * vis)
-                vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+                vis, curr_grads = generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets):
                 res.append(vis)  # superimposed_img / 255)
+                just_grads.append(curr_grads)
 
             # # layer by layer grad cam
             # for level in range(0,len(model_timm.blocks),2):

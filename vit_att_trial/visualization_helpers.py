@@ -29,6 +29,25 @@ from pytorch_grad_cam.ablation_layer import AblationLayerVit
 # from res_models import *
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
+def generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets):
+    cam = cam_algo(model=model, target_layers=target_layers,
+                   use_cuda=True if torch.cuda.is_available() else False)  # , reshape_transform=reshape_transform,
+    # )
+    if name == 'vit_base_patch16_224':
+        cam = cam_algo(model=model, target_layers=target_layers,
+                       use_cuda=True if torch.cuda.is_available() else False, reshape_transform=reshape_transform,
+                       )
+    target_category = labels.item()
+    grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True, targets=targets)
+    curr_grads= (grayscale_cam[0, :])
+    image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
+    image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
+            image_transformer_attribution.max() - image_transformer_attribution.min())
+    vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[0, :])
+    vis = np.uint8(255 * vis)
+    vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+    return vis, curr_grads
+
 
 def generate_visualization(original_image,attribution_generator, class_index=None):
     transformer_attribution = attribution_generator.generate_LRP(original_image.unsqueeze(0).to(device),
