@@ -98,7 +98,7 @@ if config['use_wandb']:
 
 CLS2IDX = config['label_names']
 
-test_dataset = Kermany_DataSet(config['test_path'][0])
+test_dataset = Kermany_DataSet(config['test_path'])
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=1,
                                           shuffle=True)
