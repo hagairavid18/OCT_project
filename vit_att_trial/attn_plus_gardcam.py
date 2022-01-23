@@ -32,6 +32,8 @@ from res_models import *
 from convnext import convnext_xlarge, convnext_base
 from visualization_helpers import generate_visualization,reshape_transform,show_cam_on_image
 
+from vit_att_trial.visualization_helpers import create_avg_img
+
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
 torch.cuda.manual_seed_all(hash("so runs are repeatable") % seed)
@@ -83,7 +85,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer4[-1]]},
 # Iterate through test dataset
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
 
-columns = ["id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
+columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
           +[ str(cam) for cam in config['cam_algs']]+['Avg']
 
     # "test": ["../../../Documents/GitHub/test"]
@@ -145,10 +147,10 @@ names = ["res18","res50"]
 for i, (images, labels) in enumerate(test_loader):
 
     for index, name in enumerate(names):
-        space_row = [None for _ in columns]
-        space_row[0] = "##### {} #####".format(name)
-        if config['use_wandb']:
-            test_dt.add_data(*space_row)
+        # space_row = [None for _ in columns]
+        # space_row[0] = "##### {} #####".format(name)
+        # if config['use_wandb']:
+        #     test_dt.add_data(*space_row)
         model = models[index]
         print(name)
         if name != 'vit_base_patch16_224':
@@ -250,33 +252,16 @@ for i, (images, labels) in enumerate(test_loader):
             if name == 'vit_base_patch16_224':
                 cat, attn_map = generate_visualization(images.squeeze(),attribution_generator=attribution_generator)
                 attention = generate_visualization(images.squeeze(), attribution_generator=attribution_generator,class_index=k,)[0]
-
-
                 avg = attn_map.copy() * 6
-            # print(avg.max())
-            for j, grad in enumerate(just_grads):
-                g = grad.copy()
-                # plt.imshow(g)
-                # plt.title(str(j))
-                # plt.show()
-                g = np.where(g < g.max() / 4, g / 7, g)
-                g = np.exp(g)
-                g = g - g.min()
-                g = g / g.max()
-                # plt.imshow(g)
-                # plt.title(str(j))
-                # plt.show()
-                avg += g
-                # print(avg.max())
-            avg = avg / avg.max()
-            # plt.imshow(avg)
-            # plt.show()
-            vis = show_cam_on_image(image_transformer_attribution, avg)
-            vis = np.uint8(255 * vis)
-            vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-            # plt.imshow(vis)
-            # plt.show()
-            avg = vis
+            avg_cam = create_avg_img(avg,image_transformer_attribution)
+            # # plt.imshow(avg)
+            # # plt.show()
+            # vis = show_cam_on_image(image_transformer_attribution, avg_cam)
+            # vis = np.uint8(255 * vis)
+            # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+            # # plt.imshow(vis)
+            # # plt.show()
+            # avg_cam = vis
             T = predicted.item() == labels.item()
             out = outputs
 
@@ -286,10 +271,9 @@ for i, (images, labels) in enumerate(test_loader):
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
 
-            row = [str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-                   config['label_names'][k]]+[ None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg)]
+            row = ["##### {} #####".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
+                   config['label_names'][k]]+[ None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg_cam)]
             if name == 'vit_base_patch16_224':
-                print('here')
                 row[7] =wandb.Image(attention)
             print(row[7])
             if config['use_wandb']:
