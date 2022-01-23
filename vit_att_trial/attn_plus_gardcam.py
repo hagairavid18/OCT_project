@@ -112,6 +112,8 @@ if config['use_wandb']:
 #,"res101","res152","convnext_xlarge", 'vit_base_patch16_224'
 names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
 print(len(test_dataset))
+predictions = None
+ground_truth = None
 for i, (images, labels) in enumerate(test_loader):
     print('here')
 
@@ -127,8 +129,7 @@ for i, (images, labels) in enumerate(test_loader):
         correct_arr = [0.0] * 10
         total = 0.0
         total_arr = [0.0] * 10
-        predictions = None
-        ground_truth = None
+
 
         # Iterate through test dataset
         if i % 10 == 0:
@@ -153,12 +154,12 @@ for i, (images, labels) in enumerate(test_loader):
             correct_arr[label] += (((predicted == labels) & (labels == label)).sum())
             total_arr[label] += (labels == label).sum()
 
-        if i == 0:
-            predictions = predicted
-            ground_truth = labels
-        else:
-            predictions = torch.cat((predictions, predicted), 0)
-            ground_truth = torch.cat((ground_truth, labels), 0)
+        # if i == 0:
+        predictions = predicted
+        ground_truth = labels
+        # else:
+        #     predictions = torch.cat((predictions, predicted), 0)
+        #     ground_truth = torch.cat((ground_truth, labels), 0)
         target_layers = [config[name]['target_layers'][-1]]
 
 
