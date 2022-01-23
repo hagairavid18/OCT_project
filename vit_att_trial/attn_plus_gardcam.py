@@ -122,8 +122,8 @@ if config['use_wandb']:
 names = ["res18","res50"]
 for i, (images, labels) in enumerate(test_loader):
 
-    for name, i in enumerate(names):
-        model = models[i]
+    for name, index in enumerate(names):
+        model = models[index]
         print(name)
         if name != 'vit_base_patch16_224':
             model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
