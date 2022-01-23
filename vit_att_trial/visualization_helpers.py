@@ -47,14 +47,14 @@ def generate_visualization(original_image,attribution_generator, class_index=Non
     vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
     return vis, transformer_attribution
 
-# def reshape_transform(tensor, height=31, width=32):
-#     result = tensor[:, 1:, :].reshape(tensor.size(0),
-#                                       height, width, tensor.size(2))
-#
-#     # Bring the channels to the first dimension,
-#     # like in CNNs.
-#     result = result.transpose(2, 3).transpose(1, 2)
-#     return result
+def reshape_transform(tensor, height=31, width=32):
+    result = tensor[:, 1:, :].reshape(tensor.size(0),
+                                      height, width, tensor.size(2))
+
+    # Bring the channels to the first dimension,
+    # like in CNNs.
+    result = result.transpose(2, 3).transpose(1, 2)
+    return result
 
 # create heatmap from mask on image
 def show_cam_on_image(img, mask):

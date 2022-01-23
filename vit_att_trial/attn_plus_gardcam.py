@@ -30,7 +30,7 @@ from baselines.ViT.ViT_explanation_generator import LRP
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
 from res_models import *
 from convnext import convnext_xlarge, convnext_base
-from visualization_helpers import generate_visualization
+from visualization_helpers import generate_visualization,reshape_transform,show_cam_on_image
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
@@ -42,22 +42,22 @@ random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-def reshape_transform(tensor, height=31, width=32):
-    result = tensor[:, 1:, :].reshape(tensor.size(0),
-                                      height, width, tensor.size(2))
-
-    # Bring the channels to the first dimension,
-    # like in CNNs.
-    result = result.transpose(2, 3).transpose(1, 2)
-    return result
-
-# create heatmap from mask on image
-def show_cam_on_image(img, mask):
-    heatmap = cv2.applyColorMap(np.uint8(255 * mask), cv2.COLORMAP_JET)
-    heatmap = np.float32(heatmap) / 255
-    cam = heatmap * 0.4 + np.float32(img)
-    cam = cam / np.max(cam)
-    return cam
+# def reshape_transform(tensor, height=31, width=32):
+#     result = tensor[:, 1:, :].reshape(tensor.size(0),
+#                                       height, width, tensor.size(2))
+#
+#     # Bring the channels to the first dimension,
+#     # like in CNNs.
+#     result = result.transpose(2, 3).transpose(1, 2)
+#     return result
+#
+# # create heatmap from mask on image
+# def show_cam_on_image(img, mask):
+#     heatmap = cv2.applyColorMap(np.uint8(255 * mask), cv2.COLORMAP_JET)
+#     heatmap = np.float32(heatmap) / 255
+#     cam = heatmap * 0.4 + np.float32(img)
+#     cam = cam / np.max(cam)
+#     return cam
 
 name = 'vit_base_patch16_224'
 # initialize ViT pretrained
