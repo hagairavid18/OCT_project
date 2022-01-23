@@ -138,12 +138,12 @@ if use_wandb:
     test_dt = wandb.Table(columns=columns)
 models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
 
-config = {'res18':{'target layers':[models[0].resnet.layer4[-1]]},
-          'res50':{'target layers':[models[1].resnet.layer4[-1]]},
-          'res101':{'target layers':[models[2].resnet.layer4[-1]]},
-          'res152':{'target layers':[models[3].resnet.layer4[-1]]},
-          'convnext_xlarge':{'target layers':[models[4].downsample_layers[-1]]},
-          'vit_base_patch16_224':{'target layers':[models[5].blocks[-1].norm1]}
+config = {'res18':{'target_layers':[models[0].resnet.layer4[-1]]},
+          'res50':{'target_layers':[models[1].resnet.layer4[-1]]},
+          'res101':{'target_layers':[models[2].resnet.layer4[-1]]},
+          'res152':{'target_layers':[models[3].resnet.layer4[-1]]},
+          'convnext_xlarge':{'target_layers':[models[4].downsample_layers[-1]]},
+          'vit_base_patch16_224':{'target_layers':[models[5].blocks[-1].norm1]}
 
           }
 
