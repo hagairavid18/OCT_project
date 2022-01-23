@@ -30,9 +30,8 @@ from baselines.ViT.ViT_explanation_generator import LRP
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
 from res_models import *
 from convnext import convnext_xlarge, convnext_base
-from visualization_helpers import generate_visualization,reshape_transform,show_cam_on_image
+from visualization_helpers import generate_visualization,reshape_transform,show_cam_on_image,create_avg_img
 
-from vit_att_trial.visualization_helpers import create_avg_img
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
