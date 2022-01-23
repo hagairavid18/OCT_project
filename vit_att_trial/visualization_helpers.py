@@ -26,9 +26,9 @@ from PIL import Image
 from baselines.ViT.ViT_LRP import vit_base_patch16_224 as vit_LRP
 from baselines.ViT.ViT_explanation_generator import LRP
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
-from res_models import *
-from convnext import convnext_xlarge, convnext_base
-from visualization_helpers import generate_visualization
+# from res_models import *
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
 
 def generate_visualization(original_image, class_index=None):
     transformer_attribution = attribution_generator.generate_LRP(original_image.unsqueeze(0).to(device),
