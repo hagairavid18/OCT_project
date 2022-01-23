@@ -123,9 +123,13 @@ for i, (images, labels) in enumerate(test_loader):
             model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
             model = model.to(device)
 
-
+        correct = 0.0
+        correct_arr = [0.0] * 10
+        total = 0.0
+        total_arr = [0.0] * 10
         predictions = None
         ground_truth = None
+
         # Iterate through test dataset
         if i % 10 == 0:
             print(f'image : {i}\n\n\n')
@@ -139,8 +143,14 @@ for i, (images, labels) in enumerate(test_loader):
 
         # Get predictions from the maximum value
         _, predicted = torch.max(outputs.data, 1)
-        print(outputs)
 
+        # Total number of labels
+        total += labels.size(0)
+        correct += (predicted == labels).sum()
+
+        for label in range(4):
+            correct_arr[label] += (((predicted == labels) & (labels == label)).sum())
+            total_arr[label] += (labels == label).sum()
 
         if i == 0:
             predictions = predicted
