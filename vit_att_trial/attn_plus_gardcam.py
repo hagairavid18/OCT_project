@@ -114,7 +114,7 @@ for i, (images, labels) in enumerate(test_loader):
 
     labels = labels.to(device)
     # print(labels)
-    if labels.item() !=2:
+    if labels.item() !=3:
         continue
     count+=1
 
