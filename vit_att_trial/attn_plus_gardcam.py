@@ -1,4 +1,4 @@
-from vit_att_trial.attn_data import Kermany_DataSet
+from attn_data import Kermany_DataSet
 import timm
 import wandb
 import os
@@ -30,7 +30,7 @@ from PIL import Image
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
 from res_models import *
 from convnext import convnext_xlarge, convnext_base
-from vit_att_trial.visualization_helpers import create_vit_models,generate_visualization
+from visualization_helpers import create_vit_models,generate_visualization
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 seed = 25
