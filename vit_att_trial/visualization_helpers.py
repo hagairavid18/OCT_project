@@ -78,7 +78,7 @@ def create_vit_models():
     attribution_generator = LRP(model_attn)
     return  model_timm, model_attn,attribution_generator
 
-def create_avg_img(init_avg,image_transformer_attribution):
+def create_avg_img(init_avg,image_transformer_attribution,just_grads):
     avg = init_avg
     for j, grad in enumerate(just_grads):
         g = grad.copy()

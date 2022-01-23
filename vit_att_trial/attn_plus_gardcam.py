@@ -252,7 +252,7 @@ for i, (images, labels) in enumerate(test_loader):
                 cat, attn_map = generate_visualization(images.squeeze(),attribution_generator=attribution_generator)
                 attention = generate_visualization(images.squeeze(), attribution_generator=attribution_generator,class_index=k,)[0]
                 avg = attn_map.copy() * 6
-            avg_cam = create_avg_img(avg,image_transformer_attribution)
+            avg_cam = create_avg_img(avg,image_transformer_attribution,just_grads)
             # # plt.imshow(avg)
             # # plt.show()
             # vis = show_cam_on_image(image_transformer_attribution, avg_cam)
