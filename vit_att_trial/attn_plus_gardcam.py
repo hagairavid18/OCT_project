@@ -178,7 +178,7 @@ for i, (images, labels) in enumerate(test_loader):
             target_categories = [k]
             targets = [ClassifierOutputTarget(category) for category in target_categories]
 
-            for cam_algo in cams:
+            for cam_algo in config['cam_algs']:
                 # print(images.shape)
 
                 cam = cam_algo(model=model, target_layers=target_layers,
