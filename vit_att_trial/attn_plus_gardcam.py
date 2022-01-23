@@ -220,7 +220,7 @@ for i, (images, labels) in enumerate(test_loader):
             while len(gradcam)!= len(config['vit_base_patch16_224']['target_layers']):
                 gradcam.append(None)
             row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-                   config['label_names'][k]]+[ None] + [wandb.Image(cam) for cam in gradcam ] +[wandb.Image(avg_cam)]
+                   config['label_names'][k]]+[ None] + [wandb.Image(cam) if cam else None for cam in gradcam ] +[wandb.Image(avg_cam)]
             if name == 'vit_base_patch16_224':
                 row[8] =wandb.Image(attention)
             # print(row[7])
