@@ -157,7 +157,7 @@ for i, (images, labels) in enumerate(test_loader):
 
             for cam_algo in config['cam_algs']:
 
-                vis, curr_grads = generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets):
+                vis, curr_grads = generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets)
                 res.append(vis)  # superimposed_img / 255)
                 just_grads.append(curr_grads)
 
