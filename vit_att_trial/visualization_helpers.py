@@ -30,7 +30,7 @@ from pytorch_grad_cam.ablation_layer import AblationLayerVit
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
-def generate_visualization(original_image, class_index=None):
+def generate_visualization(original_image,attribution_generator, class_index=None):
     transformer_attribution = attribution_generator.generate_LRP(original_image.unsqueeze(0).to(device),
                                                                  method="transformer_attribution",
                                                                  index=class_index).detach()

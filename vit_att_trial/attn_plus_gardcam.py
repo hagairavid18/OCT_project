@@ -225,8 +225,8 @@ for i, (images, labels) in enumerate(test_loader):
             avg = just_grads[0].copy() * 0
 
             if name == 'vit_base_patch16_224':
-                cat, attn_map = generate_visualization(images.squeeze())
-                attention = generate_visualization(images.squeeze(), class_index=k)[0]
+                cat, attn_map = generate_visualization(images.squeeze(),attribution_generator=attribution_generator)
+                attention = generate_visualization(images.squeeze(), attribution_generator=attribution_generator,class_index=k,)[0]
 
 
                 avg = attn_map.copy() * 6
