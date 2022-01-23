@@ -108,8 +108,11 @@ for i, (images, labels) in enumerate(test_loader):
     if config['use_wandb']:
         test_dt = wandb.Table(columns=columns)
     images = Variable(images).to(device)
+
     labels = labels.to(device)
     print(labels)
+    if labels.item() !=0:
+        continue
     print(i)
     for index, name in enumerate(names):
 
