@@ -108,7 +108,7 @@ if config['use_wandb']:
 
 
 #,"res101","res152","convnext_xlarge", 'vit_base_patch16_224'
-names = ["res18","res50"]
+names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
 for i, (images, labels) in enumerate(test_loader):
 
     for index, name in enumerate(names):
