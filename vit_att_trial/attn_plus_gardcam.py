@@ -118,8 +118,8 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
 if config['use_wandb']:
     test_dt = wandb.Table(columns=columns)
 
-#,"res50","res101","res152","convnext_xlarge",
-names = ["res18" 'vit_base_patch16_224']
+#,"res101","res152","convnext_xlarge", 'vit_base_patch16_224'
+names = ["res18","res50"]
 for i, (images, labels) in enumerate(test_loader):
 
     for name, i in enumerate(names):
