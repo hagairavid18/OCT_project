@@ -87,7 +87,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer4[i] for i in range(le
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
 
 columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
-          +[ cam for cam in config['cam_names']] +["layer" for i in range(len(config['vit_base_patch16_224']['target_layers']))]+['Avg']
+          +[ cam for cam in config['cam_names']]+['Avg'] +["layer" for i in range(len(config['vit_base_patch16_224']['target_layers']))]
 
     # "test": ["../../../Documents/GitHub/test"]
 
@@ -219,13 +219,16 @@ for i, (images, labels) in enumerate(test_loader):
             im = Image.open(img_buf)
             print(len(config['vit_base_patch16_224']['target_layers']))
             print(len(gradcam))
-            while len(layer_cam)!= len(config['vit_base_patch16_224']['target_layers']):
-                layer_cam.append(None)
+            # while len(layer_cam)!= len(config['vit_base_patch16_224']['target_layers']):
+            #     layer_cam.append(None)
             print(len(gradcam))
             row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-                   config['label_names'][k]]+[ None] +[wandb.Image(gradcam[cam]) for cam in gradcam]+ [ layer if layer is not None else None for layer in layer_cam] +[wandb.Image(avg_cam)]
-            # for pos in range(len(layer_cam)):
-            #     row[9+pos] = wandb.Image(layer_cam[pos])
+                   config['label_names'][k]]+[ None] +[wandb.Image(gradcam[cam]) for cam in gradcam]+[wandb.Image(avg_cam)]
+            row_2 = [  None for _ in len(config['vit_base_patch16_224']['target_layers'])]
+            for pos in range(len(layer_cam)):
+                row_2[pos] = wandb.Image(layer_cam[pos])
+            row+=row2
+
             if name == 'vit_base_patch16_224':
                 row[8] =wandb.Image(attention)
             # print(row[7])
