@@ -40,6 +40,7 @@ def generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets):
     target_category = labels.item()
     grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True, targets=targets)
     vis,curr_grads= [],[]
+    print(grayscale_cam.shape)
     for i in range(grayscale_cam.shape[0]):
         print(i)
         print(len(vis))
