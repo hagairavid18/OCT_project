@@ -42,7 +42,7 @@ np.random.seed(seed)
 random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 
-model_timm, model_attn,attribution_generator = create_vit_models(device)
+model_timm, model_attn,attribution_generator = create_vit_models()
 models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
 
 config = {'res18':{'target_layers':[models[0].resnet.layer4[-1]]},
