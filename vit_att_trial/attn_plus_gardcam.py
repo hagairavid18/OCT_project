@@ -57,16 +57,7 @@ model_attn = model_attn.to(device)
 model_attn.eval()
 attribution_generator = LRP(model_attn)
 
-
-
-
-
-# model_timm, model_attn,attribution_generator = create_vit_models()
-
-
-
 models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
-
 
 config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,len(models[0].resnet.layer2))]+[models[0].resnet.layer3[i] for i in range(0,len(models[0].resnet.layer3))]+[models[0].resnet.layer4[i] for i in range(len(models[0].resnet.layer4),2)]},
           'res50':{'target_layers':[models[1].resnet.layer2[i] for i in range(0,len(models[1].resnet.layer2),2)]+[models[1].resnet.layer3[i] for i in range(0,len(models[1].resnet.layer3),2)]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4),2)]},
@@ -109,13 +100,16 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
 
 
 # ,"res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224'
-names = ["res18"]
+names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
 # print(len(test_dataset))
 predictions = None
 ground_truth = None
 for i, (images, labels) in enumerate(test_loader):
     if config['use_wandb']:
         test_dt = wandb.Table(columns=columns)
+    images = Variable(images).to(device)
+    labels = labels.to(device)
+    print(labels)
     print(i)
     for index, name in enumerate(names):
 
@@ -126,8 +120,7 @@ for i, (images, labels) in enumerate(test_loader):
             model = model.to(device)
 
 
-        images = Variable(images).to(device)
-        labels = labels.to(device)
+
         # Forward pass only to get logits/output
         # print(images.shape)
         if name == 'vit_base_patch16_224':
