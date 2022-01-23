@@ -73,7 +73,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer3[i] for i in range(0,
           'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(0,len(models[2].resnet.layer3),2)]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4),2)]},
           'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),2)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4),2)]},
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[-1]]},
-          'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks),2)]},
+          'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
           'use_wandb': True,
           'visualize_all_class': False,
           'seed': 25,
@@ -111,7 +111,7 @@ if config['use_wandb']:
 
 
 names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
-print(len(test_dataset))
+# print(len(test_dataset))
 predictions = None
 ground_truth = None
 for i, (images, labels) in enumerate(test_loader):
@@ -144,7 +144,7 @@ for i, (images, labels) in enumerate(test_loader):
         # Total number of labels
         # total += labels.size(0)
         # correct += (predicted == labels).sum()
-        print(labels)
+        # print(labels)
 
         # for label in range(4):
         #     correct_arr[label] += (((predicted == labels) & (labels == label)).sum())
