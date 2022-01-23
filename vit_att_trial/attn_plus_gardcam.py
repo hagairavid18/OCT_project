@@ -68,10 +68,10 @@ attribution_generator = LRP(model_attn)
 models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
 
 
-config = {'res18':{'target_layers':[models[0].resnet.layer3[i] for i in range(1,len(models[0].resnet.layer3))]+[models[0].resnet.layer4[i] for i in range(len(models[0].resnet.layer4))]},
-          'res50':{'target_layers':[models[1].resnet.layer3[i] for i in range(1,len(models[1].resnet.layer3))]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4))]},
-          'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(1,len(models[2].resnet.layer3))]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4))]},
-          'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(1,len(models[3].resnet.layer3))]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4))]},
+config = {'res18':{'target_layers':[models[0].resnet.layer3[i] for i in range(0,len(models[0].resnet.layer3),2)]+[models[0].resnet.layer4[i] for i in range(len(models[0].resnet.layer4),2)]},
+          'res50':{'target_layers':[models[1].resnet.layer3[i] for i in range(0,len(models[1].resnet.layer3),2)]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4),2)]},
+          'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(0,len(models[2].resnet.layer3),2)]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4),2)]},
+          'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),2)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4),2)]},
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[-1]]},
           'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
           'use_wandb': True,
@@ -85,9 +85,11 @@ config = {'res18':{'target_layers':[models[0].resnet.layer3[i] for i in range(1,
           }
 # Iterate through test dataset
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
+# , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
+
 
 columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
-          +[ cam for cam in config['cam_names']]+['Avg'] +["layer {}".format(i) for i in range(len(config['vit_base_patch16_224']['target_layers']))]
+          +[ cam for cam in config['cam_names']]+['Avg'] +["layer {}".format(i) for i in range(len(config['vit_base_patch16_224']['target_layers']),2)]
 
     # "test": ["../../../Documents/GitHub/test"]
 
@@ -102,21 +104,18 @@ test_dataset = Kermany_DataSet(config['test_path'])
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=1,
                                           shuffle=True)
-# , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 
 if config['use_wandb']:
     test_dt = wandb.Table(columns=columns)
 
 
-#,"res101","res152","convnext_xlarge", 'vit_base_patch16_224'
 names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
 print(len(test_dataset))
 predictions = None
 ground_truth = None
 for i, (images, labels) in enumerate(test_loader):
-    print('here')
-
+    print(i)
     for index, name in enumerate(names):
 
         model = models[index]
@@ -125,15 +124,12 @@ for i, (images, labels) in enumerate(test_loader):
             model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
             model = model.to(device)
 
-        # correct = 0.0
-        # correct_arr = [0.0] * 10
-        # total = 0.0
-        # total_arr = [0.0] * 10
+
 
 
         # Iterate through test dataset
-        if i % 10 == 0:
-            print(f'image : {i}\n\n\n')
+        # if i % 10 == 0:
+        #     print(f'image : {i}\n\n\n')
         images = Variable(images).to(device)
         labels = labels.to(device)
         # Forward pass only to get logits/output
@@ -143,7 +139,7 @@ for i, (images, labels) in enumerate(test_loader):
         outputs = model(images)
 
         # Get predictions from the maximum value
-        _, predicted = torch.max(outputs.data, 1)
+        _, predictions = torch.max(outputs.data, 1)
 
         # Total number of labels
         # total += labels.size(0)
@@ -155,15 +151,15 @@ for i, (images, labels) in enumerate(test_loader):
         #     total_arr[label] += (labels == label).sum()
 
         # if i == 0:
-        predictions = predicted
-        ground_truth = labels
+        # predictions = predicted
+        # ground_truth = labels
 
         target_layers = [config[name]['target_layers'][-1]]
 
 
         image_transformer_attribution = None
         for k in range(4):
-            print("curr label: {}".format(k))
+            # print("curr label: {}".format(k))
             if not config['visualize_all_class']:
                 k=labels[0]
             just_grads,res,attn_diff_cls,layer_cam = [],[],[],[]
@@ -206,7 +202,7 @@ for i, (images, labels) in enumerate(test_loader):
             # # plt.imshow(vis)
             # # plt.show()
             # avg_cam = vis
-            T = predicted.item() == labels.item()
+            T = predictions.item() == labels.item()
             out = outputs
 
             plt.bar(config['label_names'], out.cpu().detach().numpy()[0])
@@ -215,7 +211,7 @@ for i, (images, labels) in enumerate(test_loader):
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
 
-            row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
+            row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
                    config['label_names'][k]]+[ None] +[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[wandb.Image(avg_cam)]
             row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
             for pos in range(len(layer_cam)):
