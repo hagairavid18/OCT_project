@@ -145,6 +145,10 @@ names = ["res18","res50"]
 for i, (images, labels) in enumerate(test_loader):
 
     for index, name in enumerate(names):
+        space_row = [None for _ in columns]
+        space_row[0] = name
+        if config['use_wandb']:
+            test_dt.add_data(*space_row)
         model = models[index]
         print(name)
         if name != 'vit_base_patch16_224':
@@ -298,9 +302,10 @@ for i, (images, labels) in enumerate(test_loader):
                 test_dt.add_data(*row)
             if not config['visualize_all_class']:
                 break
-        space_row = [None for _ in row]
-        if config['use_wandb']:
-            test_dt.add_data(*space_row)
+        # space_row = [None for _ in row]
+        # space_row[0] = name
+        # if config['use_wandb']:
+        #     test_dt.add_data(*space_row)
 
 
 if config['use_wandb']:
