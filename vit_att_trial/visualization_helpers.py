@@ -64,7 +64,7 @@ def show_cam_on_image(img, mask):
     cam = cam / np.max(cam)
     return cam
 
-def create_vit_models(device):
+def create_vit_models():
     name = 'vit_base_patch16_224'
     # initialize ViT pretrained
     model_timm = timm.create_model(name, num_classes=4, img_size=(496, 512))
@@ -76,3 +76,4 @@ def create_vit_models(device):
     model_attn = model_attn.to(device)
     model_attn.eval()
     attribution_generator = LRP(model_attn)
+    return  model_timm, model_attn,attribution_generator
