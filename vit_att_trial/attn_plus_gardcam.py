@@ -214,4 +214,4 @@ for i, (images, labels) in enumerate(test_loader):
 
 
     if config['use_wandb']:
-        wandb.log({f"Grads_{name}": test_dt})
+        wandb.log({f"image_{i}": test_dt})
