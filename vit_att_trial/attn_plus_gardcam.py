@@ -32,7 +32,6 @@ from res_models import *
 from convnext import convnext_xlarge, convnext_base
 # from visualization_helpers import create_vit_models,generate_visualization,reshape_transform
 
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
 torch.cuda.manual_seed_all(hash("so runs are repeatable") % seed)
@@ -41,6 +40,36 @@ torch.backends.cudnn.benchmark = False
 np.random.seed(seed)
 random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+def reshape_transform(tensor, height=31, width=32):
+    result = tensor[:, 1:, :].reshape(tensor.size(0),
+                                      height, width, tensor.size(2))
+
+    # Bring the channels to the first dimension,
+    # like in CNNs.
+    result = result.transpose(2, 3).transpose(1, 2)
+    return result
+
+# create heatmap from mask on image
+def show_cam_on_image(img, mask):
+    heatmap = cv2.applyColorMap(np.uint8(255 * mask), cv2.COLORMAP_JET)
+    heatmap = np.float32(heatmap) / 255
+    cam = heatmap * 0.4 + np.float32(img)
+    cam = cam / np.max(cam)
+    return cam
+
+name = 'vit_base_patch16_224'
+# initialize ViT pretrained
+model_timm = timm.create_model(name, num_classes=4, img_size=(496, 512))
+model_timm.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
+model_timm = model_timm.to(device)
+
+model_attn = vit_LRP(num_classes=4, img_size=(496, 512))
+model_attn.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
+model_attn = model_attn.to(device)
+model_attn.eval()
+attribution_generator = LRP(model_attn)
 
 def generate_visualization(original_image,attribution_generator, class_index=None):
     transformer_attribution = attribution_generator.generate_LRP(original_image.unsqueeze(0).to(device),
@@ -59,28 +88,11 @@ def generate_visualization(original_image,attribution_generator, class_index=Non
     vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
     return vis, transformer_attribution
 
-def reshape_transform(tensor, height=31, width=32):
-    result = tensor[:, 1:, :].reshape(tensor.size(0),
-                                      height, width, tensor.size(2))
 
-    # Bring the channels to the first dimension,
-    # like in CNNs.
-    result = result.transpose(2, 3).transpose(1, 2)
-    return result
 
 # model_timm, model_attn,attribution_generator = create_vit_models()
 
-name = 'vit_base_patch16_224'
-# initialize ViT pretrained
-model_timm = timm.create_model(name, num_classes=4, img_size=(496, 512))
-model_timm.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
-model_timm = model_timm.to(device)
 
-model_attn = vit_LRP(num_classes=4, img_size=(496, 512))
-model_attn.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
-model_attn = model_attn.to(device)
-model_attn.eval()
-attribution_generator = LRP(model_attn)
 
 models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
 
