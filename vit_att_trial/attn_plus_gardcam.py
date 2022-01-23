@@ -30,7 +30,7 @@ from baselines.ViT.ViT_explanation_generator import LRP
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
 from res_models import *
 from convnext import convnext_xlarge, convnext_base
-from visualization_helpers import create_vit_models,generate_visualization,reshape_transform
+# from visualization_helpers import create_vit_models,generate_visualization,reshape_transform
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 seed = 25
@@ -41,6 +41,32 @@ torch.backends.cudnn.benchmark = False
 np.random.seed(seed)
 random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
+
+def generate_visualization(original_image,attribution_generator, class_index=None):
+    transformer_attribution = attribution_generator.generate_LRP(original_image.unsqueeze(0).to(device),
+                                                                 method="transformer_attribution",
+                                                                 index=class_index).detach()
+    transformer_attribution = transformer_attribution.reshape(1, 1, 31, 32)
+    transformer_attribution = torch.nn.functional.interpolate(transformer_attribution, scale_factor=16, mode='bilinear')
+    transformer_attribution = transformer_attribution.reshape(496, 512).to(device).data.cpu().numpy()
+    transformer_attribution = (transformer_attribution - transformer_attribution.min()) / (
+            transformer_attribution.max() - transformer_attribution.min())
+    image_transformer_attribution = original_image.permute(1, 2, 0).data.cpu().numpy()
+    image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
+            image_transformer_attribution.max() - image_transformer_attribution.min())
+    vis = show_cam_on_image(image_transformer_attribution, transformer_attribution)
+    vis = np.uint8(255 * vis)
+    vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+    return vis, transformer_attribution
+
+def reshape_transform(tensor, height=31, width=32):
+    result = tensor[:, 1:, :].reshape(tensor.size(0),
+                                      height, width, tensor.size(2))
+
+    # Bring the channels to the first dimension,
+    # like in CNNs.
+    result = result.transpose(2, 3).transpose(1, 2)
+    return result
 
 # model_timm, model_attn,attribution_generator = create_vit_models()
 
