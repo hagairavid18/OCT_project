@@ -223,7 +223,9 @@ for i, (images, labels) in enumerate(test_loader):
                 gradcam.append(None)
             print(len(gradcam))
             row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-                   config['label_names'][k]]+[ None] + [wandb.Image(cam) if cam is not  None else None for cam in gradcam ] +[wandb.Image(avg_cam)]
+                   config['label_names'][k]]+[ None] + [ None for cam in gradcam ] +[wandb.Image(avg_cam)]
+            for pos in range(len(gradcam)):
+                row[9+pos] = wandb.Image(gradcam[pos])
             if name == 'vit_base_patch16_224':
                 row[8] =wandb.Image(attention)
             # print(row[7])
