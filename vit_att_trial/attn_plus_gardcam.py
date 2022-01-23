@@ -5,7 +5,7 @@ import os
 from timm.models.swin_transformer import SwinTransformer
 from utils2 import *
 
-from loging_gradcam import reshape_transform
+# from loging_gradcam import reshape_transform
 from model_running import *
 import numpy as np
 import random
@@ -30,7 +30,7 @@ from PIL import Image
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
 from res_models import *
 from convnext import convnext_xlarge, convnext_base
-from visualization_helpers import create_vit_models,generate_visualization
+from visualization_helpers import create_vit_models,generate_visualization,reshape_transform
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 seed = 25
