@@ -125,24 +125,29 @@ test_dataset = Kermany_DataSet(def_args['test'][0])
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=1,
                                           shuffle=True)
-correct = 0.0
-correct_arr = [0.0] * 10
-total = 0.0
-total_arr = [0.0] * 10
-predictions = None
-ground_truth = None
+# , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
+cams = [GradCAM]
 # Iterate through test dataset
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
 
-columns = ["id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention", "GradCAM",
-            'Avg']
+columns = ["id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
+          +[ str(cam) for cam in cams]+['Avg']
 # for a in label_names:
 #     columns.append("score_" + a)
 if use_wandb:
     test_dt = wandb.Table(columns=columns)
+models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
 
-names = ["res18","convnext_xlarge", 'vit_base_patch16_224']
-models = [Resnet18(4),convnext_base(),model_timm ]
+config = {'res18':{'target layers':[models[0].resnet.layer4[-1]]},
+          'res50':{'target layers':[models[1].resnet.layer4[-1]]},
+          'res101':{'target layers':[models[2].resnet.layer4[-1]]},
+          'res152':{'target layers':[models[3].resnet.layer4[-1]]},
+          'convnext_xlarge':{'target layers':[models[4].downsample_layers[-1]]},
+          'vit_base_patch16_224':{'target layers':[models[5].blocks[-1].norm1]}
+
+          }
+
+names = ["res18","res50","res101","convnext_xlarge", 'vit_base_patch16_224']
 for i, (images, labels) in enumerate(test_loader):
 
     for name, model in zip(names, models):
@@ -151,10 +156,7 @@ for i, (images, labels) in enumerate(test_loader):
             model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
             model = model.to(device)
 
-        correct = 0.0
-        correct_arr = [0.0] * 10
-        total = 0.0
-        total_arr = [0.0] * 10
+
         predictions = None
         ground_truth = None
         # Iterate through test dataset
@@ -172,12 +174,12 @@ for i, (images, labels) in enumerate(test_loader):
         _, predicted = torch.max(outputs.data, 1)
 
         # Total number of labels
-        total += labels.size(0)
-        correct += (predicted == labels).sum()
-
-        for label in range(4):
-            correct_arr[label] += (((predicted == labels) & (labels == label)).sum())
-            total_arr[label] += (labels == label).sum()
+        # # total += labels.size(0)
+        # # correct += (predicted == labels).sum()
+        #
+        # for label in range(4):
+        #     correct_arr[label] += (((predicted == labels) & (labels == label)).sum())
+        #     total_arr[label] += (labels == label).sum()
 
         if i == 0:
             predictions = predicted
@@ -185,22 +187,15 @@ for i, (images, labels) in enumerate(test_loader):
         else:
             predictions = torch.cat((predictions, predicted), 0)
             ground_truth = torch.cat((ground_truth, labels), 0)
+        target_layers = config[name]['target_layers']
+        # if name =='res18':
+        #     target_layers = [model.resnet.layer4[-1]]
+        #     # target_layers = [model_timm.blocks[-1].norm1]
+        # elif name == 'vit_base_patch16_224':
+        #     target_layers = [model.blocks[-1].norm1]
+        # else:
+        #     target_layers = [model.downsample_layers[-1]]
 
-        if name =='res18':
-            target_layers = [model.resnet.layer4[-1]]
-            # target_layers = [model_timm.blocks[-1].norm1]
-        elif name == 'vit_base_patch16_224':
-            target_layers = [model.blocks[-1].norm1]
-        else:
-            target_layers = [model.downsample_layers[-1]]
-        # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
-        cams = [GradCAM]
-        # print(target_layers[0])
-        # print(target_layers[0])
-        # print([Resnet18(4).resnet.layer4[-1]])
-
-
-        # images = images.unsqueeze(0)
         image_transformer_attribution = None
         for k in range(4):
             print("curr label: {}".format(k))
@@ -307,16 +302,7 @@ for i, (images, labels) in enumerate(test_loader):
         space_row = [None for _ in row]
         if use_wandb:
             test_dt.add_data(*space_row)
-        # if i % 50 == 0:
-        #     wandb.log({f"Grads_{name}_{i}": test_dt})
-        # wandb.log({"conf_mat": wandb.plot.confusion_matrix(probs=None,
-        #                                                    y_true=ground_truth, preds=predictions,
-        #                                                    class_names=label_names)})
 
-    accuracy = correct / total
-    metrics = {f'Test Accuracy_{name}': accuracy}
-    for label in range(4):
-        metrics[f'Test Accuracy_{name}' + label_names[label]] = correct_arr[label] / total_arr[label]
+
 if use_wandb:
-    wandb.log(metrics)
     wandb.log({f"Grads_{name}": test_dt})
