@@ -153,7 +153,7 @@ for i, (images, labels) in enumerate(test_loader):
             print("curr label: {}".format(k))
             if not config['visualize_all_class']:
                 k=labels[0]
-            just_grads,res,attn_diff_cls = [],[],[]
+            just_grads,res,attn_diff_cls,layer_cam = [],[],[],[]
             target_categories = [k]
             targets = [ClassifierOutputTarget(category) for category in target_categories]
 
@@ -171,8 +171,8 @@ for i, (images, labels) in enumerate(test_loader):
                     target_layer = [target_layer]
                     vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layer,
                                                                                       name, images, labels, targets)
-                    res.append(vis)  # superimposed_img / 255)
-                    just_grads.append(curr_grads)
+                    layer_cam.append(vis)  # superimposed_img / 255)
+                    # just_grads.append(curr_grads)
 
 
                     # cam = GradCAM(model=model, target_layers=target_layer,
@@ -219,13 +219,13 @@ for i, (images, labels) in enumerate(test_loader):
             im = Image.open(img_buf)
             print(len(config['vit_base_patch16_224']['target_layers']))
             print(len(gradcam))
-            # while len(gradcam)!= len(config['vit_base_patch16_224']['target_layers']):
-            #     gradcam.append(None)
-            # print(len(gradcam))
+            while len(layer_cam)!= len(config['vit_base_patch16_224']['target_layers']):
+                layer_cam.append(None)
+            print(len(gradcam))
             row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-                   config['label_names'][k]]+[ None] + [ None for _ in range(len(config['vit_base_patch16_224']['target_layers'])) ] +[wandb.Image(avg_cam)]
-            for pos in range(len(gradcam)):
-                row[9+pos] = wandb.Image(gradcam[pos])
+                   config['label_names'][k]]+[ None] +[wandb.Image(gradcam[cam]) for cam in gradcam]+ [ layer if layer is not None else None for layer in layer_cam] +[wandb.Image(avg_cam)]
+            # for pos in range(len(layer_cam)):
+            #     row[9+pos] = wandb.Image(layer_cam[pos])
             if name == 'vit_base_patch16_224':
                 row[8] =wandb.Image(attention)
             # print(row[7])
