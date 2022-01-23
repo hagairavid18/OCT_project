@@ -173,19 +173,18 @@ for i, (images, labels) in enumerate(test_loader):
             for cam_algo in config['cam_algs']:
 
                 vis, curr_grads,image_transformer_attribution = generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets)
-                res+=vis
-                just_grads+=curr_grads
+                res.append(vis)
+                just_grads.append(curr_grads)
 
             if config['layer_by_layer_cam']:
 
-                # # layer by layer grad cam
-                # for target_layer in config[name]['target_layers']:
-                #     # print(target_layer)
-                #     target_layer = [target_layer]
-                print('here')
-                vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, config[name]['target_layers'],
-                                                                                  name, images, labels, targets)
-                layer_cam=vis
+                # layer by layer grad cam
+                for target_layer in config[name]['target_layers']:
+                    # print(target_layer)
+                    target_layer = [target_layer]
+                    vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, config[name]['target_layers'],
+                                                                                      name, images, labels, targets)
+                    layer_cam.append(vis)
 
 
 

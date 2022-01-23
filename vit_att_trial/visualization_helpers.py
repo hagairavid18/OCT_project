@@ -41,20 +41,14 @@ def generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets):
     target_category = labels.item()
     # print(cam.shape)
     grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True, targets=targets)
-    vis,curr_grads= [],[]
-    print(grayscale_cam.shape)
-    for i in range(grayscale_cam.shape[0]):
-        print(i)
-        print(len(vis))
-        curr_grad= (grayscale_cam[i, :])
-        image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
-        image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
-                image_transformer_attribution.max() - image_transformer_attribution.min())
-        curr_vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[i, :])
-        curr_vis = np.uint8(255 * curr_vis)
-        curr_vis = cv2.cvtColor(np.array(curr_vis), cv2.COLOR_RGB2BGR)
-        curr_grads.append(curr_grad)
-        vis.append(curr_vis)
+
+    curr_grads= (grayscale_cam[i, :])
+    image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
+    image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
+            image_transformer_attribution.max() - image_transformer_attribution.min())
+    vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[i, :])
+    vis = np.uint8(255 * vis)
+    vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
 
     return vis, curr_grads,image_transformer_attribution
 
