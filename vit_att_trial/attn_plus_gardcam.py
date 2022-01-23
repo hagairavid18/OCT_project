@@ -219,11 +219,11 @@ for i, (images, labels) in enumerate(test_loader):
             im = Image.open(img_buf)
             print(len(config['vit_base_patch16_224']['target_layers']))
             print(len(gradcam))
-            while len(gradcam)!= len(config['vit_base_patch16_224']['target_layers']):
-                gradcam.append(None)
-            print(len(gradcam))
+            # while len(gradcam)!= len(config['vit_base_patch16_224']['target_layers']):
+            #     gradcam.append(None)
+            # print(len(gradcam))
             row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predicted.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-                   config['label_names'][k]]+[ None] + [ None for cam in gradcam ] +[wandb.Image(avg_cam)]
+                   config['label_names'][k]]+[ None] + [ None for _ in len(config['vit_base_patch16_224']['target_layers']) ] +[wandb.Image(avg_cam)]
             for pos in range(len(gradcam)):
                 row[9+pos] = wandb.Image(gradcam[pos])
             if name == 'vit_base_patch16_224':
