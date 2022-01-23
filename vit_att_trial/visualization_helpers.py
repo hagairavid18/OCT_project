@@ -30,6 +30,7 @@ from pytorch_grad_cam.ablation_layer import AblationLayerVit
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 def generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets):
+    print(target_layers)
     cam = cam_algo(model=model, target_layers=target_layers,
                    use_cuda=True if torch.cuda.is_available() else False)  # , reshape_transform=reshape_transform,
     # )
