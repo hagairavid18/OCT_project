@@ -104,16 +104,21 @@ names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_
 # print(len(test_dataset))
 predictions = None
 ground_truth = None
+count = 0
 for i, (images, labels) in enumerate(test_loader):
+    if count == 10:
+        break
     if config['use_wandb']:
         test_dt = wandb.Table(columns=columns)
     images = Variable(images).to(device)
 
     labels = labels.to(device)
-    print(labels)
+    # print(labels)
     if labels.item() !=0:
         continue
-    print(i)
+    count+=1
+
+    print(count)
     for index, name in enumerate(names):
 
         model = models[index]
