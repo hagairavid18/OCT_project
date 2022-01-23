@@ -3,7 +3,7 @@ import timm
 import wandb
 import os
 from timm.models.swin_transformer import SwinTransformer
-from vit_att_trial.utils2 import *
+from utils2 import *
 
 from loging_gradcam import reshape_transform
 from model_running import *
