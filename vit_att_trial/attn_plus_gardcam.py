@@ -74,7 +74,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer4[-1]]},
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[-1]]},
           'vit_base_patch16_224':{'target_layers':[models[5].blocks[-1].norm1]},
           'use_wandb': True,
-          'visualize_all_class': True,
+          'visualize_all_class': False,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
           'label_names':["NORMAL","CNV","DME","DRUSEN"],
@@ -141,7 +141,7 @@ if config['use_wandb']:
     test_dt = wandb.Table(columns=columns)
 
 #,"res101","res152","convnext_xlarge", 'vit_base_patch16_224'
-names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
+names = ["res18","res50"]
 for i, (images, labels) in enumerate(test_loader):
 
     for index, name in enumerate(names):
@@ -194,6 +194,8 @@ for i, (images, labels) in enumerate(test_loader):
         image_transformer_attribution = None
         for k in range(4):
             print("curr label: {}".format(k))
+            if not config['visualize_all_class']:
+                k=labels[0]
             just_grads = []
             res = []
             attn_diff_cls = []
@@ -294,6 +296,8 @@ for i, (images, labels) in enumerate(test_loader):
             print(row[7])
             if config['use_wandb']:
                 test_dt.add_data(*row)
+            if not config['visualize_all_class']:
+                break
         space_row = [None for _ in row]
         if config['use_wandb']:
             test_dt.add_data(*space_row)
