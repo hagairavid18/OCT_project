@@ -147,6 +147,7 @@ for i, (images, labels) in enumerate(test_loader):
         # Total number of labels
         total += labels.size(0)
         correct += (predicted == labels).sum()
+        print(labels)
 
         for label in range(4):
             correct_arr[label] += (((predicted == labels) & (labels == label)).sum())
