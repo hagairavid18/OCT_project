@@ -25,8 +25,8 @@ import cv2
 import os
 import io
 from PIL import Image
-# from baselines.ViT.ViT_LRP import vit_base_patch16_224 as vit_LRP
-# from baselines.ViT.ViT_explanation_generator import LRP
+from baselines.ViT.ViT_LRP import vit_base_patch16_224 as vit_LRP
+from baselines.ViT.ViT_explanation_generator import LRP
 from pytorch_grad_cam.ablation_layer import AblationLayerVit
 from res_models import *
 from convnext import convnext_xlarge, convnext_base
@@ -42,8 +42,22 @@ np.random.seed(seed)
 random.seed(seed)
 os.environ['PYTHONHASHSEED'] = str(seed)
 
-model_timm, model_attn,attribution_generator = create_vit_models()
+# model_timm, model_attn,attribution_generator = create_vit_models()
+
+name = 'vit_base_patch16_224'
+# initialize ViT pretrained
+model_timm = timm.create_model(name, num_classes=4, img_size=(496, 512))
+model_timm.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
+model_timm = model_timm.to(device)
+
+model_attn = vit_LRP(num_classes=4, img_size=(496, 512))
+model_attn.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
+model_attn = model_attn.to(device)
+model_attn.eval()
+attribution_generator = LRP(model_attn)
+
 models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
+
 
 config = {'res18':{'target_layers':[models[0].resnet.layer4[-1]]},
           'res50':{'target_layers':[models[1].resnet.layer4[-1]]},
