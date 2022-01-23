@@ -146,7 +146,7 @@ for i, (images, labels) in enumerate(test_loader):
         target_layers = config[name]['target_layers']
 
 
-        # image_transformer_attribution = None
+        image_transformer_attribution = None
         for k in range(4):
             print("curr label: {}".format(k))
             if not config['visualize_all_class']:
@@ -157,7 +157,7 @@ for i, (images, labels) in enumerate(test_loader):
 
             for cam_algo in config['cam_algs']:
 
-                vis, curr_grads = generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets)
+                vis, curr_grads,image_transformer_attribution = generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets)
                 res.append(vis)  # superimposed_img / 255)
                 just_grads.append(curr_grads)
 

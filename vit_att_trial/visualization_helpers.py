@@ -46,7 +46,7 @@ def generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets):
     vis = show_cam_on_image(image_transformer_attribution, grayscale_cam[0, :])
     vis = np.uint8(255 * vis)
     vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-    return vis, curr_grads
+    return vis, curr_grads,image_transformer_attribution
 
 
 def generate_visualization(original_image,attribution_generator, class_index=None):
