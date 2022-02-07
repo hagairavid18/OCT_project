@@ -90,7 +90,7 @@ CLS2IDX = config['label_names']
 test_dataset = Kermany_DataSet(config['test_path'])
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=1,
-                                          shuffle=True)
+                                          shuffle=False)
 
 
 
@@ -106,7 +106,7 @@ for i, (images, labels) in enumerate(test_loader):
     images = Variable(images).to(device)
 
     labels = labels.to(device)
-    if labels.item() !=3:
+    if labels.item() !=0:
         continue
     count+=1
 
@@ -196,4 +196,4 @@ for i, (images, labels) in enumerate(test_loader):
 
 
     if config['use_wandb']:
-        wandb.log({f"image_{count}": test_dt})
+        wandb.log({f"image_{config['label_names'][labels.item()]}_{count}": test_dt})
