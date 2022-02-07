@@ -106,7 +106,7 @@ for i, (images, labels) in enumerate(test_loader):
     images = Variable(images).to(device)
 
     labels = labels.to(device)
-    if labels.item() !=1:
+    if labels.item() !=0:
         continue
     count+=1
 
