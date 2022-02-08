@@ -91,7 +91,8 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
     heatmap = heatmap.permute(1, 0)
     heatmap = np.uint8(255 * heatmap)
-    heatmap = heatmap - np.min(heatmap)
+    heatmap = (heatmap - heatmap.min()) / (
+            heatmap.max() - heatmap.min())
     heatmap = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET)
     heatmap = np.float32(heatmap) / 255
     print(heatmap.shape)
@@ -184,15 +185,12 @@ names = ['convnext_xlarge']
 count = 0
 name = 'convnext_xlarge'
 for i, (images, labels) in enumerate(test_loader):
-    if count == 1:
+    if count == 3:
         break
 
     images = Variable(images).to(device)
-
     labels = labels.to(device)
-
     print(count)
-
 
 
     model = models[4]
