@@ -45,7 +45,6 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
 
     # create a white image of sizes we defined
     heatmap = torch.zeros((output_height, output_width))
-    image = image.permute(0,1, 3, 2)
     print(image.shape)
     # iterate all the pixels in each column
     max_prob = -100
@@ -75,6 +74,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # print(output_prob.tolist()[0][label])
             prob = output.tolist()[0][label]
             if prob>max_prob:
+                print(max_prob)
                 best_mask = input_image.clone().detach()
                 best_outputs = output
 
@@ -88,6 +88,8 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
             # heatmap = np.uint8(255 * heatmap)
     # print(heatmap)
+    heatmap = heatmap.permute(0,1, 3, 2)
+
     heatmap = (heatmap - heatmap.min()) / (
             heatmap.max() - heatmap.min())
     heatmap = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET)
