@@ -85,18 +85,13 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     image_transformer_attribution.max() - image_transformer_attribution.min())
     # vis = np.uint8(255 * vis)
     # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-    print(heatmap.shape)
     heatmap = heatmap.permute(1, 0)
-    print(heatmap.shape)
-    print(heatmap.shape)
 
     heatmap = np.uint8(255 * heatmap)
 
     heatmap = heatmap - np.min(heatmap)
     new_heatmap = heatmap / (1e-7 + np.max(heatmap))
-    print(image.shape)
     new_heatmap = cv2.resize(new_heatmap,image_transformer_attribution.shape[:2])
-    print(image.shape)
 
     # result = np.float32(result)
 
@@ -106,6 +101,8 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     # print(heatmap)
     masked_image = image.clone().detach()
     heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
+    print(heatmap.shape)
+
     heatmap = cv2.cvtColor(heatmap, cv2.COLOR_BGR2RGB)
     for tup in top_10_masks:
         # print(tup)
