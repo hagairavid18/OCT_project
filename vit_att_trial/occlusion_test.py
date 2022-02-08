@@ -146,7 +146,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),5)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4)-1,2)]+[models[3].resnet.layer4[-1]]},
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[0],models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
           'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
-          'use_wandb': False,
+          'use_wandb': True,
           'visualize_all_class': False,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
@@ -214,7 +214,7 @@ for i, (images, labels) in enumerate(test_loader):
         # print(torch.topk(k=2,input=outputs).values)
         # print(torch.topk(k=2, input=outputs).values[0,0])
         # print(torch.topk(k=2, input=outputs).values[0,1])
-        if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >2:
+        if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
             break
         else:
             print('here')
@@ -222,7 +222,7 @@ for i, (images, labels) in enumerate(test_loader):
 
         target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
-        heatmap,best_mask,best_ouputs = occlusion(model, images, predictions.item(), 200, 50)
+        heatmap,best_mask,best_ouputs = occlusion(model, images, predictions.item(), 50, 10)
 
         # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
         # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
