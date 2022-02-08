@@ -180,10 +180,9 @@ names = ['convnext_xlarge']
 # predictions = None
 # ground_truth = None
 count = 0
-if config['use_wandb']:
-    test_dt = wandb.Table(columns=columns)
+
 for i, (images, labels) in enumerate(test_loader):
-    if count == 5:
+    if count == 20:
         break
 
     images = Variable(images).to(device)
@@ -194,6 +193,8 @@ for i, (images, labels) in enumerate(test_loader):
     count+=1
 
     print(count)
+    if config['use_wandb']:
+        test_dt = wandb.Table(columns=columns)
     for index, name in enumerate(names):
 
         model = models[4]
@@ -286,5 +287,5 @@ for i, (images, labels) in enumerate(test_loader):
 
 
 
-if config['use_wandb']:
-    wandb.log({f"image_{config['label_names'][labels.item()]}_{count}": test_dt})
+    if config['use_wandb']:
+        wandb.log({f"image_{config['label_names'][labels.item()]}_{count}": test_dt})
