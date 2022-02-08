@@ -103,7 +103,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     print(image.shape)
 
     # result = np.float32(result)
-    heatmap = cv2.applyColorMap(np.uint8(255 * heatmap), colormap)
+    heatmap = cv2.cvtColor(heatmap, cv2.COLOR_BGR2RGB)
     # vis = show_cam_on_image(image_transformer_attribution, heatmap)
     # vis = show_cam_on_image(image_transformer_attribution, heatmap)
 
