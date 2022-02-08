@@ -65,7 +65,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
 
             # run inference on modified image
             output = model(input_image)
-            print(outputs)
+            print(output)
             # output = nn.functional.softmax(output, dim=1)
             prob = output.tolist()[0][label]
 
@@ -79,6 +79,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
             # heatmap = np.uint8(255 * heatmap)
     print(heatmap)
+    heatmap = np.uint8(255 * heatmap)
     heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
     print(heatmap)
 
