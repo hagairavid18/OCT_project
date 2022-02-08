@@ -95,6 +95,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
 
     heatmap = (heatmap - heatmap.min()) / (
             heatmap.max() - heatmap.min())
+    heatmap = 1- heatmap
     heatmap = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET)
     heatmap = np.float32(heatmap) / 255
     # cam = heatmap * 0.4 + np.float32(img)
@@ -210,7 +211,7 @@ for i, (images, labels) in enumerate(test_loader):
     # print(torch.topk(k=2,input=outputs).values)
     # print(torch.topk(k=2, input=outputs).values[0,0])
     # print(torch.topk(k=2, input=outputs).values[0,1])
-    if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1:
+    if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
         continue
 
     print('here')
