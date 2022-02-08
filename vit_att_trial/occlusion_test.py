@@ -94,7 +94,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     heatmap = heatmap - np.min(heatmap)
     heatmap = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET)
     heatmap = np.float32(heatmap) / 255
-    new_heatmap =cv2.resize(heatmap, (512,496,3))
+    new_heatmap =cv2.resize(heatmap, (512,496))
     inter_heatmap = new_heatmap * 0.4 + np.float32(image)
     inter_heatmap = inter_heatmap / np.max(inter_heatmap)
 
