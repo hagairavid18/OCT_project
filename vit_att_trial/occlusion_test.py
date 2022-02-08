@@ -72,7 +72,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # print(output_prob)
             # print(output_prob.tolist()[0][label])
             prob = output.tolist()[0][label]
-            if prob>top_10_masks[-1][0]:
+            if prob>top_10_masks[-1][1]:
                 # print(max_prob)
                 # max_prob= prob
                 top_10_masks.append((w_start,w_end,h_start,h_end))
