@@ -45,6 +45,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
 
     # create a white image of sizes we defined
     heatmap = torch.zeros((output_height, output_width))
+    image = image.permute(0,1, 3, 2)
     print(image.shape)
     # iterate all the pixels in each column
     for h in range(0, height):
@@ -183,7 +184,7 @@ for i, (images, labels) in enumerate(test_loader):
 
         target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
-        heatmap = occlusion(model, images, predictions.item(), 100, 10)
+        heatmap = occlusion(model, images, predictions.item(), 50, 10)
 
         # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
         # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
