@@ -116,7 +116,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
         masked_image[:, :, w_start:w_end, h_start:h_end] = occ_pixel
     output = model(masked_image)
     prob = output.tolist()[0][label]
-    return vis,masked_image,output
+    return vis,heatmap,masked_image,output
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
@@ -165,7 +165,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 
-columns = ["id", "Original Image", "prediction" ,"Logits","Truth","curr_target",'GradCAM',"occlusion","best_mask","Logits after","new prediction"]\
+columns = ["id", "Original Image", "prediction" ,"Logits","Truth","curr_target",'GradCAM',"occlusion inter","occlusion","best_mask","Logits after","new prediction"]\
 
 
 if config['use_wandb']:
@@ -245,7 +245,7 @@ for i, (images, labels) in enumerate(test_loader):
         targets = [ClassifierOutputTarget(category) for category in target_categories]
 
 
-        vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
+        vis,heatmap, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
                                                                           images, labels, targets)
         res.append(vis)
         # just_grads.append(curr_grads)
@@ -272,7 +272,7 @@ for i, (images, labels) in enumerate(test_loader):
         im_2 = Image.open(img_buf_2)
 
         row = [str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-               ]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(heatmap),wandb.Image(best_mask),wandb.Image(im_2), config['label_names'][new_predictions.item()]]
+               ]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(vis),wandb.Image(heatmap),wandb.Image(best_mask),wandb.Image(im_2), config['label_names'][new_predictions.item()]]
         # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
         # for pos in range(len(layer_cam)):
         #     row_2[pos] = wandb.Image(layer_cam[pos])
