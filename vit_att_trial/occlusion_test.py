@@ -67,10 +67,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
 
             # run inference on modified image
             output = model(input_image)
-            # print(output)
-            output_prob = nn.functional.softmax(output, dim=1)
-            # print(output_prob)
-            # print(output_prob.tolist()[0][label])
+
             prob = output.tolist()[0][label]
             if prob>top_10_masks[-1][1]:
                 # print(max_prob)
@@ -109,6 +106,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     # print(heatmap)
     masked_image = image.clone().detach()
     heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
+    heatmap = cv2.cvtColor(heatmap, cv2.COLOR_BGR2RGB)
     for tup in top_10_masks:
         # print(tup)
         w_start, w_end, h_start, h_end = tup[0]
