@@ -50,6 +50,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     # iterate all the pixels in each column
     max_prob = 0
     best_outputs = None
+    best_mask = None
     for h in range(0, height):
         for w in range(0, width):
 
