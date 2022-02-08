@@ -89,6 +89,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     image_transformer_attribution.max() - image_transformer_attribution.min())
     # vis = np.uint8(255 * vis)
     # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+    heatmap = 1- heatmap
     heatmap = heatmap.permute(1, 0)
     new_heatmap =cv2.resize(np.float32(heatmap), (512,496))
 
@@ -186,7 +187,7 @@ names = ['convnext_xlarge']
 count = 0
 name = 'convnext_xlarge'
 for i, (images, labels) in enumerate(test_loader):
-    if count == 3:
+    if count == 10:
         break
 
     images = Variable(images).to(device)
@@ -206,8 +207,8 @@ for i, (images, labels) in enumerate(test_loader):
     # print(torch.topk(k=2,input=outputs).values)
     # print(torch.topk(k=2, input=outputs).values[0,0])
     # print(torch.topk(k=2, input=outputs).values[0,1])
-    if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
-        continue
+    # if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
+    #     continue
 
     print('here')
     count += 1
