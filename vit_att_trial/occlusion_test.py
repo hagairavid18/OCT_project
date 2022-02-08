@@ -169,7 +169,7 @@ for i, (images, labels) in enumerate(test_loader):
 
         # target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
-        heatmap = occlusion(model, images, predictions.item()[0].item(), 32, 14)
+        heatmap = occlusion(model, images, predictions.item(), 32, 14)
 
         # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
         # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
