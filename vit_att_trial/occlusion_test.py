@@ -162,7 +162,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 
-columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target",'GradCAM',"occlusion","best_mask","Logits after"]\
+columns = ["id", "Original Image", "prediction" ,"Logits","Truth","curr_target",'GradCAM',"occlusion","best_mask","Logits after","new prediction"]\
 
 
 if config['use_wandb']:
@@ -221,8 +221,8 @@ for i, (images, labels) in enumerate(test_loader):
 
     target_layers = [config[name]['target_layers'][-1]]
     # compute occlusion heatmap
-    heatmap,best_mask,best_ouputs = occlusion(model, images, labels.item(), 50, 5)
-
+    heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 50, 5)
+    _, new_predictions = torch.max(new_ouputs.data, 1)
     # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
     # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
     # figure = imgplot.get_figure()
@@ -235,10 +235,9 @@ for i, (images, labels) in enumerate(test_loader):
         # just_grads,res,attn_diff_cls,layer_cam = [],[],[],[]
         # target_categories = [k]
         # targets = [ClassifierOutputTarget(category) for category in target_categories]
-
+        res = []
         if not config['visualize_all_class']:
             k = labels[0]
-        just_grads, res, attn_diff_cls, layer_cam = [], [], [], []
         target_categories = [k]
         targets = [ClassifierOutputTarget(category) for category in target_categories]
 
@@ -264,13 +263,13 @@ for i, (images, labels) in enumerate(test_loader):
 
         plt.clf()
 
-        plt.bar(config['label_names'], best_ouputs.cpu().detach().numpy()[0])
+        plt.bar(config['label_names'], new_ouputs.cpu().detach().numpy()[0])
         img_buf_2 = io.BytesIO()
         plt.savefig(img_buf_2, format='png')
         im_2 = Image.open(img_buf_2)
 
-        row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-               config['label_names'][k]]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(heatmap),wandb.Image(best_mask),wandb.Image(im_2)]
+        row = [str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
+               ]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(heatmap),wandb.Image(best_mask),wandb.Image(im_2), config['label_names'][new_predictions.item()]]
         # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
         # for pos in range(len(layer_cam)):
         #     row_2[pos] = wandb.Image(layer_cam[pos])
