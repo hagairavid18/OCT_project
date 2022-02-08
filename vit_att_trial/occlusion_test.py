@@ -76,8 +76,9 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
                 print(max_prob)
                 max_prob= prob
                 top_10_masks.append((w_start,w_end,h_start,h_end))
-                if len(top_10_masks>10):
+                if len(top_10_masks)>10:
                     top_10_masks.pop(0)
+                print(top_10_masks)
 
             # setting the heatmap location to probability value
             heatmap[h, w] = prob
