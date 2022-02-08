@@ -48,7 +48,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     print(image.shape)
     # iterate all the pixels in each column
     max_prob = -100
-    top_10_masks = []
+    top_10_masks = [((0,0,0,0),max_prob)]
     for h in range(0, height):
         for w in range(0, width):
 
@@ -72,10 +72,11 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # print(output_prob)
             # print(output_prob.tolist()[0][label])
             prob = output.tolist()[0][label]
-            if prob>max_prob:
-                print(max_prob)
-                max_prob= prob
+            if prob>top_10_masks[-1][0]:
+                # print(max_prob)
+                # max_prob= prob
                 top_10_masks.append((w_start,w_end,h_start,h_end))
+                top_10_masks = top_10_masks.sort(key = lambda x: x[1],reversed=True)
                 if len(top_10_masks)>20:
                     top_10_masks.pop(0)
                 print(top_10_masks)
@@ -104,8 +105,8 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     # print(heatmap)
     masked_image = image.clone().detach()
 
-    for w_start,w_end,h_start,h_end in top_10_masks:
-
+    for tup in top_10_masks:
+        w_start, w_end, h_start, h_end = tup[0]
         # replacing all the pixel information in the image with occ_pixel(grey) in the specified location
         masked_image[:, :, w_start:w_end, h_start:h_end] = occ_pixel
     output = model(masked_image)
