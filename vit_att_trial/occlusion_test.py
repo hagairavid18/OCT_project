@@ -119,7 +119,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 
-columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","occlusion"]\
+columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target",'GradCAM',"occlusion"]\
 
 
 if config['use_wandb']:
@@ -167,7 +167,7 @@ for i, (images, labels) in enumerate(test_loader):
         # Get predictions from the maximum value
         _, predictions = torch.max(outputs.data, 1)
 
-        # target_layers = [config[name]['target_layers'][-1]]
+        target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
         heatmap = occlusion(model, images, predictions.item(), 32, 14)
 
@@ -184,7 +184,30 @@ for i, (images, labels) in enumerate(test_loader):
             # target_categories = [k]
             # targets = [ClassifierOutputTarget(category) for category in target_categories]
 
+            if not config['visualize_all_class']:
+                k = labels[0]
+            just_grads, res, attn_diff_cls, layer_cam = [], [], [], []
+            target_categories = [k]
+            targets = [ClassifierOutputTarget(category) for category in target_categories]
 
+
+            vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
+                                                                              images, labels, targets)
+            res.append(vis)
+            # just_grads.append(curr_grads)
+
+
+            gradcam = res
+            # attention = None
+            # avg = just_grads[0].copy() * 0
+
+            # if name == 'vit_base_patch16_224':
+            #     cat, attn_map = generate_visualization(images.squeeze(), attribution_generator=attribution_generator)
+            #     attention = \
+            #     generate_visualization(images.squeeze(), attribution_generator=attribution_generator, class_index=k, )[
+            #         0]
+            #     avg = attn_map.copy() * 6
+            # avg_cam = create_avg_img(avg, image_transformer_attribution, just_grads)
 
             T = predictions.item() == labels.item()
             out = outputs
@@ -197,7 +220,7 @@ for i, (images, labels) in enumerate(test_loader):
             im = Image.open(img_buf)
 
             row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-                   config['label_names'][k]]+[ wandb.Image(heatmap)]
+                   config['label_names'][k]]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(heatmap)]
             # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
             # for pos in range(len(layer_cam)):
             #     row_2[pos] = wandb.Image(layer_cam[pos])
