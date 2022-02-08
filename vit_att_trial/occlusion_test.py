@@ -140,7 +140,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 # model_attn.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
 # model_attn = model_attn.to(device)
 # model_attn.eval()
-attribution_generator = LRP(model_attn)
+# attribution_generator = LRP(model_attn)
 
 models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base() ]
 
