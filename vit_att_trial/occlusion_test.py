@@ -108,7 +108,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
 
     # print(heatmap)
     masked_image = image.clone().detach()
-
+    heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
     for tup in top_10_masks:
         # print(tup)
         w_start, w_end, h_start, h_end = tup[0]
@@ -224,7 +224,7 @@ for i, (images, labels) in enumerate(test_loader):
 
     target_layers = [config[name]['target_layers'][-1]]
     # compute occlusion heatmap
-    inter_heatmap,heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 100, 20)
+    inter_heatmap,heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 50, 20)
     _, new_predictions = torch.max(new_ouputs.data, 1)
     # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
     # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
