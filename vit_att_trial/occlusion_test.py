@@ -206,8 +206,8 @@ for i, (images, labels) in enumerate(test_loader):
     # print(torch.topk(k=2,input=outputs).values)
     # print(torch.topk(k=2, input=outputs).values[0,0])
     # print(torch.topk(k=2, input=outputs).values[0,1])
-    # if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
-    #     continue
+    if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
+        continue
 
     print('here')
     count += 1
