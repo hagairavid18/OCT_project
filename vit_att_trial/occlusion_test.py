@@ -214,6 +214,10 @@ for i, (images, labels) in enumerate(test_loader):
         print(torch.topk(k=2,input=outputs).values)
         print(torch.topk(k=2, input=outputs).values[0,0])
         print(torch.topk(k=2, input=outputs).values[0,1])
+        if print(torch.topk(k=2, input=outputs).values[0,0]) - print(torch.topk(k=2, input=outputs).values[0,1]) >1:
+            break
+        else:
+            print('here')
         count += 1
 
         target_layers = [config[name]['target_layers'][-1]]
