@@ -45,7 +45,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
 
     # create a white image of sizes we defined
     heatmap = torch.zeros((output_height, output_width))
-    print(image)
+    print(image.shape)
     # iterate all the pixels in each column
     for h in range(0, height):
         for w in range(0, width):
