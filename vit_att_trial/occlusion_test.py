@@ -180,7 +180,7 @@ names = ['convnext_xlarge']
 # predictions = None
 # ground_truth = None
 count = 0
-
+name = 'convnext_xlarge'
 for i, (images, labels) in enumerate(test_loader):
     if count == 2:
         break
@@ -188,112 +188,109 @@ for i, (images, labels) in enumerate(test_loader):
     images = Variable(images).to(device)
 
     labels = labels.to(device)
-    # if labels.item() !=0:
-    #     continue
-
 
     print(count)
 
-    for index, name in enumerate(names):
-
-        model = models[4]
-        print(name)
-        if name != 'vit_base_patch16_224':
-            model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
-            model = model.to(device)
 
 
-        if name == 'vit_base_patch16_224':
-            outputs_attn = model_attn(images)
-        outputs = model(images)
+    model = models[4]
+    print(name)
+    if name != 'vit_base_patch16_224':
+        model.load_state_dict(torch.load(f'{names[0]}.pt', map_location=torch.device(device)))
+        model = model.to(device)
 
-        # Get predictions from the maximum value
-        _, predictions = torch.max(outputs.data, 1)
-        # print(outputs)
-        # print(torch.topk(k=2,input=outputs).values)
-        # print(torch.topk(k=2, input=outputs).values[0,0])
-        # print(torch.topk(k=2, input=outputs).values[0,1])
-        if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
-            continue
-        else:
-            print('here')
-        count += 1
+
+    if name == 'vit_base_patch16_224':
+        outputs_attn = model_attn(images)
+    outputs = model(images)
+
+    # Get predictions from the maximum value
+    _, predictions = torch.max(outputs.data, 1)
+    # print(outputs)
+    # print(torch.topk(k=2,input=outputs).values)
+    # print(torch.topk(k=2, input=outputs).values[0,0])
+    # print(torch.topk(k=2, input=outputs).values[0,1])
+    if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
+        continue
+    else:
+        print('here')
+    count += 1
+    if config['use_wandb']:
+        test_dt = wandb.Table(columns=columns)
+
+    target_layers = [config[name]['target_layers'][-1]]
+    # compute occlusion heatmap
+    heatmap,best_mask,best_ouputs = occlusion(model, images, predictions.item(), 50, 10)
+
+    # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
+    # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
+    # figure = imgplot.get_figure()
+
+    image_transformer_attribution = None
+    for k in range(4):
+        # print("curr label: {}".format(k))
+        if not config['visualize_all_class']:
+            k=labels[0]
+        # just_grads,res,attn_diff_cls,layer_cam = [],[],[],[]
+        # target_categories = [k]
+        # targets = [ClassifierOutputTarget(category) for category in target_categories]
+
+        if not config['visualize_all_class']:
+            k = labels[0]
+        just_grads, res, attn_diff_cls, layer_cam = [], [], [], []
+        target_categories = [k]
+        targets = [ClassifierOutputTarget(category) for category in target_categories]
+
+
+        vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
+                                                                          images, labels, targets)
+        res.append(vis)
+        # just_grads.append(curr_grads)
+
+
+        gradcam = res
+        # attention = None
+        # avg = just_grads[0].copy() * 0
+
+        # if name == 'vit_base_patch16_224':
+        #     cat, attn_map = generate_visualization(images.squeeze(), attribution_generator=attribution_generator)
+        #     attention = \
+        #     generate_visualization(images.squeeze(), attribution_generator=attribution_generator, class_index=k, )[
+        #         0]
+        #     avg = attn_map.copy() * 6
+        # avg_cam = create_avg_img(avg, image_transformer_attribution, just_grads)
+
+        T = predictions.item() == labels.item()
+        out = outputs
+        plt.clf()
+
+        plt.bar(config['label_names'], out.cpu().detach().numpy()[0])
+        # plt.xlabel(label_names)
+        img_buf = io.BytesIO()
+        plt.savefig(img_buf, format='png')
+        im = Image.open(img_buf)
+
+        plt.clf()
+
+        plt.bar(config['label_names'], best_ouputs.cpu().detach().numpy()[0])
+        img_buf_2 = io.BytesIO()
+        plt.savefig(img_buf_2, format='png')
+        im_2 = Image.open(img_buf_2)
+
+        row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
+               config['label_names'][k]]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(heatmap),wandb.Image(best_mask),wandb.Image(im_2)]
+        # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
+        # for pos in range(len(layer_cam)):
+        #     row_2[pos] = wandb.Image(layer_cam[pos])
+        # row+=row_2
+        #
+        # if name == 'vit_base_patch16_224':
+        #     row[8] =wandb.Image(attention)
+        # print(row[7])
         if config['use_wandb']:
-            test_dt = wandb.Table(columns=columns)
-
-        target_layers = [config[name]['target_layers'][-1]]
-        # compute occlusion heatmap
-        heatmap,best_mask,best_ouputs = occlusion(model, images, predictions.item(), 50, 10)
-
-        # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
-        # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
-        # figure = imgplot.get_figure()
-
-        image_transformer_attribution = None
-        for k in range(4):
-            # print("curr label: {}".format(k))
-            if not config['visualize_all_class']:
-                k=labels[0]
-            # just_grads,res,attn_diff_cls,layer_cam = [],[],[],[]
-            # target_categories = [k]
-            # targets = [ClassifierOutputTarget(category) for category in target_categories]
-
-            if not config['visualize_all_class']:
-                k = labels[0]
-            just_grads, res, attn_diff_cls, layer_cam = [], [], [], []
-            target_categories = [k]
-            targets = [ClassifierOutputTarget(category) for category in target_categories]
-
-
-            vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
-                                                                              images, labels, targets)
-            res.append(vis)
-            # just_grads.append(curr_grads)
-
-
-            gradcam = res
-            # attention = None
-            # avg = just_grads[0].copy() * 0
-
-            # if name == 'vit_base_patch16_224':
-            #     cat, attn_map = generate_visualization(images.squeeze(), attribution_generator=attribution_generator)
-            #     attention = \
-            #     generate_visualization(images.squeeze(), attribution_generator=attribution_generator, class_index=k, )[
-            #         0]
-            #     avg = attn_map.copy() * 6
-            # avg_cam = create_avg_img(avg, image_transformer_attribution, just_grads)
-
-            T = predictions.item() == labels.item()
-            out = outputs
-            plt.clf()
-
-            plt.bar(config['label_names'], out.cpu().detach().numpy()[0])
-            # plt.xlabel(label_names)
-            img_buf = io.BytesIO()
-            plt.savefig(img_buf, format='png')
-            im = Image.open(img_buf)
-
-            plt.clf()
-
-            plt.bar(config['label_names'], best_ouputs.cpu().detach().numpy()[0])
-            img_buf_2 = io.BytesIO()
-            plt.savefig(img_buf_2, format='png')
-            im_2 = Image.open(img_buf_2)
-
-            row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-                   config['label_names'][k]]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(heatmap),wandb.Image(best_mask),wandb.Image(im_2)]
-            # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
-            # for pos in range(len(layer_cam)):
-            #     row_2[pos] = wandb.Image(layer_cam[pos])
-            # row+=row_2
-            #
-            # if name == 'vit_base_patch16_224':
-            #     row[8] =wandb.Image(attention)
-            # print(row[7])
-            if config['use_wandb']:
-                test_dt.add_data(*row)
-            if not config['visualize_all_class']:
-                break
+            test_dt.add_data(*row)
+        if not config['visualize_all_class']:
+            break
 
 
 
