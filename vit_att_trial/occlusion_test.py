@@ -212,8 +212,8 @@ for i, (images, labels) in enumerate(test_loader):
     # print(torch.topk(k=2, input=outputs).values[0,1])
     if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1:
         continue
-    else:
-        print('here')
+
+    print('here')
     count += 1
     if config['use_wandb']:
         test_dt = wandb.Table(columns=columns)
@@ -249,16 +249,7 @@ for i, (images, labels) in enumerate(test_loader):
 
 
         gradcam = res
-        # attention = None
-        # avg = just_grads[0].copy() * 0
 
-        # if name == 'vit_base_patch16_224':
-        #     cat, attn_map = generate_visualization(images.squeeze(), attribution_generator=attribution_generator)
-        #     attention = \
-        #     generate_visualization(images.squeeze(), attribution_generator=attribution_generator, class_index=k, )[
-        #         0]
-        #     avg = attn_map.copy() * 6
-        # avg_cam = create_avg_img(avg, image_transformer_attribution, just_grads)
 
         T = predictions.item() == labels.item()
         out = outputs
