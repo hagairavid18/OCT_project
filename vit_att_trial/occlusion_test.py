@@ -68,8 +68,8 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             output = model(input_image)
             # print(output)
             output_prob = nn.functional.softmax(output, dim=1)
-            print(output_prob)
-            print(output_prob.tolist()[0][label])
+            # print(output_prob)
+            # print(output_prob.tolist()[0][label])
             prob = output.tolist()[0][label]
 
             # setting the heatmap location to probability value
@@ -117,10 +117,10 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 # model_attn.eval()
 # attribution_generator = LRP(model_attn)
 
-models = [Resnet18(4)]
+models = [Resnet18(4),Resnet50(4)]
 
 config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,len(models[0].resnet.layer2))]+[models[0].resnet.layer3[i] for i in range(0,len(models[0].resnet.layer3))]+[models[0].resnet.layer4[i] for i in range(len(models[0].resnet.layer4)-1,2)]+[models[0].resnet.layer4[-1]]},
-          # 'res50':{'target_layers':[models[1].resnet.layer2[i] for i in range(0,len(models[1].resnet.layer2),2)]+[models[1].resnet.layer3[i] for i in range(0,len(models[1].resnet.layer3),2)]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4)-1,2)]+[models[1].resnet.layer4[-1]]},
+          'res50':{'target_layers':[models[1].resnet.layer2[i] for i in range(0,len(models[1].resnet.layer2),2)]+[models[1].resnet.layer3[i] for i in range(0,len(models[1].resnet.layer3),2)]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4)-1,2)]+[models[1].resnet.layer4[-1]]},
           # 'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(0,len(models[2].resnet.layer3),3)]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4)-1,2)]+[models[2].resnet.layer4[-1]]},
           # 'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),5)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4)-1,2)]+[models[3].resnet.layer4[-1]]},
           # 'convnext_xlarge':{'target_layers':[models[4].downsample_layers[0],models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
@@ -151,18 +151,18 @@ CLS2IDX = config['label_names']
 test_dataset = Kermany_DataSet(config['test_path'])
 test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           batch_size=1,
-                                          shuffle=False)
+                                          shuffle=True)
 
 
 #,"res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224'
-names = ["res18"]
+names = ["res50"]
 # predictions = None
 # ground_truth = None
 count = 0
 if config['use_wandb']:
     test_dt = wandb.Table(columns=columns)
 for i, (images, labels) in enumerate(test_loader):
-    if count == 10:
+    if count == 1:
         break
 
     images = Variable(images).to(device)
@@ -191,7 +191,7 @@ for i, (images, labels) in enumerate(test_loader):
 
         target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
-        heatmap = occlusion(model, images, predictions.item(), 50, 10)
+        heatmap = occlusion(model, images, predictions.item(), 50, 2)
 
         # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
         # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
