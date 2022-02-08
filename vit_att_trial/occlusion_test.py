@@ -75,6 +75,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             prob = output.tolist()[0][label]
             if prob>max_prob:
                 print(max_prob)
+                max_prob= prob
                 best_mask = input_image.clone().detach()
                 best_outputs = output
 
