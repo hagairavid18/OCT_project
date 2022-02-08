@@ -70,8 +70,16 @@ def occlusion(model, image, label, occ_size=50, occ_stride=50, occ_pixel=0.5):
 
             # setting the heatmap location to probability value
             heatmap[h, w] = prob
+            image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
+            image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
+                    image_transformer_attribution.max() - image_transformer_attribution.min())
+            # vis = show_cam_on_image(image_transformer_attribution, heatmap)
+            # vis = np.uint8(255 * vis)
+            # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+            heatmap = np.uint8(255 * heatmap)
+            heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
 
-    return heatmap
+    return vis
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
@@ -85,30 +93,31 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
 
-name = 'vit_base_patch16_224'
-# initialize ViT pretrained
-model_timm = timm.create_model(name, num_classes=4, img_size=(496, 512))
-model_timm.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
-model_timm = model_timm.to(device)
+# name = 'vit_base_patch16_224'
+# # initialize ViT pretrained
+# model_timm = timm.create_model(name, num_classes=4, img_size=(496, 512))
+# model_timm.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
+# model_timm = model_timm.to(device)
+#
+# model_attn = vit_LRP(num_classes=4, img_size=(496, 512))
+# model_attn.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
+# model_attn = model_attn.to(device)
+# model_attn.eval()
+# attribution_generator = LRP(model_attn)
 
-model_attn = vit_LRP(num_classes=4, img_size=(496, 512))
-model_attn.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
-model_attn = model_attn.to(device)
-model_attn.eval()
-attribution_generator = LRP(model_attn)
-
-models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
+models = [Resnet18(4)]
 
 config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,len(models[0].resnet.layer2))]+[models[0].resnet.layer3[i] for i in range(0,len(models[0].resnet.layer3))]+[models[0].resnet.layer4[i] for i in range(len(models[0].resnet.layer4)-1,2)]+[models[0].resnet.layer4[-1]]},
-          'res50':{'target_layers':[models[1].resnet.layer2[i] for i in range(0,len(models[1].resnet.layer2),2)]+[models[1].resnet.layer3[i] for i in range(0,len(models[1].resnet.layer3),2)]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4)-1,2)]+[models[1].resnet.layer4[-1]]},
-          'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(0,len(models[2].resnet.layer3),3)]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4)-1,2)]+[models[2].resnet.layer4[-1]]},
-          'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),5)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4)-1,2)]+[models[3].resnet.layer4[-1]]},
-          'convnext_xlarge':{'target_layers':[models[4].downsample_layers[0],models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
-          'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
+          # 'res50':{'target_layers':[models[1].resnet.layer2[i] for i in range(0,len(models[1].resnet.layer2),2)]+[models[1].resnet.layer3[i] for i in range(0,len(models[1].resnet.layer3),2)]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4)-1,2)]+[models[1].resnet.layer4[-1]]},
+          # 'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(0,len(models[2].resnet.layer3),3)]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4)-1,2)]+[models[2].resnet.layer4[-1]]},
+          # 'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),5)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4)-1,2)]+[models[3].resnet.layer4[-1]]},
+          # 'convnext_xlarge':{'target_layers':[models[4].downsample_layers[0],models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
+          # 'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
           'use_wandb': True,
           'visualize_all_class': False,
           'seed': 25,
-          'test_path' :"../../data/kermany/test",
+          # 'test_path' :"../../data/kermany/test",
+          "test_path": "../../../Documents/GitHub/test",
           'label_names':["NORMAL","CNV","DME","DRUSEN"],
           'cam_algs': [GradCAM,GradCAMPlusPlus,XGradCAM,ScoreCAM],
           'cam_names':['GradCAM','GradCAMPlusPlus','XGradCAM','ScoreCAM'],
