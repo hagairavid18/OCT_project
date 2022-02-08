@@ -182,7 +182,7 @@ names = ['convnext_xlarge']
 count = 0
 name = 'convnext_xlarge'
 for i, (images, labels) in enumerate(test_loader):
-    if count == 10:
+    if count == 20:
         break
 
     images = Variable(images).to(device)
@@ -220,7 +220,7 @@ for i, (images, labels) in enumerate(test_loader):
 
     target_layers = [config[name]['target_layers'][-1]]
     # compute occlusion heatmap
-    heatmap,best_mask,best_ouputs = occlusion(model, images, labels.item(), 50, 10)
+    heatmap,best_mask,best_ouputs = occlusion(model, images, labels.item(), 50, 5)
 
     # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
     # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
