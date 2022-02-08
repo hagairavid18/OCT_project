@@ -84,25 +84,19 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
 
             # setting the heatmap location to probability value
             heatmap[h, w] = prob
-    # image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
-    # image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
-    # image_transformer_attribution.max() - image_transformer_attribution.min())
+    image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
+    image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
+    image_transformer_attribution.max() - image_transformer_attribution.min())
     # vis = np.uint8(255 * vis)
     # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-    print(heatmap.shape)
     heatmap = heatmap.permute(1, 0)
-    print(heatmap.shape)
-    print(heatmap.shape)
-
     heatmap = np.uint8(255 * heatmap)
-
     heatmap = heatmap - np.min(heatmap)
-    # heatmap = heatmap / (1e-7 + np.max(heatmap))
-    # heatmap = cv2.resize(heatmap, )
     heatmap = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET)
     heatmap = np.float32(heatmap) / 255
-    print(heatmap)
-    print(heatmap.shape)
+    new_heatmap =cv2.resize(heatmap, (512,496,3))
+    inter_heatmap = new_heatmap * 0.4 + np.float32(image)
+    inter_heatmap = inter_heatmap / np.max(inter_heatmap)
 
     # result = np.float32(result)
     # heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
@@ -119,7 +113,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
         masked_image[:, :, w_start:w_end, h_start:h_end] = occ_pixel
     output = model(masked_image)
     prob = output.tolist()[0][label]
-    return heatmap,masked_image,output
+    return inter_heatmap,masked_image,output
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
@@ -153,7 +147,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),5)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4)-1,2)]+[models[3].resnet.layer4[-1]]},
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[0],models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
           'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
-          'use_wandb': True,
+          'use_wandb': False,
           'visualize_all_class': False,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
