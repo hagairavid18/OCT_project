@@ -99,7 +99,7 @@ names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_
 # ground_truth = None
 count = 0
 for i, (images, labels) in enumerate(test_loader):
-    if count == 10:
+    if count == 1:
         break
     if config['use_wandb']:
         test_dt = wandb.Table(columns=columns)
