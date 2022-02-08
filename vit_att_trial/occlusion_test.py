@@ -35,7 +35,7 @@ from visualization_helpers import generate_visualization,reshape_transform,show_
 
 # custom function to conduct occlusion experiments
 
-def occlusion(model, image, label, occ_size=50, occ_stride=50, occ_pixel=0.5):
+def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     # get the width and height of the image
     width, height = image.shape[-2], image.shape[-1]
 
@@ -45,7 +45,7 @@ def occlusion(model, image, label, occ_size=50, occ_stride=50, occ_pixel=0.5):
 
     # create a white image of sizes we defined
     heatmap = torch.zeros((output_height, output_width))
-
+    print(image)
     # iterate all the pixels in each column
     for h in range(0, height):
         for w in range(0, width):
