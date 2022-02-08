@@ -79,7 +79,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
                 top_10_masks = sorted(top_10_masks,key = lambda x: x[1],reverse=True)
                 if len(top_10_masks)>20:
                     top_10_masks.pop(-1)
-                print(top_10_masks)
+                # print(top_10_masks)
 
             # setting the heatmap location to probability value
             heatmap[h, w] = prob
@@ -106,7 +106,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     masked_image = image.clone().detach()
 
     for tup in top_10_masks:
-        print(tup)
+        # print(tup)
         w_start, w_end, h_start, h_end = tup[0]
         # replacing all the pixel information in the image with occ_pixel(grey) in the specified location
         masked_image[:, :, w_start:w_end, h_start:h_end] = occ_pixel
@@ -212,7 +212,7 @@ for i, (images, labels) in enumerate(test_loader):
 
         target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
-        heatmap,best_mask,best_ouputs = occlusion(model, images, predictions.item(), 50, 10)
+        heatmap,best_mask,best_ouputs = occlusion(model, images, predictions.item(), 50, 5)
 
         # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
         # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
