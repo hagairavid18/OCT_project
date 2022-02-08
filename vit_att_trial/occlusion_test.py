@@ -90,9 +90,10 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     # vis = np.uint8(255 * vis)
     # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
     heatmap = heatmap.permute(1, 0)
-    heatmap = np.uint8(255 * heatmap)
     heatmap = (heatmap - heatmap.min()) / (
             heatmap.max() - heatmap.min())
+    # heatmap = np.uint8(255 * heatmap)
+
     heatmap = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET)
     heatmap = np.float32(heatmap) / 255
     print(heatmap.shape)
@@ -183,7 +184,7 @@ names = ['convnext_xlarge']
 count = 0
 name = 'convnext_xlarge'
 for i, (images, labels) in enumerate(test_loader):
-    if count == 3:
+    if count == 1:
         break
 
     images = Variable(images).to(device)
@@ -213,7 +214,7 @@ for i, (images, labels) in enumerate(test_loader):
 
     target_layers = [config[name]['target_layers'][-1]]
     # compute occlusion heatmap
-    inter_heatmap,curr_heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 50, 5)
+    inter_heatmap,curr_heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 50, 20)
     _, new_predictions = torch.max(new_ouputs.data, 1)
     # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
     # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
