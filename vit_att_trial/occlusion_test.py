@@ -80,6 +80,11 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
             # heatmap = np.uint8(255 * heatmap)
     # print(heatmap)
+    heatmap = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET)
+    heatmap = np.float32(heatmap) / 255
+    # cam = heatmap * 0.4 + np.float32(img)
+    heatmap = heatmap / np.max(heatmap)
+    # return cam
     heatmap = np.uint8(255 * heatmap)
     heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
     # print(heatmap)
@@ -155,7 +160,7 @@ count = 0
 if config['use_wandb']:
     test_dt = wandb.Table(columns=columns)
 for i, (images, labels) in enumerate(test_loader):
-    if count == 5:
+    if count == 1:
         break
 
     images = Variable(images).to(device)
