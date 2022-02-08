@@ -48,7 +48,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     image = image.permute(0,1, 3, 2)
     print(image.shape)
     # iterate all the pixels in each column
-    max_prob = 0
+    max_prob = -100
     best_outputs = None
     best_mask = None
     for h in range(0, height):
