@@ -83,26 +83,24 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
 
             # setting the heatmap location to probability value
             heatmap[h, w] = prob
-            image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
-            image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
-                    image_transformer_attribution.max() - image_transformer_attribution.min())
-            # vis = show_cam_on_image(image_transformer_attribution, heatmap)
-            # vis = np.uint8(255 * vis)
-            # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
-            # heatmap = np.uint8(255 * heatmap)
+    image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
+    image_transformer_attribution = (image_transformer_attribution - image_transformer_attribution.min()) / (
+    image_transformer_attribution.max() - image_transformer_attribution.min())
+    # vis = np.uint8(255 * vis)
+    # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
+    # heatmap = np.uint8(255 * heatmap)
     # print(heatmap)
     heatmap = heatmap.permute(1, 0)
 
-    heatmap = (heatmap - heatmap.min()) / (
-            heatmap.max() - heatmap.min())
-    heatmap = 1- heatmap
-    heatmap = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET)
-    heatmap = np.float32(heatmap) / 255
-    # cam = heatmap * 0.4 + np.float32(img)
-    heatmap = heatmap / np.max(heatmap)
-    # return cam
-    heatmap = np.uint8(255 * heatmap)
-    heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
+    heatmap = heatmap - np.min(heatmap)
+    heatmap = heatmap / (1e-7 + np.max(heatmap))
+
+    heatmap = cv2.resize(heatmap, image.shape[:2])
+    # result = np.float32(result)
+
+    vis = show_cam_on_image(image_transformer_attribution, heatmap)
+    # vis = show_cam_on_image(image_transformer_attribution, heatmap)
+
     # print(heatmap)
     masked_image = image.clone().detach()
 
@@ -113,7 +111,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
         masked_image[:, :, w_start:w_end, h_start:h_end] = occ_pixel
     output = model(masked_image)
     prob = output.tolist()[0][label]
-    return heatmap,masked_image,output
+    return vis,masked_image,output
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
@@ -183,7 +181,7 @@ names = ['convnext_xlarge']
 count = 0
 name = 'convnext_xlarge'
 for i, (images, labels) in enumerate(test_loader):
-    if count == 20:
+    if count == 1:
         break
 
     images = Variable(images).to(device)
@@ -211,8 +209,8 @@ for i, (images, labels) in enumerate(test_loader):
     # print(torch.topk(k=2,input=outputs).values)
     # print(torch.topk(k=2, input=outputs).values[0,0])
     # print(torch.topk(k=2, input=outputs).values[0,1])
-    if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
-        continue
+    # if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
+    #     continue
 
     print('here')
     count += 1
@@ -221,7 +219,7 @@ for i, (images, labels) in enumerate(test_loader):
 
     target_layers = [config[name]['target_layers'][-1]]
     # compute occlusion heatmap
-    heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 50, 5)
+    heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 200, 50)
     _, new_predictions = torch.max(new_ouputs.data, 1)
     # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
     # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
