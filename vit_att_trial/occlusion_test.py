@@ -211,7 +211,7 @@ for i, (images, labels) in enumerate(test_loader):
         # Get predictions from the maximum value
         _, predictions = torch.max(outputs.data, 1)
         print(outputs)
-        print(torch.topk(k=2,input=outputs))
+        print(torch.topk(k=2,input=outputs).values)
         count += 1
 
         target_layers = [config[name]['target_layers'][-1]]
