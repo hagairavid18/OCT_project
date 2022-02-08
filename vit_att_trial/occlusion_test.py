@@ -186,7 +186,7 @@ names = ['convnext_xlarge']
 count = 0
 name = 'convnext_xlarge'
 for i, (images, labels) in enumerate(test_loader):
-    if count == 1:
+    if count == 3:
         break
 
     images = Variable(images).to(device)
@@ -216,7 +216,7 @@ for i, (images, labels) in enumerate(test_loader):
 
     target_layers = [config[name]['target_layers'][-1]]
     # compute occlusion heatmap
-    inter_heatmap,curr_heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 50, 20)
+    inter_heatmap,curr_heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 50, 10)
     _, new_predictions = torch.max(new_ouputs.data, 1)
     # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
     # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
