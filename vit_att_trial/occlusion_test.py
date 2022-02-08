@@ -190,7 +190,7 @@ for i, (images, labels) in enumerate(test_loader):
     labels = labels.to(device)
     # if labels.item() !=0:
     #     continue
-    count+=1
+
 
     print(count)
     if config['use_wandb']:
@@ -210,10 +210,12 @@ for i, (images, labels) in enumerate(test_loader):
 
         # Get predictions from the maximum value
         _, predictions = torch.max(outputs.data, 1)
+        print(predictions)
+        count += 1
 
         target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
-        heatmap,best_mask,best_ouputs = occlusion(model, images, predictions.item(), 50, 3)
+        heatmap,best_mask,best_ouputs = occlusion(model, images, predictions.item(), 200, 50)
 
         # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
         # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
