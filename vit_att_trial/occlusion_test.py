@@ -193,8 +193,7 @@ for i, (images, labels) in enumerate(test_loader):
 
 
     print(count)
-    if config['use_wandb']:
-        test_dt = wandb.Table(columns=columns)
+
     for index, name in enumerate(names):
 
         model = models[4]
@@ -219,6 +218,8 @@ for i, (images, labels) in enumerate(test_loader):
         else:
             print('here')
         count += 1
+        if config['use_wandb']:
+            test_dt = wandb.Table(columns=columns)
 
         target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
