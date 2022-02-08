@@ -106,6 +106,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     masked_image = image.clone().detach()
 
     for tup in top_10_masks:
+        print(tup)
         w_start, w_end, h_start, h_end = tup[0]
         # replacing all the pixel information in the image with occ_pixel(grey) in the specified location
         masked_image[:, :, w_start:w_end, h_start:h_end] = occ_pixel
