@@ -152,7 +152,7 @@ names = ["res18"]
 # ground_truth = None
 count = 0
 for i, (images, labels) in enumerate(test_loader):
-    if count == 1:
+    if count == 5:
         break
     if config['use_wandb']:
         test_dt = wandb.Table(columns=columns)
@@ -182,7 +182,7 @@ for i, (images, labels) in enumerate(test_loader):
 
         target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
-        heatmap = occlusion(model, images, predictions.item(), 100, 50)
+        heatmap = occlusion(model, images, predictions.item(), 100, 20)
 
         # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
         # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
