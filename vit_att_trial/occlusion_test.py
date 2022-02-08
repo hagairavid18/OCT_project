@@ -224,7 +224,7 @@ for i, (images, labels) in enumerate(test_loader):
 
     target_layers = [config[name]['target_layers'][-1]]
     # compute occlusion heatmap
-    heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 200, 50)
+    inter_heatmap,heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 200, 50)
     _, new_predictions = torch.max(new_ouputs.data, 1)
     # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
     # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
@@ -245,7 +245,7 @@ for i, (images, labels) in enumerate(test_loader):
         targets = [ClassifierOutputTarget(category) for category in target_categories]
 
 
-        vis,heatmap, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
+        vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
                                                                           images, labels, targets)
         res.append(vis)
         # just_grads.append(curr_grads)
@@ -272,7 +272,7 @@ for i, (images, labels) in enumerate(test_loader):
         im_2 = Image.open(img_buf_2)
 
         row = [str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-               ]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(vis),wandb.Image(heatmap),wandb.Image(best_mask),wandb.Image(im_2), config['label_names'][new_predictions.item()]]
+               ]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(inter_heatmap),wandb.Image(heatmap),wandb.Image(best_mask),wandb.Image(im_2), config['label_names'][new_predictions.item()]]
         # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
         # for pos in range(len(layer_cam)):
         #     row_2[pos] = wandb.Image(layer_cam[pos])
