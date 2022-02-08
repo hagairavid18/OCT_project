@@ -67,7 +67,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # run inference on modified image
             output = model(input_image)
             # print(output)
-            # output = nn.functional.softmax(output, dim=1)
+            output = nn.functional.softmax(output, dim=1)
             prob = output.tolist()[0][label]
 
             # setting the heatmap location to probability value
