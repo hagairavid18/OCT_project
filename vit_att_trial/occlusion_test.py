@@ -48,8 +48,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     print(image.shape)
     # iterate all the pixels in each column
     max_prob = -100
-    best_outputs = None
-    best_mask = None
+    top_10_masks = []
     for h in range(0, height):
         for w in range(0, width):
 
@@ -76,8 +75,9 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             if prob>max_prob:
                 print(max_prob)
                 max_prob= prob
-                best_mask = input_image.clone().detach()
-                best_outputs = output
+                top_10_masks.append((w_start,w_end,h_start,h_end))
+                if len(top_10_masks>10):
+                    top_10_masks.pop(0)
 
             # setting the heatmap location to probability value
             heatmap[h, w] = prob
@@ -101,8 +101,15 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     heatmap = np.uint8(255 * heatmap)
     heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
     # print(heatmap)
+    masked_image = image.clone().detach()
 
-    return heatmap,best_mask,best_outputs
+    for w_start,w_end,h_start,h_end in top_10_masks:
+
+        # replacing all the pixel information in the image with occ_pixel(grey) in the specified location
+        masked_image[:, :, w_start:w_end, h_start:h_end] = occ_pixel
+    output = model(masked_image)
+    prob = output.tolist()[0][label]
+    return heatmap,masked_image,prob
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
