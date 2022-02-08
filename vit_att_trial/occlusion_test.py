@@ -65,7 +65,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
 
             # run inference on modified image
             output = model(input_image)
-            print(output)
+            # print(output)
             # output = nn.functional.softmax(output, dim=1)
             prob = output.tolist()[0][label]
 
@@ -78,10 +78,10 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # vis = np.uint8(255 * vis)
             # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
             # heatmap = np.uint8(255 * heatmap)
-    print(heatmap)
+    # print(heatmap)
     heatmap = np.uint8(255 * heatmap)
     heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
-    print(heatmap)
+    # print(heatmap)
 
     return heatmap
 
@@ -151,11 +151,12 @@ names = ["res18"]
 # predictions = None
 # ground_truth = None
 count = 0
+if config['use_wandb']:
+    test_dt = wandb.Table(columns=columns)
 for i, (images, labels) in enumerate(test_loader):
     if count == 5:
         break
-    if config['use_wandb']:
-        test_dt = wandb.Table(columns=columns)
+
     images = Variable(images).to(device)
 
     labels = labels.to(device)
@@ -182,7 +183,7 @@ for i, (images, labels) in enumerate(test_loader):
 
         target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
-        heatmap = occlusion(model, images, predictions.item(), 100, 20)
+        heatmap = occlusion(model, images, predictions.item(), 100, 10)
 
         # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
         # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
@@ -249,5 +250,5 @@ for i, (images, labels) in enumerate(test_loader):
 
 
 
-    if config['use_wandb']:
-        wandb.log({f"image_{config['label_names'][labels.item()]}_{count}": test_dt})
+if config['use_wandb']:
+    wandb.log({f"image_{config['label_names'][labels.item()]}_{count}": test_dt})
