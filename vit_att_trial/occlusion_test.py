@@ -89,7 +89,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     # vis = np.uint8(255 * vis)
     # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
     # heatmap = np.uint8(255 * heatmap)
-    # print(heatmap)
+    print(heatmap.shape)
     heatmap = heatmap.permute(1, 0)
 
     heatmap = heatmap - np.min(heatmap)
@@ -145,7 +145,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),5)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4)-1,2)]+[models[3].resnet.layer4[-1]]},
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[0],models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
           'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
-          'use_wandb': True,
+          'use_wandb': False,
           'visualize_all_class': False,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
