@@ -89,7 +89,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # vis = cv2.cvtColor(np.array(vis), cv2.COLOR_RGB2BGR)
             # heatmap = np.uint8(255 * heatmap)
     # print(heatmap)
-    heatmap = heatmap.permute(0,1, 3, 2)
+    heatmap = heatmap.permute(0, 2, 1)
 
     heatmap = (heatmap - heatmap.min()) / (
             heatmap.max() - heatmap.min())
