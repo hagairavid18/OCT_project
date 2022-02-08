@@ -182,7 +182,7 @@ names = ['convnext_xlarge']
 count = 0
 
 for i, (images, labels) in enumerate(test_loader):
-    if count == 20:
+    if count == 2:
         break
 
     images = Variable(images).to(device)
