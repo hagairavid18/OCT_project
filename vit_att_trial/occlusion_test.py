@@ -48,6 +48,8 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     image = image.permute(0,1, 3, 2)
     print(image.shape)
     # iterate all the pixels in each column
+    max_prob = 0
+    best_outputs = None
     for h in range(0, height):
         for w in range(0, width):
 
@@ -71,6 +73,9 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # print(output_prob)
             # print(output_prob.tolist()[0][label])
             prob = output.tolist()[0][label]
+            if prob>max_prob:
+                best_mask = input_image
+                best_outputs = output
 
             # setting the heatmap location to probability value
             heatmap[h, w] = prob
@@ -93,7 +98,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     heatmap = cv2.cvtColor(np.array(heatmap), cv2.COLOR_RGB2BGR)
     # print(heatmap)
 
-    return heatmap
+    return heatmap,best_mask,best_outputs
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
@@ -142,7 +147,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 
-columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target",'GradCAM',"occlusion"]\
+columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target",'GradCAM',"occlusion","best_mask","Logits after"]\
 
 
 if config['use_wandb']:
@@ -164,7 +169,7 @@ count = 0
 if config['use_wandb']:
     test_dt = wandb.Table(columns=columns)
 for i, (images, labels) in enumerate(test_loader):
-    if count == 10:
+    if count == 1:
         break
 
     images = Variable(images).to(device)
@@ -193,7 +198,7 @@ for i, (images, labels) in enumerate(test_loader):
 
         target_layers = [config[name]['target_layers'][-1]]
         # compute occlusion heatmap
-        heatmap = occlusion(model, images, predictions.item(), 50, 5)
+        heatmap,best_mask,best_ouputs = occlusion(model, images, predictions.item(), 50, 20)
 
         # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
         # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
@@ -243,8 +248,15 @@ for i, (images, labels) in enumerate(test_loader):
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
 
+            plt.clf()
+
+            plt.bar(config['label_names'], best_ouputs.cpu().detach().numpy()[0])
+            img_buf_2 = io.BytesIO()
+            plt.savefig(img_buf_2, format='png')
+            im_2 = Image.open(img_buf_2)
+
             row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-                   config['label_names'][k]]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(heatmap)]
+                   config['label_names'][k]]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[ wandb.Image(heatmap),wandb.Image(best_mask),wandb.Image(im_2)]
             # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
             # for pos in range(len(layer_cam)):
             #     row_2[pos] = wandb.Image(layer_cam[pos])
