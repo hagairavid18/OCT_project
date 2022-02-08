@@ -75,7 +75,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
             # print(output_prob.tolist()[0][label])
             prob = output.tolist()[0][label]
             if prob>max_prob:
-                best_mask = input_image
+                best_mask = input_image.clone().detach()
                 best_outputs = output
 
             # setting the heatmap location to probability value
@@ -170,7 +170,7 @@ count = 0
 if config['use_wandb']:
     test_dt = wandb.Table(columns=columns)
 for i, (images, labels) in enumerate(test_loader):
-    if count == 4:
+    if count == 1:
         break
 
     images = Variable(images).to(device)
