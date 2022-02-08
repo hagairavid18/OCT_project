@@ -110,7 +110,7 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
         masked_image[:, :, w_start:w_end, h_start:h_end] = occ_pixel
     output = model(masked_image)
     prob = output.tolist()[0][label]
-    return heatmap,masked_image,prob
+    return heatmap,masked_image,output
 
 seed = 25
 torch.manual_seed(hash("by removing stochasticity") % seed)
