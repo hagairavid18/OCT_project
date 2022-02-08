@@ -117,7 +117,7 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 # model_attn.eval()
 # attribution_generator = LRP(model_attn)
 
-models = [Resnet18(4),Resnet50(4)]
+models = [Resnet50(4)]
 
 config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,len(models[0].resnet.layer2))]+[models[0].resnet.layer3[i] for i in range(0,len(models[0].resnet.layer3))]+[models[0].resnet.layer4[i] for i in range(len(models[0].resnet.layer4)-1,2)]+[models[0].resnet.layer4[-1]]},
           'res50':{'target_layers':[models[1].resnet.layer2[i] for i in range(0,len(models[1].resnet.layer2),2)]+[models[1].resnet.layer3[i] for i in range(0,len(models[1].resnet.layer3),2)]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4)-1,2)]+[models[1].resnet.layer4[-1]]},
