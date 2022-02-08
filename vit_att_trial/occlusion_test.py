@@ -210,8 +210,8 @@ for i, (images, labels) in enumerate(test_loader):
     # print(torch.topk(k=2,input=outputs).values)
     # print(torch.topk(k=2, input=outputs).values[0,0])
     # print(torch.topk(k=2, input=outputs).values[0,1])
-    # if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
-    #     continue
+    if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
+        continue
 
     print('here')
     count += 1
@@ -220,7 +220,7 @@ for i, (images, labels) in enumerate(test_loader):
 
     target_layers = [config[name]['target_layers'][-1]]
     # compute occlusion heatmap
-    inter_heatmap,curr_heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 50, 10)
+    inter_heatmap,curr_heatmap,best_mask,new_ouputs = occlusion(model, images, labels.item(), 50, 5)
     _, new_predictions = torch.max(new_ouputs.data, 1)
     # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
     # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
