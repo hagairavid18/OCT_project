@@ -160,7 +160,7 @@ count = 0
 if config['use_wandb']:
     test_dt = wandb.Table(columns=columns)
 for i, (images, labels) in enumerate(test_loader):
-    if count == 1:
+    if count == 10:
         break
 
     images = Variable(images).to(device)
