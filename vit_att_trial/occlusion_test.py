@@ -98,7 +98,9 @@ def occlusion(model, image, label, occ_size=100, occ_stride=100, occ_pixel=0.5):
     heatmap = heatmap - np.min(heatmap)
     heatmap = heatmap / (1e-7 + np.max(heatmap))
     print(image.shape)
-    heatmap = cv2.resize(heatmap, image.shape[:2])
+    heatmap = cv2.resize(heatmap, image.shape[2:])
+    print(image.shape)
+
     # result = np.float32(result)
 
     vis = show_cam_on_image(image_transformer_attribution, heatmap)
