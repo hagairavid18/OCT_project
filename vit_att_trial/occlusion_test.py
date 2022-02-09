@@ -160,7 +160,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 
-columns = ["id", "Original Image", "prediction" ,"Logits","Truth","curr_target",'GradCAM',"occlusion","occ_on_image","best_mask","Logits after","new prediction"]\
+columns = ["id", "Original Image", "prediction" ,"Logits","Truth","curr_target",'GradCAM',"occlusion","occ_on_image","best_mask","Logits after","new prediction"]
 if config['visualize_all_class']:
     columns = ["id", "Original Image", "prediction", "Logits", "Truth", "curr_target", 'GradCAM', "occ_NORMAL","occ_CNV","occ_DME","occ_DRUSEN"]
 
