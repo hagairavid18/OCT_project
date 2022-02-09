@@ -160,7 +160,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 
-columns = ["id", "Original Image", "prediction" ,"Logits","Truth","curr_target",'GradCAM',"occlusion","occ_on_image","best_mask","Logits after","new prediction"]
+columns = ["id", "Original Image", "prediction" ,"Logits","Truth","T/F",'GradCAM',"occlusion","occ_on_image","best_mask","Logits after","new prediction"]
 if config['visualize_all_class']:
     columns = ["id", "Original Image", "prediction", "Logits", "Truth", "curr_target", 'GradCAM', "occ_NORMAL","occ_CNV","occ_DME","occ_DRUSEN"]
 
@@ -198,8 +198,8 @@ for i, (images, labels) in enumerate(test_loader):
     # Get predictions from the maximum value
     _, predictions = torch.max(outputs.data, 1)
 
-    # if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1:
-    #     continue
+    if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1:
+        continue
 
     print('here')
     count += 1
@@ -222,7 +222,7 @@ for i, (images, labels) in enumerate(test_loader):
             k = labels.item()
         target_categories = [k]
 
-        inter_heatmap, curr_heatmap, best_mask, new_ouputs = occlusion(model, images, k, 50, 30)
+        inter_heatmap, curr_heatmap, best_mask, new_ouputs = occlusion(model, images, k, 50, 5)
         _, new_predictions = torch.max(new_ouputs.data, 1)
         heatmaps.append(curr_heatmap)
 
