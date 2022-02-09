@@ -186,7 +186,6 @@ for i, (images, labels) in enumerate(test_loader):
 
     images = Variable(images).to(device)
     labels = labels.to(device)
-    print(count)
 
     model = models[4]
     model.load_state_dict(torch.load(f'{names[0]}.pt', map_location=torch.device(device)))
@@ -200,6 +199,8 @@ for i, (images, labels) in enumerate(test_loader):
         continue
 
     count += 1
+    print(count)
+
     if config['use_wandb']:
         test_dt = wandb.Table(columns=columns)
 
@@ -227,7 +228,7 @@ for i, (images, labels) in enumerate(test_loader):
         inter_heatmap, occlusion_map, best_mask, new_ouputs = occlusion(model, images, k, 50, 5)
         _, new_predictions = torch.max(new_ouputs.data, 1)
 
-        cam_and_occlusion.append(occlusion_map)
+        cam_and_occlusion.append(inter_heatmap)
         if not config['visualize_all_class']:
             break
 
