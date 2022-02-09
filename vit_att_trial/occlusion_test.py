@@ -235,37 +235,35 @@ for i, (images, labels) in enumerate(test_loader):
         # just_grads.append(curr_grads)
 
 
-        gradcam = res
+    gradcam = res
 
 
-        T = predictions.item() == labels.item()
-        out = outputs
-        plt.clf()
+    T = predictions.item() == labels.item()
+    out = outputs
+    plt.clf()
 
-        plt.bar(config['label_names'], out.cpu().detach().numpy()[0])
-        # plt.xlabel(label_names)
-        img_buf = io.BytesIO()
-        plt.savefig(img_buf, format='png')
-        im = Image.open(img_buf)
+    plt.bar(config['label_names'], out.cpu().detach().numpy()[0])
+    # plt.xlabel(label_names)
+    img_buf = io.BytesIO()
+    plt.savefig(img_buf, format='png')
+    im = Image.open(img_buf)
 
-        plt.clf()
+    plt.clf()
 
-        plt.bar(config['label_names'], new_ouputs.cpu().detach().numpy()[0])
-        img_buf_2 = io.BytesIO()
-        plt.savefig(img_buf_2, format='png')
-        im_2 = Image.open(img_buf_2)
+    plt.bar(config['label_names'], new_ouputs.cpu().detach().numpy()[0])
+    img_buf_2 = io.BytesIO()
+    plt.savefig(img_buf_2, format='png')
+    im_2 = Image.open(img_buf_2)
 
-        row = [str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-               ]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[wandb.Image(heatmaps[i]) for i in range(len(heatmaps))]+[wandb.Image(inter_heatmap),wandb.Image(best_mask),wandb.Image(im_2), config['label_names'][new_predictions.item()]]
+    row = [str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
+           ]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[wandb.Image(heatmaps[i]) for i in range(len(heatmaps))]+[wandb.Image(inter_heatmap),wandb.Image(best_mask),wandb.Image(im_2), config['label_names'][new_predictions.item()]]
 
-        if config['visualize_all_class']:
-            row = [str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im),
-                   config['label_names'][labels.item()], T,
-                   ] + [wandb.Image(gradcam[i]) for i in range(len(gradcam))] + [wandb.Image(heatmaps[i]) for i in range(len(heatmaps))]
+    if config['visualize_all_class']:
+        row = [str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im),
+               config['label_names'][labels.item()], T,
+               ] + [wandb.Image(gradcam[i]) for i in range(len(gradcam))] + [wandb.Image(heatmaps[i]) for i in range(len(heatmaps))]
 
-            columns = ["id", "Original Image", "prediction", "Logits", "Truth", "curr_target", 'GradCAM', "occ_NORMAL",
-                       "occ_CNV",
-                       "occ_DME", "occ_DRUSEN"]
+
         # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
         # for pos in range(len(layer_cam)):
         #     row_2[pos] = wandb.Image(layer_cam[pos])
@@ -274,10 +272,10 @@ for i, (images, labels) in enumerate(test_loader):
         # if name == 'vit_base_patch16_224':
         #     row[8] =wandb.Image(attention)
         # print(row[7])
-        if config['use_wandb']:
-            test_dt.add_data(*row)
-        if not config['visualize_all_class']:
-            break
+    if config['use_wandb']:
+        test_dt.add_data(*row)
+    if not config['visualize_all_class']:
+        break
 
 
 
