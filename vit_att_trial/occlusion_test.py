@@ -162,7 +162,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 
 columns = [ "Original Image", "prediction" ,"Logits","Truth","T/F",'GradCAM',"occlusion","occ_on_image","best_mask","Logits after","new prediction"]
 if config['visualize_all_class']:
-    columns = [ "Original Image", "prediction", "Logits", "Truth", "curr_target", 'CAM_NORMAL', "occ_NORMAL",'CAM_CNV',"occ_CNV",'CAM_DME',"occ_DME",'CAM_DRUSEN',"occ_DRUSEN"]
+    columns = [ "Original Image", "prediction", "Logits", "Truth", "curr_target", 'CAM', "OCC_NORMAL","OCC_CNV","OCC_DME","OCC_DRUSEN"]
 
 
 if config['use_wandb']:
@@ -198,8 +198,8 @@ for i, (images, labels) in enumerate(test_loader):
     # Get predictions from the maximum value
     _, predictions = torch.max(outputs.data, 1)
 
-    if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
-        continue
+    # if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
+    #     continue
 
     print('here')
     count += 1
@@ -211,23 +211,28 @@ for i, (images, labels) in enumerate(test_loader):
 
 
     cam_and_occlusion = []
+
     image_transformer_attribution = None
+    target_categories = [labels.item()]
+    targets = [ClassifierOutputTarget(category) for category in target_categories]
+
+    cam_map, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
+                                                                          images, labels, targets)
+    cam_and_occlusion.append(cam_map)
+
     for k in range(4):
         print("curr label: {}".format(k))
 
         if not config['visualize_all_class']:
             k = labels.item()
-        target_categories = [k]
-        targets = [ClassifierOutputTarget(category) for category in target_categories]
 
-        cam_map, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
-                                                                          images, labels, targets)
-        cam_and_occlusion.append(cam_map)
 
         inter_heatmap, occlusion_map, best_mask, new_ouputs = occlusion(model, images, k, 50, 40)
         _, new_predictions = torch.max(new_ouputs.data, 1)
 
         cam_and_occlusion.append(occlusion_map)
+        if not config['visualize_all_class']:
+            break
 
 
 
@@ -259,4 +264,4 @@ for i, (images, labels) in enumerate(test_loader):
 
     if config['use_wandb']:
         test_dt.add_data(*row)
-        wandb.log({f"image_{config['label_names'][labels.item()]}_{count}": test_dt})
+        wandb.log({f"image_{count}_{config['label_names'][labels.item()]}": test_dt})
