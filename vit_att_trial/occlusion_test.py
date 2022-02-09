@@ -210,19 +210,19 @@ for i, (images, labels) in enumerate(test_loader):
     # compute occlusion heatmap
 
 
-
+    heatmaps = []
     image_transformer_attribution = None
     for k in range(4):
         print("curr label: {}".format(k))
 
         # just_grads,res,attn_diff_cls,layer_cam = [],[],[],[]
         # target_categories = [k]
-        res,heatmaps =[], []
+        res =[]
         if not config['visualize_all_class']:
             k = labels.item()
         target_categories = [k]
 
-        inter_heatmap, curr_heatmap, best_mask, new_ouputs = occlusion(model, images, k, 50, 20)
+        inter_heatmap, curr_heatmap, best_mask, new_ouputs = occlusion(model, images, k, 50, 30)
         _, new_predictions = torch.max(new_ouputs.data, 1)
         heatmaps.append(curr_heatmap)
 
