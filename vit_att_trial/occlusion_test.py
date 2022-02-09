@@ -160,9 +160,9 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 
-columns = [ "Original Image", "prediction" ,"Logits","Truth","T/F",'GradCAM',"occlusion","occ_on_image","best_mask","Logits after","new prediction"]
+columns = [ "Original Image","Truth", "predicted" ,"Logits","T/F",'GradCAM',"occlusion","occ_on_image","best_mask","Logits after","new prediction"]
 if config['visualize_all_class']:
-    columns = [ "Original Image", "prediction", "Logits", "Truth", "curr_target", 'CAM', "OCC_NORMAL","OCC_CNV","OCC_DME","OCC_DRUSEN"]
+    columns = [ "Original Image", "Truth", "predicted", "Logits", "T/F", 'CAM', "OCC_NORMAL","OCC_CNV","OCC_DME","OCC_DRUSEN"]
 
 
 if config['use_wandb']:
@@ -189,19 +189,16 @@ for i, (images, labels) in enumerate(test_loader):
     print(count)
 
     model = models[4]
-    print(name)
-    if name != 'vit_base_patch16_224':
-        model.load_state_dict(torch.load(f'{names[0]}.pt', map_location=torch.device(device)))
-        model = model.to(device)
+    model.load_state_dict(torch.load(f'{names[0]}.pt', map_location=torch.device(device)))
+    model = model.to(device)
 
     outputs = model(images)
     # Get predictions from the maximum value
     _, predictions = torch.max(outputs.data, 1)
 
-    # if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
-    #     continue
+    if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1.5:
+        continue
 
-    print('here')
     count += 1
     if config['use_wandb']:
         test_dt = wandb.Table(columns=columns)
@@ -227,7 +224,7 @@ for i, (images, labels) in enumerate(test_loader):
             k = labels.item()
 
 
-        inter_heatmap, occlusion_map, best_mask, new_ouputs = occlusion(model, images, k, 50, 40)
+        inter_heatmap, occlusion_map, best_mask, new_ouputs = occlusion(model, images, k, 50, 5)
         _, new_predictions = torch.max(new_ouputs.data, 1)
 
         cam_and_occlusion.append(occlusion_map)
@@ -253,12 +250,12 @@ for i, (images, labels) in enumerate(test_loader):
     plt.savefig(img_buf_2, format='png')
     im_2 = Image.open(img_buf_2)
 
-    row = [ wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
+    row = [ wandb.Image(images), config['label_names'][labels.item()], config['label_names'][predictions.item()], wandb.Image(im), T,
            ]+[wandb.Image(cam_and_occlusion[i]) for i in range(len(cam_and_occlusion))]+[wandb.Image(inter_heatmap),wandb.Image(best_mask),wandb.Image(im_2), config['label_names'][new_predictions.item()]]
 
     if config['visualize_all_class']:
-        row = [ wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im),
-               config['label_names'][labels.item()], T,
+        row = [ wandb.Image(images),
+               config['label_names'][labels.item()], config['label_names'][predictions.item()], wandb.Image(im), T,
                ] + [wandb.Image(cam_and_occlusion[i]) for i in range(len(cam_and_occlusion))]
 
 
