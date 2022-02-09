@@ -160,9 +160,9 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 
-columns = ["id", "Original Image", "prediction" ,"Logits","Truth","T/F",'GradCAM',"occlusion","occ_on_image","best_mask","Logits after","new prediction"]
+columns = [ "Original Image", "prediction" ,"Logits","Truth","T/F",'GradCAM',"occlusion","occ_on_image","best_mask","Logits after","new prediction"]
 if config['visualize_all_class']:
-    columns = ["id", "Original Image", "prediction", "Logits", "Truth", "curr_target", 'GradCAM', "occ_NORMAL","occ_CNV","occ_DME","occ_DRUSEN"]
+    columns = [ "Original Image", "prediction", "Logits", "Truth", "curr_target", 'CAM_NORMAL', "occ_NORMAL",'CAM_CNV',"occ_CNV",'CAM_DME',"occ_DME",'CAM_DRUSEN',"occ_DRUSEN"]
 
 
 if config['use_wandb']:
@@ -210,32 +210,25 @@ for i, (images, labels) in enumerate(test_loader):
     # compute occlusion heatmap
 
 
-    heatmaps = []
+    cam_and_occlusion = []
     image_transformer_attribution = None
     for k in range(4):
         print("curr label: {}".format(k))
 
-        # just_grads,res,attn_diff_cls,layer_cam = [],[],[],[]
-        # target_categories = [k]
-        res =[]
         if not config['visualize_all_class']:
             k = labels.item()
         target_categories = [k]
-
-        inter_heatmap, curr_heatmap, best_mask, new_ouputs = occlusion(model, images, k, 50, 5)
-        _, new_predictions = torch.max(new_ouputs.data, 1)
-        heatmaps.append(curr_heatmap)
-
         targets = [ClassifierOutputTarget(category) for category in target_categories]
 
-
-        vis, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
+        cam_map, curr_grads, image_transformer_attribution = generate_cam_vis(model, GradCAM, target_layers, name,
                                                                           images, labels, targets)
-        res.append(vis)
-        # just_grads.append(curr_grads)
+        cam_and_occlusion.append(cam_map)
 
+        inter_heatmap, occlusion_map, best_mask, new_ouputs = occlusion(model, images, k, 50, 40)
+        _, new_predictions = torch.max(new_ouputs.data, 1)
 
-    gradcam = res
+        cam_and_occlusion.append(occlusion_map)
+
 
 
     T = predictions.item() == labels.item()
@@ -255,29 +248,15 @@ for i, (images, labels) in enumerate(test_loader):
     plt.savefig(img_buf_2, format='png')
     im_2 = Image.open(img_buf_2)
 
-    row = [str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-           ]+[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[wandb.Image(heatmaps[i]) for i in range(len(heatmaps))]+[wandb.Image(inter_heatmap),wandb.Image(best_mask),wandb.Image(im_2), config['label_names'][new_predictions.item()]]
+    row = [ wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
+           ]+[wandb.Image(cam_and_occlusion[i]) for i in range(len(cam_and_occlusion))]+[wandb.Image(inter_heatmap),wandb.Image(best_mask),wandb.Image(im_2), config['label_names'][new_predictions.item()]]
 
     if config['visualize_all_class']:
-        row = [str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im),
+        row = [ wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im),
                config['label_names'][labels.item()], T,
-               ] + [wandb.Image(gradcam[i]) for i in range(len(gradcam))] + [wandb.Image(heatmaps[i]) for i in range(len(heatmaps))]
+               ] + [wandb.Image(cam_and_occlusion[i]) for i in range(len(cam_and_occlusion))]
 
 
-        # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
-        # for pos in range(len(layer_cam)):
-        #     row_2[pos] = wandb.Image(layer_cam[pos])
-        # row+=row_2
-        #
-        # if name == 'vit_base_patch16_224':
-        #     row[8] =wandb.Image(attention)
-        # print(row[7])
     if config['use_wandb']:
         test_dt.add_data(*row)
-    if not config['visualize_all_class']:
-        break
-
-
-
-    if config['use_wandb']:
         wandb.log({f"image_{config['label_names'][labels.item()]}_{count}": test_dt})
