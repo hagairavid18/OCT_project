@@ -198,10 +198,7 @@ for i, (images, labels) in enumerate(test_loader):
     outputs = model(images)
     # Get predictions from the maximum value
     _, predictions = torch.max(outputs.data, 1)
-    # print(outputs)
-    # print(torch.topk(k=2,input=outputs).values)
-    # print(torch.topk(k=2, input=outputs).values[0,0])
-    # print(torch.topk(k=2, input=outputs).values[0,1])
+
     # if torch.topk(k=2, input=outputs).values[0,0] - torch.topk(k=2, input=outputs).values[0,1] >1:
     #     continue
 
@@ -213,23 +210,20 @@ for i, (images, labels) in enumerate(test_loader):
     target_layers = [config[name]['target_layers'][-1]]
     # compute occlusion heatmap
 
-    # displaying the image using seaborn heatmap and also setting the maximum value of gradient to probability
-    # imgplot = sns.heatmap(heatmap, xticklabels=False, yticklabels=False, vmax=prob_no_occ)
-    # figure = imgplot.get_figure()
+
 
     image_transformer_attribution = None
     for k in range(4):
-        # print("curr label: {}".format(k))
+        print("curr label: {}".format(k))
 
         # just_grads,res,attn_diff_cls,layer_cam = [],[],[],[]
         # target_categories = [k]
-        # targets = [ClassifierOutputTarget(category) for category in target_categories]
         res,heatmaps =[], []
         if not config['visualize_all_class']:
             k = labels.item()
         target_categories = [k]
 
-        inter_heatmap, curr_heatmap, best_mask, new_ouputs = occlusion(model, images, k, 50, 10)
+        inter_heatmap, curr_heatmap, best_mask, new_ouputs = occlusion(model, images, k, 50, 20)
         _, new_predictions = torch.max(new_ouputs.data, 1)
         heatmaps.append(curr_heatmap)
 
