@@ -2,7 +2,10 @@ import torch
 from rembg.bg import remove
 from attn_data import Kermany_DataSet
 from PIL import ImageFile
+from torchvision import transforms
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
+from pathlib import Path
 
 import numpy as np
 import io
@@ -10,7 +13,7 @@ from PIL import Image
 from torch.autograd import Variable
 
 input_path = 'input.png'
-output_path = 'out.png'
+output_path = 'outttt.png'
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 
@@ -21,22 +24,39 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
 
 count = 0
 name = 'convnext_xlarge'
+path = "../../data/kermany/test"
 
+t = transforms.Compose([transforms.ToTensor(), transforms.RandomResizedCrop((496, 512))])
+# self.dataset = []
+label = 0
+label_dict = {"NORMAL": 0,
+              "CNV": 1,
+              "DME": 2,
+              "DRUSEN": 3}
+f_1 = lambda x: 0 if "NORMAL" in x else 0
+f_2 = lambda x: 1 if "CNV" in x else 0
+f_3 = lambda x: 2 if "DME" in x else 0
+f_4 = lambda x: 3 if "DRUSEN" in x else 0
+i = 0
+# self.labels = []
+for path2 in Path(path).rglob('*.jpeg'):
+    i += 1
+    if i > 2: break
+    # path2 = str(path2)
+    # image = self.t(cv.imread(path2))
+    # label = f_1(path2) + f_2(path2) + f_3(path2) + f_4(path2)
+    # self.dataset.append((image, label))
 
-# images = Variable(images).to(device)
-f = np.fromfile("../../data/kermany/test/CNV/CNV-1016042-1.jpeg")
-# "/home/labs/testing/class57/data/kermany/test/CNV/CNV-1016042-1.jpeg"
-result = remove(f)
-img = Image.open(io.BytesIO(result)).convert("RGBA")
-img.save(output_path)
+    path2 = str(path2)
+    label = f_1(path2) + f_2(path2) + f_3(path2) + f_4(path2)
 
-f = np.fromfile("../../data/kermany/test/CNV/CNV-1016042-2.jpeg")
-# "/home/labs/testing/class57/data/kermany/test/CNV/CNV-1016042-1.jpeg"
-result = remove(f)
-img = Image.open(io.BytesIO(result)).convert("RGBA")
-output_path = 'out2.png'
+    # images = Variable(images).to(device)
+    f = np.fromfile(path2)
+    # "/home/labs/testing/class57/data/kermany/test/CNV/CNV-1016042-1.jpeg"
+    result = remove(f)
+    img = Image.open(io.BytesIO(result)).convert("RGBA")
+    img.save(output_path)
 
-img.save(output_path)
 
 # model = models[4]
 # model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
