@@ -37,4 +37,4 @@ for i, (images, labels) in enumerate(test_loader):
     # model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
     # model = model.to(device)
 
-    outputs = model(images)
+    # outputs = model(images)
