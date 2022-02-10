@@ -21,20 +21,17 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
 
 count = 0
 name = 'convnext_xlarge'
-for i, (images, labels) in enumerate(test_loader):
-    if count == 50:
-        break
 
-    # images = Variable(images).to(device)
-    labels = labels.to(device)
-    f = np.fromfile("../../data/kermany/test/CNV/CNV-1016042-1.jpeg")
-    # "/home/labs/testing/class57/data/kermany/test/CNV/CNV-1016042-1.jpeg"
-    result = remove(f)
-    img = Image.open(io.BytesIO(result)).convert("RGBA")
-    img.save(output_path)
 
-    # model = models[4]
-    # model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
-    # model = model.to(device)
+# images = Variable(images).to(device)
+f = np.fromfile("../../data/kermany/test/CNV/CNV-1016042-1.jpeg")
+# "/home/labs/testing/class57/data/kermany/test/CNV/CNV-1016042-1.jpeg"
+result = remove(f)
+img = Image.open(io.BytesIO(result)).convert("RGBA")
+img.save(output_path)
 
-    # outputs = model(images)
+# model = models[4]
+# model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
+# model = model.to(device)
+
+# outputs = model(images)
