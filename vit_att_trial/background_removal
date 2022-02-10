@@ -23,8 +23,9 @@ for i, (images, labels) in enumerate(test_loader):
     if count == 50:
         break
 
-    images = Variable(images).to(device)
+    # images = Variable(images).to(device)
     labels = labels.to(device)
+    # f = np.fromfile(input_path)
     result = remove(images[0])
     img = Image.open(io.BytesIO(result)).convert("RGBA")
     img.save(output_path)
