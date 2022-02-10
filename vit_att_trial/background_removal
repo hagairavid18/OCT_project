@@ -1,0 +1,36 @@
+import torch
+from rembg.bg import remove
+from attn_data import Kermany_DataSet
+
+import numpy as np
+import io
+from PIL import Image
+from torch.autograd import Variable
+
+input_path = 'input.png'
+output_path = 'out.png'
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+
+test_dataset = Kermany_DataSet("../../data/kermany/test")
+test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
+                                          batch_size=1,
+                                          shuffle=True)
+
+count = 0
+name = 'convnext_xlarge'
+for i, (images, labels) in enumerate(test_loader):
+    if count == 50:
+        break
+
+    images = Variable(images).to(device)
+    labels = labels.to(device)
+    result = remove(images[0])
+    img = Image.open(io.BytesIO(result)).convert("RGBA")
+    img.save(output_path)
+
+    # model = models[4]
+    # model.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(device)))
+    # model = model.to(device)
+
+    outputs = model(images)
