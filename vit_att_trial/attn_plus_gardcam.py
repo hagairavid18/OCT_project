@@ -56,8 +56,8 @@ model_attn.load_state_dict(torch.load(f'{name}.pt', map_location=torch.device(de
 model_attn = model_attn.to(device)
 model_attn.eval()
 attribution_generator = LRP(model_attn)
-
-models = [Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),convnext_base(),model_timm ]
+#Resnet18(4),Resnet50(4),Resnet101(4),Resnet152(4),
+models = [Resnet50(4),convnext_base(),model_timm ]
 
 config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,len(models[0].resnet.layer2))]+[models[0].resnet.layer3[i] for i in range(0,len(models[0].resnet.layer3))]+[models[0].resnet.layer4[i] for i in range(len(models[0].resnet.layer4)-1,2)]+[models[0].resnet.layer4[-1]]},
           'res50':{'target_layers':[models[1].resnet.layer2[i] for i in range(0,len(models[1].resnet.layer2),2)]+[models[1].resnet.layer3[i] for i in range(0,len(models[1].resnet.layer3),2)]+[models[1].resnet.layer4[i] for i in range(len(models[1].resnet.layer4)-1,2)]+[models[1].resnet.layer4[-1]]},
@@ -93,8 +93,8 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
                                           shuffle=False)
 
 
-
-names = ["res18","res50","res101","res152","convnext_xlarge", 'vit_base_patch16_224']
+#"res18","res50","res101","res152"
+names = ["res50","convnext_xlarge", 'vit_base_patch16_224']
 # predictions = None
 # ground_truth = None
 count = 0
@@ -106,7 +106,7 @@ for i, (images, labels) in enumerate(test_loader):
     images = Variable(images).to(device)
 
     labels = labels.to(device)
-    if labels.item() !=3:
+    if labels.item() !=0:
         continue
     count+=1
 
