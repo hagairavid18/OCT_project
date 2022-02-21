@@ -84,7 +84,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
 columns = ["model_name", "Original Image","Truth", "Predicted" ,"Logits", "Correct","curr_target"]+[ cam for cam in config['cam_names']] #+["layer {}".format(i) for i in range(len(config['res50']['target_layers']))]
 
 if config['use_wandb']:
-    wandb.init(project="layer_by_layer_cam")
+    wandb.init(project="cam_per_target")
 
 CLS2IDX = config['label_names']
 
