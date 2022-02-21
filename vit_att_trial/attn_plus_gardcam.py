@@ -70,7 +70,8 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
           'label_names':["NORMAL","CNV","DME","DRUSEN"],
-          'cam_algs': [GradCAM,GradCAMPlusPlus,XGradCAM,ScoreCAM],
+          'cam_algs': [GradCAMPlusPlus],
+          # GradCAM,GradCAMPlusPlus,XGradCAM,ScoreCAM
           'cam_names':['GradCAMPlusPlus'],
           #'GradCAM','GradCAMPlusPlus','XGradCAM','ScoreCAM'
           'layer_by_layer_cam' :False
@@ -197,4 +198,4 @@ for i, (images, labels) in enumerate(test_loader):
 
 
     if config['use_wandb']:
-        wandb.log({f"image_{config['label_names'][labels.item()]}_{count}": test_dt})
+        wandb.log({f"image_{count}_{config['label_names'][labels.item()]}": test_dt})
