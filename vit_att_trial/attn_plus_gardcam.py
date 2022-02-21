@@ -206,5 +206,5 @@ for i, (images, labels) in enumerate(test_loader):
 
 
 
-    if config['use_wandb']:
-        wandb.log({f"image_{count}_{config['label_names'][labels.item()]}": test_dt})
+        if config['use_wandb']:
+            wandb.log({f"image_{count}_{config['label_names'][labels.item()]}": test_dt})
