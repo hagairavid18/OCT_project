@@ -181,10 +181,11 @@ for i, (images, labels) in enumerate(test_loader):
             im = Image.open(img_buf)
             #+[ None]
             row = ["# {} #".format(name), wandb.Image(images), config['label_names'][labels.item()], config['label_names'][predictions.item()], wandb.Image(im), T,config['label_names'][k]] +[wandb.Image(gradcam[i]) for i in range(len(gradcam))]
-            row_2 = [  None for _ in range(len(config['res50']['target_layers']))]
-            for pos in range(len(layer_cam)):
-                row_2[pos] = wandb.Image(layer_cam[pos])
-            row+=row_2
+            if config['layer_by_layer_cam']:
+                row_2 = [  None for _ in range(len(config['res50']['target_layers']))]
+                for pos in range(len(layer_cam)):
+                    row_2[pos] = wandb.Image(layer_cam[pos])
+                row+=row_2
 
             if name == 'vit_base_patch16_224':
                 row[6] =wandb.Image(attention)
