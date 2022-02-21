@@ -109,7 +109,6 @@ for i, (images, labels) in enumerate(test_loader):
     labels = labels.to(device)
     # if labels.item() !=3:
     #     continue
-    count+=1
 
     print(count)
     for index, name in enumerate(names):
@@ -206,5 +205,5 @@ for i, (images, labels) in enumerate(test_loader):
 
 
 
-        if config['use_wandb']:
-            wandb.log({f"image_{count}_{config['label_names'][labels.item()]}": test_dt})
+    if config['use_wandb']:
+        wandb.log({f"image_{count}_{config['label_names'][labels.item()]}": test_dt})
