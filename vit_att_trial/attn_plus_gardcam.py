@@ -70,21 +70,21 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
           'label_names':["NORMAL","CNV","DME","DRUSEN"],
-          'cam_algs': [GradCAM,GradCAMPlusPlus,XGradCAM,ScoreCAM],
+          'cam_algs': [GradCAMPlusPlus],
           # GradCAM,GradCAMPlusPlus,XGradCAM,ScoreCAM
-          'cam_names':['GradCAM','GradCAMPlusPlus','XGradCAM','ScoreCAM'],
+          'cam_names':['GradCAMPlusPlus'],
           #'GradCAM','GradCAMPlusPlus','XGradCAM','ScoreCAM'
-          'layer_by_layer_cam' :False
+          'layer_by_layer_cam' :True
           }
 # Iterate through test dataset
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 #,"attention"]\
-columns = ["model_name", "Original Image","Truth", "Predicted" ,"Logits", "Correct"]+[ cam for cam in config['cam_names']] #+["layer {}".format(i) for i in range(len(config['vit_base_patch16_224']['target_layers']))]
+columns = ["model_name", "Original Image","Truth", "Predicted" ,"Logits", "Correct"]+[ cam for cam in config['cam_names']] +["layer {}".format(i) for i in range(len(config['res50']['target_layers']))]
 
 if config['use_wandb']:
-    wandb.init(project="cam_comparision")
+    wandb.init(project="layer_by_layer_cam")
 
 CLS2IDX = config['label_names']
 
@@ -181,10 +181,10 @@ for i, (images, labels) in enumerate(test_loader):
             im = Image.open(img_buf)
             #+[ None]
             row = ["# {} #".format(name), wandb.Image(images), config['label_names'][labels.item()], config['label_names'][predictions.item()], wandb.Image(im), T] +[wandb.Image(gradcam[i]) for i in range(len(gradcam))]
-            # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
-            # for pos in range(len(layer_cam)):
-            #     row_2[pos] = wandb.Image(layer_cam[pos])
-            # row+=row_2
+            row_2 = [  None for _ in range(len(config['res50']['target_layers']))]
+            for pos in range(len(layer_cam)):
+                row_2[pos] = wandb.Image(layer_cam[pos])
+            row+=row_2
 
             if name == 'vit_base_patch16_224':
                 row[6] =wandb.Image(attention)
