@@ -64,23 +64,24 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           'res101':{'target_layers':[models[2].resnet.layer3[i] for i in range(0,len(models[2].resnet.layer3),3)]+[models[2].resnet.layer4[i] for i in range(len(models[2].resnet.layer4)-1,2)]+[models[2].resnet.layer4[-1]]},
           'res152':{'target_layers':[models[3].resnet.layer3[i] for i in range(0,len(models[3].resnet.layer3),5)]+[models[3].resnet.layer4[i] for i in range(len(models[3].resnet.layer4)-1,2)]+[models[3].resnet.layer4[-1]]},
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[0],models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
-          'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks))]},
+          'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks),2)]},
           'use_wandb': True,
           'visualize_all_class': False,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
           'label_names':["NORMAL","CNV","DME","DRUSEN"],
           'cam_algs': [GradCAM,GradCAMPlusPlus,XGradCAM,ScoreCAM],
-          'cam_names':['GradCAM','GradCAMPlusPlus','XGradCAM','ScoreCAM'],
-          'layer_by_layer_cam' :True
+          'cam_names':['GradCAMPlusPlus'],
+          #'GradCAM','GradCAMPlusPlus','XGradCAM','ScoreCAM'
+          'layer_by_layer_cam' :False
           }
 # Iterate through test dataset
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 
-columns = ["model_name","id", "Original Image", "Predicted" ,"Logits","Truth", "Correct","curr_target","attention"]\
-          +[ cam for cam in config['cam_names']]+['Avg'] +["layer {}".format(i) for i in range(len(config['vit_base_patch16_224']['target_layers']))]
+columns = ["model_name", "Original Image","Truth", "Predicted" ,"Logits", "Correct","attention"]\
+          +[ cam for cam in config['cam_names']] #+["layer {}".format(i) for i in range(len(config['vit_base_patch16_224']['target_layers']))]
 
 if config['use_wandb']:
     wandb.init(project="test_attn_plus_gradcam")
@@ -106,8 +107,8 @@ for i, (images, labels) in enumerate(test_loader):
     images = Variable(images).to(device)
 
     labels = labels.to(device)
-    if labels.item() !=3:
-        continue
+    # if labels.item() !=3:
+    #     continue
     count+=1
 
     print(count)
@@ -179,15 +180,14 @@ for i, (images, labels) in enumerate(test_loader):
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
 
-            row = ["# {} #".format(name),str(i), wandb.Image(images), config['label_names'][predictions.item()], wandb.Image(im), config['label_names'][labels.item()], T,
-                   config['label_names'][k]]+[ None] +[wandb.Image(gradcam[i]) for i in range(len(gradcam))]+[wandb.Image(avg_cam)]
-            row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
-            for pos in range(len(layer_cam)):
-                row_2[pos] = wandb.Image(layer_cam[pos])
-            row+=row_2
+            row = ["# {} #".format(name), wandb.Image(images), config['label_names'][labels.item()], config['label_names'][predictions.item()], wandb.Image(im), T]+[ None] +[wandb.Image(gradcam[i]) for i in range(len(gradcam))]
+            # row_2 = [  None for _ in range(len(config['vit_base_patch16_224']['target_layers']))]
+            # for pos in range(len(layer_cam)):
+            #     row_2[pos] = wandb.Image(layer_cam[pos])
+            # row+=row_2
 
             if name == 'vit_base_patch16_224':
-                row[8] =wandb.Image(attention)
+                row[6] =wandb.Image(attention)
             # print(row[7])
             if config['use_wandb']:
                 test_dt.add_data(*row)
