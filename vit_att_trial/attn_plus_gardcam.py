@@ -84,7 +84,7 @@ columns = ["model_name", "Original Image","Truth", "Predicted" ,"Logits", "Corre
           +[ cam for cam in config['cam_names']] #+["layer {}".format(i) for i in range(len(config['vit_base_patch16_224']['target_layers']))]
 
 if config['use_wandb']:
-    wandb.init(project="test_attn_plus_gradcam")
+    wandb.init(project="just_grad_cam")
 
 CLS2IDX = config['label_names']
 
