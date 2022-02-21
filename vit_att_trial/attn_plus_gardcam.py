@@ -66,7 +66,7 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           'convnext_xlarge':{'target_layers':[models[4].downsample_layers[0],models[4].downsample_layers[1],models[4].downsample_layers[-1]]},
           'vit_base_patch16_224':{'target_layers':[models[5].blocks[i].norm1 for i in range(0,len(model_timm.blocks),2)]},
           'use_wandb': True,
-          'visualize_all_class': False,
+          'visualize_all_class': True,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
           'label_names':["NORMAL","CNV","DME","DRUSEN"],
@@ -74,14 +74,14 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           # GradCAM,GradCAMPlusPlus,XGradCAM,ScoreCAM
           'cam_names':['GradCAMPlusPlus'],
           #'GradCAM','GradCAMPlusPlus','XGradCAM','ScoreCAM'
-          'layer_by_layer_cam' :True
+          'layer_by_layer_cam' :False
           }
 # Iterate through test dataset
 #  'ScoreCAM', 'GradCAMPlusPlus', 'XGradCAM', 'EigenCAM', 'EigenGradCAM',
 # , ScoreCAM, EigenCAM, GradCAMPlusPlus, XGradCAM, EigenGradCAM
 
 #,"attention"]\
-columns = ["model_name", "Original Image","Truth", "Predicted" ,"Logits", "Correct"]+[ cam for cam in config['cam_names']] +["layer {}".format(i) for i in range(len(config['res50']['target_layers']))]
+columns = ["model_name", "Original Image","Truth", "Predicted" ,"Logits", "Correct","curr_target"]+[ cam for cam in config['cam_names']] #+["layer {}".format(i) for i in range(len(config['res50']['target_layers']))]
 
 if config['use_wandb']:
     wandb.init(project="layer_by_layer_cam")
@@ -180,7 +180,7 @@ for i, (images, labels) in enumerate(test_loader):
             plt.savefig(img_buf, format='png')
             im = Image.open(img_buf)
             #+[ None]
-            row = ["# {} #".format(name), wandb.Image(images), config['label_names'][labels.item()], config['label_names'][predictions.item()], wandb.Image(im), T] +[wandb.Image(gradcam[i]) for i in range(len(gradcam))]
+            row = ["# {} #".format(name), wandb.Image(images), config['label_names'][labels.item()], config['label_names'][predictions.item()], wandb.Image(im), T,config['label_names'][k]] +[wandb.Image(gradcam[i]) for i in range(len(gradcam))]
             row_2 = [  None for _ in range(len(config['res50']['target_layers']))]
             for pos in range(len(layer_cam)):
                 row_2[pos] = wandb.Image(layer_cam[pos])
