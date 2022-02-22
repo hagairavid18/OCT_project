@@ -102,8 +102,8 @@ count = 0
 for i, (images, labels) in enumerate(test_loader):
     if count == 50:
         break
-    # if config['use_wandb']:
-    #     test_dt = wandb.Table(columns=columns)
+    if config['use_wandb']:
+        test_dt = wandb.Table(columns=columns)
     images = Variable(images).to(device)
 
     labels = labels.to(device)
@@ -134,8 +134,7 @@ for i, (images, labels) in enumerate(test_loader):
         count += 1
         print(count)
 
-        if config['use_wandb']:
-            test_dt = wandb.Table(columns=columns)
+
 
         target_layers = [config[name]['target_layers'][-1]]
 
@@ -205,5 +204,5 @@ for i, (images, labels) in enumerate(test_loader):
 
 
 
-        if config['use_wandb']:
-            wandb.log({f"image_{count}_{config['label_names'][labels.item()]}": test_dt})
+    if config['use_wandb']:
+        wandb.log({f"image_{count}_{config['label_names'][labels.item()]}": test_dt})
