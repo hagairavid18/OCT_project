@@ -70,9 +70,9 @@ config = {'res18':{'target_layers':[models[0].resnet.layer2[i] for i in range(0,
           'seed': 25,
           'test_path' :"../../data/kermany/test",
           'label_names':["NORMAL","CNV","DME","DRUSEN"],
-          'cam_algs': [GradCAMPlusPlus],
+          'cam_algs': [GradCAM,GradCAMPlusPlus,XGradCAM],
           # GradCAM,GradCAMPlusPlus,XGradCAM,ScoreCAM
-          'cam_names':['GradCAMPlusPlus'],
+          'cam_names':['GradCAM','GradCAMPlusPlus','XGradCAM'],
           #'GradCAM','GradCAMPlusPlus','XGradCAM','ScoreCAM'
           'layer_by_layer_cam' :False
           }
