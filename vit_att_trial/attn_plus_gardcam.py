@@ -112,8 +112,8 @@ for i, (images, labels) in enumerate(test_loader):
 
     print(count)
     for index, name in enumerate(names):
-        if name in ["res18","res101","res152"]:
-            continue
+        # if name in ["res18","res101","res152"]:
+        #     continue
         model = models[index]
         print(name)
         if name != 'vit_base_patch16_224':
