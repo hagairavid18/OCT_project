@@ -39,6 +39,7 @@ def generate_cam_vis(model,cam_algo, target_layers,name,images,labels,targets):
                        )
     target_category = labels.item()
     grayscale_cam = cam(input_tensor=images, aug_smooth=True, eigen_smooth=True, targets=targets)
+    print(grayscale_cam.shape)
 
     curr_grads= (grayscale_cam[0, :])
     image_transformer_attribution = images.squeeze().permute(1, 2, 0).data.cpu().numpy()
